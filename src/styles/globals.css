@@ -27,3 +27,16 @@ a {
 }
 
 
+@font-face {
+  font-family: "NexaTextBold";
+  src: local("NexaTextBold"),
+    url("../../public/NEXAFONTS/OTF/Nexa-Black.otf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "NexaTextLight";
+  src: local("NexaTextLight"),
+    url("../../public/NEXAFONTS/OTF/Nexa-Light.otf") format("truetype");
+  font-weight: 500;
+}

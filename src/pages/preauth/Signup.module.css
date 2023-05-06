@@ -1,0 +1,69 @@
+.formdataHeader{
+    font-family: NexaTextBold;
+    width:'100%';
+    text-align: center;
+    padding: 5px 0px;
+    height: auto;
+    box-sizing: border-box;
+    font-size: 25px;
+    position:relative
+}
+
+.formdataHeader::after{
+    position:absolute;
+    bottom: -1.5px;
+    content: ' ';
+    width: 70%;
+    height: 0.5px;
+    left:0px;
+    border-radius: 3px;
+    background-color: rgb(70, 70, 70);
+}
+
+.forminput{
+    height:45px;
+    box-sizing:border-box;
+    padding-left:10px;
+    border-radius:10px;
+    width:100%;
+    font-size:15px;
+    background-color: rgb(228,228,228);
+    color: black;
+    outline:none;
+    border-width:0px 0px 0px;
+    border-color:rgba(95, 94, 94, 0.698);
+    text-align:left
+}
+
+
+.forminputUnfilled{
+    height:45px;
+    box-sizing:border-box;
+    padding-left:10px;
+    border-radius:10px;
+    width:100%;
+    font-size:15px;
+    background-color: rgb(228,228,228);
+    color: black;
+    outline:none;
+    border-width: 1px;
+    border-color:red;
+    text-align:left;
+    
+}
+
+.forminputTextArea{
+    height:130px;
+    box-sizing:border-box;
+    padding-left:10px;
+    border-radius:10px;
+    padding-top: 20px;
+    width:100%;
+    font-size:15px;
+    background-color: rgb(228,228,228);
+    color: black;
+    outline:none;
+    border-width:0px 0px 0px;
+    border-color:rgba(95, 94, 94, 0.698);
+    text-align:left
+}

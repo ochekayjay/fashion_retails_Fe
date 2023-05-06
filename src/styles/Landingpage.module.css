@@ -1,0 +1,48 @@
+.creatorsects{
+    width: auto;
+    display:flex;
+    justify-content: left;
+    padding:15px 0px;
+    font-size:18px;
+    font-weight:bolder;
+    font-family: 'Merriweather', serif;; 
+}
+
+.creatorsectsInner{
+    width: auto;
+    display:flex;
+    justify-content: left;
+    padding:15px 0px;
+    font-size:18px;
+    font-weight:bolder;
+    font-family: NexaTextLight;
+    margin: 15px 0px
+}
+.navdivs{
+    width: 85%;
+    margin: 45px auto;
+    height: auto;
+    padding:15px;
+    box-sizing: border-box;
+    min-height: 70px;
+    background-color: rgb(228,228,228);
+    border-radius: 15px;
+    box-shadow: 1px 1px 5px rgb(91, 90, 90);
+}
+
+
+
+.navspanIcon{
+    margin-right:2.5px;
+    padding:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+
+.navlogospan{
+    margin-left:2.5px;
+    display:flex;
+    justify-content:center;
+    align-items:center
+}

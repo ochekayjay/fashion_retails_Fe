@@ -9,6 +9,7 @@ import imgThree from '../../public/images/1681676340544.jpg'
 import { crop_one,crop_two,crop_three } from '@/utils/cropImage'
 import useWindowResize from '@/utils/windowdimension'
 import Imagecarousel from '@/utils/carousel'
+import Link from 'next/link'
 
 
 
@@ -55,7 +56,7 @@ export default function Home() {
         <section style={{display:'flex',position:'relative',flexDirection:width>750?'row':'column',width:'100%',justifyContent:'space-around',alignItems:'center',height:width>750?'400px':'auto',marginTop:'50px'}}>
           <div style={{width:width>750?'25%':'85%',margin:'10px auto',height:width>750?'100%':'400px',display:'flex',flexDirection:'column',alignItems:'left',justifyContent:'space-around',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
             <p style={{fontSize:'35px',letterSpacing:'1.5px'}}>Melting point for buyers, digital creators, models and SME's</p>
-            <p style={{width:'100px',padding:'15px 15px',textAlign:'center',marginTop:'10px',backgroundColor:'black',color:'white',boxShadow:'0px 0px 3px black',fontSize:'15px',fontFamily:" 'Merriweather', serif; "}}>explore</p>
+            <p style={{width:'100px',padding:'15px 15px',textAlign:'center',marginTop:'10px',backgroundColor:'black',color:'white',boxShadow:'0px 0px 3px black',fontSize:'15px',fontFamily:" 'Merriweather', serif; "}}><Link href={'/postauth/landingpage'}>explore</Link></p>
           </div>
         {width>750?<div style={{display:'flex',justifyContent:'space-around',alignItems:'center',width:width>750?'65%':'300%',height:width>750?'100%':'550px',overflow:'hidden',position:width>750?"static":'absolute',bottom:'0px',left:'0px'}}>
                 <div style={{width:'30%',height:'100%',display:'flex',alignItems:'center',backgroundColor:'rgb(251, 249, 249)',border:'0px 0px 3px black',borderRadius:'5px',justifyContent:'space-around',flexDirection:'column'}}>
