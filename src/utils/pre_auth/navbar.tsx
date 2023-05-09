@@ -10,11 +10,19 @@ import signinIcon from '../../iconholder/login.svg'
 import signoutIcon from '../../iconholder/logout.svg'
 import signupIcon from '../../iconholder/signup.svg'
 import searchIcon from '../../iconholder/search.svg'
+import menuIcon from '../../iconholder/menu.svg'
 import Image from 'next/image' 
 import Link from 'next/link'
+import useWindowResize from '../windowdimension'
 
 
-function Navbar() {
+type showMobile = {
+  viewmobile: boolean,
+  setViewMobile : any
+}
+
+function Navbar({viewmobile,setViewMobile}:showMobile) {
+  const {width,height} = useWindowResize()
   return (
     <>
     <Head>
@@ -24,11 +32,16 @@ function Navbar() {
         @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&display=swap');
       </style>
     </Head>
-    <section style={{position:'fixed',top:"0px",left:'0px',width:'25%',backgroundColor:'white',height:'100vh',overflow:'auto'}}>
-        <p style={{width:'80%',margin:'20px auto',textAlign:'center',display:'flex',justifyContent:'space-around',padding:'15px 0px',fontSize:'30px',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
+    <section className={width>800?styles.navMainHolder:viewmobile?styles.navMainMobile:styles.navMobileOf}>
+        <div style={{width:'100%',margin:'20px auto',display:'flex',justifyContent:'space-between',padding:'15px 10px',alignItems:"center",height:'40px'}}>
+        <p style={{width:'80%',alignItems:'center',display:'flex',justifyContent:'left',padding:'10px 0px 0px',fontSize:width>800?'30px':'20px',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
           <span style={{padding:'10px',width:'auto',borderRadius:"50%",display:'flex',alignItems:'center',justifyContent:'center'}}><Image alt='test' src={creatorIcon}/></span>
           <span style={{display:'flex',alignItems:"center",justifyContent:"center",fontFamily:"NexaTextBold"}}>Creator's Corner</span>
         </p>
+        <p onClick={()=>setViewMobile(!viewmobile)} style={{width:'10%',height:'20px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+          <Image alt='menu' src={menuIcon}/>
+        </p>
+        </div>
 
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='searchCreator' src={seachcreatorIcon}/></span><span className={styles.navlogospan}>Search for Creators</span></p>

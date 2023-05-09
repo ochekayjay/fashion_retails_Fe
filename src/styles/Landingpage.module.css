@@ -8,6 +8,16 @@
     font-family: 'Merriweather', serif;; 
 }
 
+.navMainHolder{
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:25%;
+    background-color:white;
+    height:100vh;
+    overflow:auto
+}
+
 .creatorsectsInner{
     width: auto;
     display:flex;
@@ -46,3 +56,46 @@
     justify-content:center;
     align-items:center
 }
+
+
+@media(max-width:800px){
+    .navMobileOff{
+        animation-name: menuClose;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        position:absolute;
+        display: block;
+        left:0px;
+        z-index:300;
+        width:85%;
+        background-color:white;
+        height:100vh;
+        overflow:auto
+    
+    }
+
+    .navMainMobile{
+        animation-name: menuOption;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        display:block;
+        background-color:white;
+        overflow: auto;
+        top:0px;
+        z-index:300000;
+        width:85%;
+        height:100vh;
+    }
+}
+
+
+@keyframes menuOption{
+    from{ transform: translateX(-400px)}
+    to{ transform: translateX(0px)}
+  }
+
+  @keyframes menuClose{
+    from{ transform: translateX(-400px)}
+    to{ transform: translateX(-400px)}
+  }
+
