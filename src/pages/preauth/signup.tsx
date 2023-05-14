@@ -5,15 +5,18 @@ import { Button } from '@mantine/core'
 import Link from 'next/link'
 import ColorThief from "color-thief-ts"
 import useWindowResize from '@/utils/windowdimension';
+import ImageCropper from '@/utils/pre_auth/imageCropper';
 
 export default function Signup() {
     const [ImageUrl,setImageUrl] = useState<any>('')
     const [showImage, setShowImage] = useState(false)
     const [shownormal,setshowNormal] = useState(true)
+    const [cropImage, setCropImage] = useState(false)
     const [file,setFile] = useState<string>('')
     const [isLoading, setIsLoading] = useState(false)
     const [imagewidth,setImageWidth] = useState(0)
     const [imageHeight,setImageHeight] = useState(0)
+    const [cropImageUrl,setCroppedImageurl] = useState('')
     const [dominantColor, setDominantColor] = useState<any>(null);
     const uploader = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z"/></svg>;
     const {width,height} = useWindowResize()
@@ -40,6 +43,10 @@ export default function Signup() {
     })
 
 
+    const onCancel = ()=>{
+        
+        setCropImage(false)
+    }
    
 
 
@@ -106,12 +113,17 @@ export default function Signup() {
    
     }
 
+    
+
     useEffect( ()=>{
         const extractColor = async(url:string)=>{
         const colorThief = new ColorThief();
         const dominantColor = await colorThief.getColorAsync(url);
         console.log(dominantColor)
         setDominantColor(dominantColor);
+        setCropImage(!cropImage)
+        setShowImage(!showImage)
+        
         
         // create a new image object and set its source to the provided URL
         //const image = new Image();
@@ -123,8 +135,8 @@ export default function Signup() {
           console.log(color)
           setDominantColor(`rgb(${color[0]},${color[1]},${color[2]})`);
         });}*/}
-        extractColor(ImageUrl)
-    },[ImageUrl])
+        extractColor(cropImageUrl)
+    },[cropImageUrl])
 
     const handleFileChange = (e:any) => {
         console.log('in')
@@ -133,7 +145,8 @@ export default function Signup() {
         //console.log(imageUrl)
         setFile(file)
         setImageUrl(imageUrl);
-        setShowImage(true)
+        setCropImage(true)
+        //setShowImage(true)
     
       };
 
@@ -144,7 +157,12 @@ export default function Signup() {
 
 
   return (
-    <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',display:"flex",alignItems:"center",flexDirection:'column',justifyContent:"center"}}>
+        
+        {cropImage?<ImageCropper ImageUrl={ImageUrl} onCancel={onCancel} setCroppedImageurl={setCroppedImageurl}/>:""}
+        <div style={{width:'85%',margin:'30px auto'}}>
+            <p style={{width:'140px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',marginLeft:'0px',textAlign:'center',padding:'10px 15px',boxSizing:'border-box',borderRadius:'15px',color:'black',backgroundColor:"white",fontFamily:'NexaTextLight',fontSize:'18px', letterSpacing:'1.5px',height:'auto'}}>back</p>
+        </div>
         <section className={styles.innerSection} >
             <div className={styles.smallSection}>
                 <div  style={{width:"100%",fontSize:'30px',fontFamily:"NexaTextBold",height:"50%",display:"flex",alignItems:"center",justifyContent:'center'}}>
@@ -155,9 +173,10 @@ export default function Signup() {
                 </div>
             </div>
             <div className={styles.BigSection} >
+                <p style={{textAlign:'center',letterSpacing:'2.0px',fontFamily:"NexaTextBold",marginBottom:'40px',marginTop:"15px",fontSize:width>850?'25px':"20px"}}>CREATE ACCOUNT</p>
                 <form style={{height:'100%',width:'100%'}}>
-                    <section style={{width:'100%',height:'90%',display:"flex",flexDirection:width>800?'row':'column'}}>
-                        <div style={{height:'100%',width:width>800?'33.3%':'90%',margin:'0px auto',padding:"15px",display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
+                    <section style={{width:'100%',height:'95%',display:"flex",flexDirection:width>800?'row':'column'}}>
+                        <div style={{height:'100%',width:width>800?'33.3%':'90%',margin:'0px auto',padding:width>800?"15px":'5px',boxSizing:'border-box',display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
                         <div style={{height:'15%',display:"flex",alignItems:"center",justifyContent:"center",boxSizing:"border-box"}}><p className={styles.formdataHeader}>Authentication Data</p></div>
                             <div style={{display:'flex',flexDirection:"column",justifyContent:"space-between",height:'80%'}}>
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
@@ -175,7 +194,7 @@ export default function Signup() {
                             
                             </div>
                         </div>
-                        <div style={{height:'100%',width:width>800?'33.3%':'90%',margin:'0px auto',padding:"15px",display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
+                        <div style={{height:'100%',width:width>800?'33.3%':'95%',margin:'0px auto',padding:width>800?"15px":'5px',boxSizing:'border-box',display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
                         <div style={{height:'15%',display:"flex",alignItems:"center",justifyContent:"center",boxSizing:"border-box"}}><p className={styles.formdataHeader}>Profile</p></div>
                             <div style={{display:'flex',flexDirection:"column",justifyContent:"space-between",height:'80%'}}>
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
@@ -186,7 +205,7 @@ export default function Signup() {
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Avatar</p>
                             <div style={{height:'90px',position:'relative',width:'100%',boxSizing:'border-box',backgroundColor:"rgb(228,228,228)",borderRadius:'10px',display:'flex',alignItems:"center",justifyContent:'center'}}>
-                                <p style={{height:'70px',width:'70px',border:'3px solid rgb(70, 70, 70)',borderRadius:'50%',display:showImage?'block':'none'}}><img style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'50%'}}  src={ImageUrl} alt="user avatar"/></p>
+                                <p style={{height:'70px',width:'70px',border:'3px solid rgb(70, 70, 70)',borderRadius:'50%',display:showImage?'block':'none'}}><img style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'50%'}}  src={cropImageUrl} alt="user avatar"/></p>
                                 <input type='file'id='avatar' onChange={(event)=>handleFileChange(event)} name='avatar' style={{display:'none'}} />
                                 <label htmlFor= 'avatar' style={{backgroundColor:'rgb(70, 70, 70)',left:'0px',cursor:'pointer',position:'absolute',height:'100%',width:'15%'}}>
                                 <div style={{height:'100%',width:'100%',display:'flex',alignItems:"center",justifyContent:'center'}}><p>{uploader}</p></div>
@@ -201,7 +220,7 @@ export default function Signup() {
                             
                             </div>
                         </div>
-                        <div style={{height:'100%',width:width>800?'33.3%':'90%',margin:'0px auto',padding:"15px",display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
+                        <div style={{height:'100%',width:width>800?'33.3%':'95%',margin:'0px auto',padding:width>800?"15px":'5px',boxSizing:'border-box',display:'flex',flexDirection:"column",justifyContent:"space-around"}}>
                             <div style={{height:'15%',display:"flex",alignItems:"center",justifyContent:"center",boxSizing:"border-box"}}><p className={styles.formdataHeader}>Socials</p></div>
                             <div style={{display:'flex',flexDirection:"column",justifyContent:"space-between",height:'80%'}}>
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
@@ -219,7 +238,7 @@ export default function Signup() {
                             </div>
                         </div>
                     </section>
-                    <section style={{width:'100%',height:'10%',textAlign:'center'}}>
+                    <section style={{width:'100%',height:'10%',textAlign:'center',marginBottom:'20px'}}>
                         <button onClick={(event)=>submitUserInfo(event,enlistUserObj)} style={{fontFamily:'NexaTextLight',fontSize:'20px',width:'200px',height:'auto',padding:'5px 0px',borderRadius:'25px',border:'3px solid white',backgroundColor:'rgb(70, 70, 70)',color:'white',textAlign:'center'}}>{isLoading?<Loader color="white" size="sm" variant="bars" />: 'Sign Up'}</button>
                     </section>
                 </form>

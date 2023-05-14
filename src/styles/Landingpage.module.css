@@ -28,6 +28,21 @@
     font-family: NexaTextLight;
     margin: 15px 0px
 }
+
+.creatorsectsInnerUser{
+    width: auto;
+    padding:15px 5px;
+    font-size:18px;
+    font-weight:bolder;
+    font-family: NexaTextLight;
+    margin: 15px 0px;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
 .navdivs{
     width: 85%;
     margin: 45px auto;

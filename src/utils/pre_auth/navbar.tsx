@@ -14,15 +14,18 @@ import menuIcon from '../../iconholder/menu.svg'
 import Image from 'next/image' 
 import Link from 'next/link'
 import useWindowResize from '../windowdimension'
+import { useRetailContext } from '@/context/context'
 
 
 type showMobile = {
   viewmobile: boolean,
-  setViewMobile : any
+  setViewMobile : any,
+
 }
 
 function Navbar({viewmobile,setViewMobile}:showMobile) {
   const {width,height} = useWindowResize()
+  const {signed,name,username,avatarUrl} = useRetailContext()
   return (
     <>
     <Head>
@@ -51,14 +54,26 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
           </p>
         </div>
         <div className={styles.navdivs}>
-          <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='top creators' src={topcreatorIcon}/></span><span className={styles.navlogospan}>Top Creators</span></p>
+          <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='top creators' src={topcreatorIcon} /></span><span className={styles.navlogospan}>Top Creators</span></p>
         </div>
+        {signed?
+        <div className={styles.navdivs}>
+            <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>WELCOME</span></p>
+        <div className={styles.creatorsectsInnerUser}>
+            <div style={{height:'700px',width:'500px',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><img style={{width:'100%',height:'100%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
+            <div style={{width:'100px',height:'100px',display:'flex',justifyContent:"center",alignItems:'left',flexDirection:'column'}}>
+              <p style={{fontFamily:"NexaTextLight",fontSize:'18px'}}>{username}</p>
+              <p style={{fontFamily:"NexaTextLight",fontSize:'12px'}}>{name}</p>
+            </div>
+        </div>
+        <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
+      </div>:
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>Become a Creator</span></p>
           <Link href={'../../preauth/signup'}><p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signupIcon} alt='signup'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN UP</span></p></p></Link>
           <Link href={'../../preauth/signin'}><p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signinIcon} alt='signin'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN IN</span></p></p></Link>
           <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
-        </div>
+        </div>}
     </section>
     </>
   )
