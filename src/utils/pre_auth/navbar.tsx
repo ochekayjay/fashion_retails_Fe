@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import styles from '@/styles/Landingpage.module.css'
+import styles from '@/styles/Navbar.module.css'
 import creatorIcon from '../../iconholder/creator_corner.svg'
 import seachcreatorIcon from '../../iconholder/search_creator.svg'
 import topcreatorIcon from  '../../iconholder/top_creator.svg'
@@ -60,10 +60,14 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
         <div className={styles.navdivs}>
             <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>WELCOME</span></p>
         <div className={styles.creatorsectsInnerUser}>
-            <div style={{height:'700px',width:'500px',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><img style={{width:'100%',height:'100%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
+            <div style={{height:'150px',width:'150px',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><img style={{width:'100%',height:'100%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
             <div style={{width:'100px',height:'100px',display:'flex',justifyContent:"center",alignItems:'left',flexDirection:'column'}}>
               <p style={{fontFamily:"NexaTextLight",fontSize:'18px'}}>{username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px'}}>{name}</p>
+              <Link href={'../../postauth/userpage'}>
+                <p style={{padding:'5px',backgroundColor:'white',borderRadius:"3px"}}>profile</p>
+              </Link>
+              
             </div>
         </div>
         <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
