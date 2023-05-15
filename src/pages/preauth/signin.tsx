@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 
 export default function signin() {
 
-    const {setUsername,setAvatarUrl,setName,setSigned} = useRetailContext()
+    const {setUsername,setAvatarUrl,setName,setSigned,setId} = useRetailContext()
     const {width,height} = useWindowResize()
     const [shownormal,setshowNormal] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
@@ -52,12 +52,15 @@ export default function signin() {
             }); 
         const res = await createdCreator.json()
         if(res.status==='successful'){
-            const {Username,name,avatarLink} = res
+            const {Username,name,avatarLink,Token,_id} = res
+            window.localStorage.setItem('token',Token)
+            window.localStorage.setItem('id',_id)
             setIsLoading(false)
             setUsername(Username)
             setName(name)
             setAvatarUrl(avatarLink)
             setSigned(true)
+            setId(_id)
             push('/postauth/landingpage')
 
         }

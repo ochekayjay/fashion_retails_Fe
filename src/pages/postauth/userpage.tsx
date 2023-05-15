@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
 import menuIcon from '../../iconholder/menu.svg'
 import Image from 'next/image'
@@ -7,10 +7,37 @@ import editIcon from '../../iconholder/editIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
 import { useRetailContext } from '@/context/context'
 
-export default function Userpage() {
 
-    const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,signed,name,username,avatarUrl} = useRetailContext()
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const id = window.localStorage.getItem('id')
+  const token = window.localStorage.getItem('token')
+  const res = await fetch(`https://fashion-r-services.onrender.com/creator/personal/${id}`,{
+    method: 'GET',  
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+        }
+    });
+  const data = await res.json();
+ 
+  // Pass data to the page via props
+  return { props: { data} };
+}
+
+
+export default function Userpage({data}:any) {
+
+  const {width,height} = useWindowResize()
+  const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName} = useRetailContext()
+
+
+  useEffect(()=>{
+    setAvatarUrl(data.avatarLink)
+    setUsername(data.Username)
+    setName(data.name)
+  },[])
 
 
   return (
@@ -34,7 +61,7 @@ export default function Userpage() {
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, rgb(228,228,228) , ${data.color})`}}>
             <div style={{textAlign:'center'}}>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{username}</p>
