@@ -16,8 +16,9 @@ export async function getServerSideProps(context:any) {
   const id = query?.id
   const token = query?.token
   //https://fashion-r-services.onrender.com
+  //http://localhost:5005
   if(id && token){
-    const res = await fetch(`http://localhost:5005/creator/personal/${id}`,{
+    const res = await fetch(`https://fashion-r-services.onrender.com/creator/personal/${id}`,{
     method: 'GET',  
     headers: {
       'Accept': 'application/json',
