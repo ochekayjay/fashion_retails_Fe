@@ -41,7 +41,7 @@ export default function signin() {
 
         try{
         setIsLoading(true)
-        console.log(enlistUserObj)
+        
         const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/signin', {
             method: 'POST',  
             headers: {

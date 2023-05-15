@@ -5,14 +5,19 @@ import Image from 'next/image'
 import addIcon from '../../iconholder/addIcon.svg'
 import editIcon from '../../iconholder/editIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
+import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
 
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context:any) {
+
+  const { query } = context;
   // Fetch data from external API
-  const id = window.localStorage.getItem('id')
-  const token = window.localStorage.getItem('token')
-  const res = await fetch(`https://fashion-r-services.onrender.com/creator/personal/${id}`,{
+  const id = query?.id
+  const token = query?.token
+  //https://fashion-r-services.onrender.com
+  if(id && token){
+    const res = await fetch(`http://localhost:5005/creator/personal/${id}`,{
     method: 'GET',  
     headers: {
       'Accept': 'application/json',
@@ -21,22 +26,43 @@ export async function getServerSideProps() {
         }
     });
   const data = await res.json();
+  return { props: { data} };
+  }
+
+  else{
+    const data = {}
+    return { props: { data} };
+  }
+  
  
   // Pass data to the page via props
-  return { props: { data} };
+  
 }
 
 
 export default function Userpage({data}:any) {
 
+  const router = useRouter()
   const {width,height} = useWindowResize()
   const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName} = useRetailContext()
 
+  
 
   useEffect(()=>{
-    setAvatarUrl(data.avatarLink)
-    setUsername(data.Username)
-    setName(data.name)
+
+    if(data?.avatarLink && data?.Username && data?.name){
+      setAvatarUrl(data.avatarLink)
+      setUsername(data.Username)
+      setName(data.name)
+    }
+
+    else{
+      const id = window.localStorage.getItem('id');
+      const token = window.localStorage.getItem('token')
+      const queryParam = token ? `?id=${id}&token=${token}` : '';
+      router.push(`../../postauth/userpage${queryParam}`)
+    }
+    
   },[])
 
 
@@ -80,7 +106,7 @@ export default function Userpage({data}:any) {
             </div>
 
             <div style={{boxShadow:'1px 1px 5px rgb(91, 90, 90)',position:'absolute',bottom:'-50px',left:'10px',border:'3px solid white',borderRadius:"15px",width:'150px',backgroundColor:"white",height:'150px'}}>
-                <Image src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover"}}/>
+                <img src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
         <section style={{width:width>800?'65%':'100%',height:width>800?'100vh':'75vh',margin:"0px auto",backgroundColor:'red'}}>
