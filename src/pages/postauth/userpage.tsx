@@ -15,6 +15,9 @@ export async function getServerSideProps(context:any) {
   // Fetch data from external API
   const id = query?.id
   const token = query?.token
+
+  console.log(id)
+  console.log(token)
   //https://fashion-r-services.onrender.com
   //http://localhost:5005
   if(id && token){
@@ -26,12 +29,14 @@ export async function getServerSideProps(context:any) {
       Authorization: `Bearer ${token}`
         }
     });
-  const data = await res.json();
+
+    console.log(JSON.stringify(res))
+  const data = {};
   return { props: { data} };
   }
 
   else{
-    const data = {}
+    const data = null
     return { props: { data} };
   }
   
@@ -50,19 +55,21 @@ export default function Userpage({data}:any) {
   
 
   useEffect(()=>{
+if(typeof window !== 'undefined'){
 
-    if(data?.avatarLink && data?.Username && data?.name){
-      setAvatarUrl(data.avatarLink)
-      setUsername(data.Username)
-      setName(data.name)
-    }
+  if(data?.avatarLink && data?.Username && data?.name){
+    setAvatarUrl(data.avatarLink)
+    setUsername(data.Username)
+    setName(data.name)
+  }
 
-    else{
-      const id = window.localStorage.getItem('id');
-      const token = window.localStorage.getItem('token')
-      const queryParam = token ? `?id=${id}&token=${token}` : '';
-      router.push(`../../postauth/userpage${queryParam}`)
-    }
+  else{
+    const id = window.localStorage.getItem('id');
+    const token = window.localStorage.getItem('token')
+    const queryParam = token ? `?id=${id}&token=${token}` : '';
+    router.push(`../../postauth/userpage${queryParam}`)
+  }
+}
     
   },[])
 
