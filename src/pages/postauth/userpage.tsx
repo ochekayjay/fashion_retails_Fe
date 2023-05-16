@@ -29,9 +29,8 @@ export async function getServerSideProps(context:any) {
       Authorization: `Bearer ${token}`
         }
     });
-
-    console.log(JSON.stringify(res))
-  const data = {};
+    const data = await res.json()
+    
   return { props: { data} };
   }
 
@@ -95,9 +94,9 @@ if(typeof window !== 'undefined'){
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, rgb(228,228,228) , ${data.color})`}}>
+        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, rgb(228,228,228) , ${data?.color})`}}>
             <div style={{textAlign:'center'}}>
-                <p style={{width:'80%',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
+                <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{username}</p>
             </div>
             <p style={{fontFamily:'NexaTextLight',fontSize:'15px',margin:'10px',width:"100%",padding:'20px',boxSizing:'border-box'}}>
