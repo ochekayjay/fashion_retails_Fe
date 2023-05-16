@@ -74,27 +74,36 @@ if(typeof window !== 'undefined'){
 
 
   return (
-    <div style={{display:'flex',flexDirection:width>800?'row':'column',justifyContent:width>800?"space-around":"center",marginTop:'0px',minHeight:'100vh',backgroundColor:'rgb(228,228,228)',padding:'0px',boxSizing:"border-box",paddingBottom:'30px'}}>
+    <div style={{display:'flex',flexDirection:width>1100?'row':'column',border:"1px solid brown",justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',backgroundColor:'rgb(228,228,228)',boxSizing:"border-box",paddingBottom:'30px'}}>
         
-        {width>800?<section style={{width:'30%',height:'auto',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
-            <div style={{backgroundColor:'pink',height:"350px",width:'350px',marginBottom:'30px'}}>
-
+        {width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${data?.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
+            <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px'}}>
+                <img src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
 
-            <div style={{backgroundColor:'pink',height:"150px",width:'350px',marginBottom:'30px'}}>
-
+            <div style={{textAlign:'center',height:"50px",width:'350px',marginBottom:'30px'}}>
+                <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
+                <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{username}</p>
             </div>
 
-            <div style={{backgroundColor:'pink',height:"150px",width:'350px',marginBottom:'30px'}}>
-
+            <div style={{height:"150px",width:'350px',overflow:'auto',marginBottom:'30px',display:'flex',alignItems:"center",justifyContent:"center"}}>
+                <p style={{fontFamily:'NexaTextLight',fontSize:'15px',margin:'10px',width:"100%",padding:'20px',boxSizing:'border-box'}}>
+                  Lorem Ipsum is simply dummy text of the printing and tyIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                </p>
             </div>
 
-            <div style={{backgroundColor:'pink',height:"150px",width:'350px',marginBottom:'30px'}}>
+            <div style={{height:"150px",width:'350px',display:'flex',flexDirection:'column',alignItems:"center",justifyContent:"center",marginBottom:'30px'}}>
+              <p style={{fontFamily:"NexaTextBold",textAlign:"center",fontSize:'15px'}}><strong>Subscribers</strong> &nbsp; &nbsp; 345</p>
+              <p style={{fontFamily:"NexaTextBold",textAlign:"center",fontSize:'15px'}}><strong>Accumulated Views</strong> &nbsp; &nbsp; 13456</p>
+            </div>
 
+            <div style={{height:"150px",width:'350px',display:'flex',flexDirection:'column',alignItems:"center",justifyContent:"space-around",marginBottom:'30px'}}>
+              <section style={{width:'70%',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
+              <section style={{width:'70%',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, rgb(228,228,228) , ${data?.color})`}}>
+        <section style={{width:'100%',position:"relative",margin:"0px auto",border:'1px solid green',height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, white , ${data?.color})`}}>
             <div style={{textAlign:'center'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{username}</p>
@@ -116,7 +125,7 @@ if(typeof window !== 'undefined'){
                 <img src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
-        <section style={{width:width>800?'65%':'100%',height:width>800?'100vh':'75vh',margin:"0px auto",backgroundColor:'red'}}>
+        <section style={{width:width>1100?'65%':'100%',height:width>1100?'100vh':'75vh',backgroundColor:'red'}}>
 
         </section>
     </div>
