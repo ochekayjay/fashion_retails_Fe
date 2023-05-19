@@ -3,20 +3,27 @@ import { useRetailContext } from '@/context/context';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import useWindowResize from '@/utils/windowdimension';
+import { Loader } from '@mantine/core';
 import addIcon from '../../../iconholder/addIcon.svg'
 import styles from './Editprofile.module.css'
 import editIcon from '../../../iconholder/editIcon.svg'
+import ImageCropper from '@/utils/pre_auth/imageCropper';
+import ColorThief from "color-thief-ts"
 
 
 export async function getServerSideProps(context:any) {
     const { query } = context;
     // Fetch data from external API
+    console.log(query)
     const id = query?.id
     const token = query?.token
+    console.log(`${id} case one fixed`)
+    console.log(`${token} case two fixed`)
   
     //https://fashion-r-services.onrender.com
     //http://localhost:5005
-    if(id && token){
+    if(token){
+      console.log('new but fixed latest')
       const res = await fetch(`https://fashion-r-services.onrender.com/creator/personal/${id}`,{
       method: 'GET',  
       headers: {
@@ -26,11 +33,14 @@ export async function getServerSideProps(context:any) {
           }
       });
       const data = await res.json()
+
+      //console.log(data)
       
-    return { props: { data} };
+    return { props: {data} };
     }
   
-    else{
+    else {
+      console.log('new here latest')
       const data = null
       return { props: { data} };
     }
@@ -43,43 +53,148 @@ export async function getServerSideProps(context:any) {
 
 export default function EditProfile({data}:any) {
 
+
+ 
   const [showAvatar,setShowAvatar] = useState(false)
   const [shownormal,setshowNormal] = useState(true)
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
+  const [datachecker,setDataChecker] = useState(false)
   const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName} = useRetailContext()
+  const {viewmobile,setViewMobile,signed,username,avatarUrl,setAvatarUrl,setUsername,setName} = useRetailContext()
   const bioValue = 'Lorem Ipsum is simply dummy text of the printing and tyIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+  const [file,setFile] = useState<string>('')
+  const [ImageUrl,setImageUrl] = useState<any>('')
+  const [dominantColor, setDominantColor] = useState<any>(null);
+  const [cropImage, setCropImage] = useState(false)
+  const [cropImageUrl,setCroppedImageurl] = useState('')
+  const [newAvatar, setNewAvatar] = useState(false)
+  const [showImage, setShowImage] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [newName,setNewName] = useState('')
   const [enlistUserObj,setEnlistUserObj] = useState<any>({
     name:"",
-    username: "",
-    password: "",
-    twitter:"",
-    facebook: "",
-    instagram : "",
-    email: "",
     bio: "",
+    hashtag:"",
+    avatarUrl:''
 })
+
+
 
 const updateUserObj = (event:any)=>{
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
+    console.log(enlistUserObj)
     
 }
 
 
-    useEffect(()=>{
-        if(typeof window !== 'undefined'){
+const onCancel = ()=>{
         
+  setCropImage(false)
+}
+
+
+const submitUserInfo = async (event:any,enlistUserObj:any)=>{
+  event.preventDefault()
+  
+console.log(enlistUserObj)
+  const token = window.localStorage.getItem('token')
+  setIsLoading(true)
+  const formData = new FormData()
+ formData.append('name',enlistUserObj.name)
+formData.append('bio',enlistUserObj.bio)
+  formData.append('hashtag',enlistUserObj.hashtag)
+  enlistUserObj?.twitter?formData.append('twitter',enlistUserObj.twitter): ""
+  enlistUserObj?.facebook?formData.append('facebook',enlistUserObj.facebook): ""
+  enlistUserObj?.instagram?formData.append('instagram',enlistUserObj.instagram): ""
+  file!==''?formData.append('backgroundColor',dominantColor): ""
+  file!==''?formData.append('avatar',file): ""
+  console.log(formData)
+  console.log(token)
+
+
+
+  //'https://fashion-r-services.onrender.com/creator/editProfile
+  const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {
+      method: 'POST',  
+      headers: {
+          'Accept': '*/*',
+          
+          Authorization: `Bearer ${token}`
+          },    
+      body: formData
+      }); 
+  const res = await createdCreator.json()
+  if(res.verified===true){
+      setIsLoading(false)
+  }
+  console.log(`${JSON.stringify(res)} got it out`)
+ 
+  
+
+}
+
+
+
+const handleFileChange = (e:any) => {
+  console.log('in')
+  const file = e.target.files[0];
+  const imageUrl = URL.createObjectURL(file);
+  //console.log(imageUrl)
+  setFile(file)
+  setImageUrl(imageUrl);
+  setCropImage(true)
+  //setShowImage(true)
+
+};
+
+
+//useeffect to change avatars to be displayed
+
+  useEffect(()=>{
+    if(cropImageUrl===''){
+      setNewAvatar(false)
+    }
+    else{
+      setNewAvatar(true)
+    }
+},[cropImageUrl])
+ 
+
+
+
+//useEffect for refreshing site and setting states to be edited
+    useEffect(()=>{
+      //setDataChecker(data)
+      //setNewName(data?.name)
+        if(typeof window !== 'undefined'){
+          //setDataChecker(data)
+          //setNewName(data?.name)
+          console.log('abc')
           const id = window.localStorage.getItem('id');
-          if(data?.avatarLink && data?.Username && data?.name){
+          console.log(data)
+          if(data !== null){
+            console.log('def')
+            console.log(data.name)
+            const dat = {...enlistUserObj,name :data.name}
             setUserId(id)
             setAvatarUrl(data.avatarLink)
             setUsername(data.Username)
             setName(data.name)
+            setEnlistUserObj({...enlistUserObj,bio:data?.bio,hashtag:data?.hashtag,name :data.name})
+            //setEnlistUserObj({...enlistUserObj,bio : data?.bio})
+            //setEnlistUserObj({...enlistUserObj,hashtags : data?.hashtags})
           }
         
+          else if(data!==null){
+            console.log('manifesting...')
+            const {name} = data
+            //setDataChecker(true)
+          }
           else{
+            console.log('ghi')
             const id = window.localStorage.getItem('id');
+            console.log(id)
             const token = window.localStorage.getItem('token')
             const queryParam = token ? `?id=${id}&token=${token}` : '';
             router.push(`../../postauth/UserPrivates/editProfile${queryParam}`)
@@ -88,33 +203,88 @@ const updateUserObj = (event:any)=>{
             
           },[])
 
+          useEffect(()=>{
+
+            if(data !== null){
+              console.log('def')
+              console.log(data.name)
+              const dat = {...enlistUserObj,name :data.name}
+              
+              setAvatarUrl(data.avatarLink)
+              setUsername(data.Username)
+              setName(data.name)
+              setEnlistUserObj({...enlistUserObj,bio:data?.bio,hashtag:data?.hashtag,name :data.name,avatarUrl:data.avatarLink})
+              //setEnlistUserObj({...enlistUserObj,bio : data?.bio})
+              //setEnlistUserObj({...enlistUserObj,hashtags : data?.hashtags})
+            }
+        
+            
+          },[data])
+
+
+          /**
+           * 
+          useEffect(()=>{
+            if(datachecker===true){
+              setName(data.name)
+            }
+          },[datachecker])
+           */
+
+        //effect to be display crop section and get dominant colors
+           useEffect( ()=>{
+            console.log(enlistUserObj)
+            const extractColor = async(url:string)=>{
+            const colorThief = new ColorThief();
+            const dominantColor = await colorThief.getColorAsync(url);
+            console.log(dominantColor)
+            setDominantColor(dominantColor);
+            setCropImage(!cropImage)
+            setShowImage(!showImage)
+            
+            }
+            extractColor(cropImageUrl)
+        },[cropImageUrl])
+          
+
+        //router.back()
+
+
+        //enlistUserObj.bio!==''?enlistUserObj.bio:data!==null?data.bio:''
 
   return (
-    <div style={{width:'100vw',minHeight:'100vh',display:'flex',alignItems:"center",justifyContent:'center',padding:width>500?'30px 0px':'0px'}}>
+    <div style={{width:'100vw',minHeight:'100vh',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:width>500?'30px 0px':'0px'}}>
+      {cropImage?<ImageCropper ImageUrl={ImageUrl} onCancel={onCancel} setCroppedImageurl={setCroppedImageurl}/>:""}
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${data?.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
-            {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
+            {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             <div style={{height:width>500?"350px":width*0.80,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px'}}>
-                <img onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
+                {newAvatar===false?
+                    <img onClick={()=>setShowAvatar(true)} src={enlistUserObj?.avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>:
+                    <img onClick={()=>setShowAvatar(true)} src={cropImageUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>}
                 <p style={{position:'absolute',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',bottom:'15px',right:'15px',width:'35px',height:'35px',padding:'15px',borderRadius:"50%",display:'flex',alignItems:"center",justifyContent:"center"}}><Image src={editIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
+                <input type='file'id='avatar' onChange={(event)=>handleFileChange(event)} name='avatar' style={{display:'none'}} />
+                <label htmlFor= 'avatar' style={{position:'absolute',cursor:'pointer',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',bottom:'15px',right:'15px',width:'35px',height:'35px',padding:'15px',borderRadius:"50%",display:'flex',alignItems:"center",justifyContent:"center"}}>
+                      <Image src={editIcon} alt='' style={{width:"24px",height:'24px'}}/>
+                </label>
             </div>
 
             <div style={{height:"50px",width:width>500?'350px':width*0.80,margin:'30px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input value={enlistUserObj.name} type='text' placeholder="name" name='name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.name===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input value={enlistUserObj?.name} type='text' placeholder="name" name='name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.name===""?styles.forminputUnfilled: styles.forminput}/>
             </div>
 
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Bio &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={bioValue} placeholder='user bio' name='bio' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
+                            <textarea value={enlistUserObj?.bio} placeholder='user bio' name='bio' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
             </div>
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
-                            <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Bio &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={enlistUserObj.bio} placeholder='user bio' name='bio' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
+                            <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Hashtags &nbsp; <span style={{color:'red'}}>*</span></p>
+                            <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
             </div>
 
-
+            <p onClick={(event)=>submitUserInfo(event,enlistUserObj)} style={{width:'100px',cursor:'pointer',height:'50px',display:'flex',alignItems:"center",justifyContent:"center",backgroundColor:'white',margin:'30px auto',fontFamily:"NexaTextight",borderRadius:'7px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>{isLoading?<Loader color="black" size="sm" variant="bars" />:'Save'}</p>
             </section>
     </div>
   )

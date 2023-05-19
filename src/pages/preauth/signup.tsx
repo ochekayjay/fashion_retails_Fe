@@ -86,30 +86,7 @@ export default function Signup() {
         }
         console.log(res)
        }
-        /*setEnlistUserObj((enlistUserObj:any) => {
-            let newObj = enlistUserObj
-            for(const k in newObj){
-                if(newObj[k]===""){
-                    newObj[k] = false
-                }}
-                console.log(newObj)
-        return newObj})
         
-            for(const k in enlistUserObj){
-            if(enlistUserObj[k]===""){
-                newObj[k] = false
-                console.log('a')
-                /*setEnlistUserObj((enlistUserObj:any) => {
-                    let newObj = enlistUserObj
-                    for(const k in newObj){
-                        if(newObj[k]===""){
-                            newObj[k] = false
-                        }}
-                return newObj})
-            }
-            
-        }
-        */
    
     }
 
@@ -124,17 +101,7 @@ export default function Signup() {
         setCropImage(!cropImage)
         setShowImage(!showImage)
         
-        
-        // create a new image object and set its source to the provided URL
-        //const image = new Image();
-        //image.src = ImageUrl;
-        
-        // wait for the image to load, then use the getColor method to extract the dominant color
-        /*image.addEventListener('load', () => {
-          const color = colorThief.getColor(image);
-          console.log(color)
-          setDominantColor(`rgb(${color[0]},${color[1]},${color[2]})`);
-        });}*/}
+        }
         extractColor(cropImageUrl)
     },[cropImageUrl])
 
