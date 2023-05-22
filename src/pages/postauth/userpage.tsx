@@ -76,13 +76,23 @@ if(typeof window !== 'undefined'){
     
   },[])
 
+  useEffect(()=>{
+    const id = window.localStorage.getItem('id');
+  if(data){
+    setUserId(id)
+    setAvatarUrl(data.avatarLink)
+    setUsername(data.Username)
+    setName(data.name)
+  }
+  },[data])
+
 
   return (
     <div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',backgroundColor:'rgb(228,228,228)',boxSizing:"border-box",paddingBottom:'30px'}}>
         {showAvatar && <Profilepictures color={data?.color} userId={userId} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
         {width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${data?.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
-            <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px'}}>
-                <img onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
+            <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px',position:'relative'}}>
+                <Image fill={true}  onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
 
             <div style={{textAlign:'center',height:"50px",width:'350px',marginBottom:'30px'}}>
@@ -126,7 +136,7 @@ if(typeof window !== 'undefined'){
             </div>
 
             <div style={{boxShadow:'1px 1px 5px rgb(91, 90, 90)',position:'absolute',bottom:'-50px',left:'10px',border:'3px solid white',borderRadius:"15px",width:'150px',backgroundColor:"white",height:'150px'}}>
-                <img onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
+                <Image fill={true}  quality={100} onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
         <section style={{width:width>1100?'65%':'100%',height:width>1100?'100vh':'75vh',backgroundColor:'red'}}>

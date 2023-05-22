@@ -60,7 +60,7 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
         <div className={styles.navdivs}>
             <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>WELCOME</span></p>
         <div className={styles.creatorsectsInnerUser}>
-            <div style={{height:'80px',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><img style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
+            <div style={{height:'80px',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image quality={100} fill={true} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
             <div style={{width:'150px',height:'auto',display:'flex',justifyContent:"center",alignItems:'left',flexDirection:'column'}}>
               <p style={{fontFamily:"NexaTextLight",fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{name}</p>

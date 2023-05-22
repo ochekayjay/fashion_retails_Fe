@@ -52,13 +52,16 @@ export default async function getCroppedImg({ImageUrl, croppedAreaP, rotation = 
   ctx.rotate(getRadianAngle(rotation));
   ctx.translate(-safeArea / 2, -safeArea / 2);
 
-  
+  //safeArea / 2 - image.width * 0.5
   // draw rotated image and store data.
-  ctx.drawImage(
-    image,
-    safeArea / 2 - image.width * 0.5,
-    safeArea / 2 - image.height * 0.5
-  );
+  image.onload = ()=>{
+    ctx.drawImage(
+      image,
+      safeArea / 2 - image.width * 0.5 ,
+      safeArea / 2 - image.height * 0.5 
+    );
+  }
+   
 
   
   const data = ctx.getImageData(0, 0, safeArea, safeArea);
@@ -66,13 +69,13 @@ export default async function getCroppedImg({ImageUrl, croppedAreaP, rotation = 
   // set canvas width to final desired crop size - this will clear existing context
   canvas.width = croppedAreaP?.width;
   canvas.height = croppedAreaP?.height;
-
+ //0 - safeArea / 2 + image.width * 0.5 - croppedAreaP?.x
   // paste generated rotate image with correct offsets for x,y crop values.
   if(croppedAreaP?.x && croppedAreaP?.y){
     ctx.putImageData(
     data,
     Math.round(0 - safeArea / 2 + image.width * 0.5 - croppedAreaP?.x),
-    Math.round(0 - safeArea / 2 + image.height * 0.5 - croppedAreaP?.y)
+    Math.round(0 - safeArea / 2 + image.height * 0.5  - croppedAreaP?.y)
   );}
 console.log(canvas)
 console.log(ctx)
@@ -90,23 +93,29 @@ console.log(ctx)
   // As a blob
 
   return  new Promise((resolve) => {
-
+    
     try{
-      canvas.toBlob((file:any) => {
-        console.log(file);
-        const url = URL.createObjectURL(file);
-        console.log(url)
-        const link = document.createElement("a");
-        link.download = "myImage.jpg";
-        link.href = url;
-        link.click();
-        resolve(url);
-      }, "image/jpeg");
+      
+       
+
+        canvas.toBlob((file:any) => {
+          console.log(file);
+          const url = URL.createObjectURL(file);
+          console.log(url)
+          //const link = document.createElement("a");
+          //link.download = "myImage.jpg";
+          //link.href = url;
+          //link.click();
+          resolve(url);
+        }, "image/jpeg");
+      
     }
 
     catch(error){
       console.log(error)
     }
+
+  
   });
    
 

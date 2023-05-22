@@ -2,6 +2,9 @@ import React,{useEffect,useState} from 'react'
 import useWindowResize from '../windowdimension'
 import { useRouter } from 'next/router';
 import { Loader } from '@mantine/core';
+import Image from 'next/image';
+
+
 
 function Profilepictures({color,userId,setShowAvatar,showAvatar}:any) {
   const [imgUrl,setImgUrl] = useState('')
@@ -50,14 +53,20 @@ function Profilepictures({color,userId,setShowAvatar,showAvatar}:any) {
     })()
   },[])
 
+  //<img alt='avatar'   src ={imgUrl} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+  //<Image alt='avatar' fill={true} quality={100} src ={imgUrl} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
   const {width,height} = useWindowResize()
   return (
-    <div style={{position:'fixed',zIndex:'5000000',top:'0px',left:'0px',height:"100vh",width:"100vw",display:'flex',flexDirection:"column",paddingTop:'15px',alignItems:"center",justifyContent:'space-between',backgroundColor:color}}>
+    <div style={{position:'fixed',zIndex:'5000000',top:'0px',left:'0px',height:"100vh",width:"100vw",display:'flex',flexDirection:"column",paddingTop:'15px',alignItems:"center",justifyContent:'space-between',backgroundColor:'black'}}>
         
         <section style={{width:'100%',position:'absolute',top:'0px',left:'0px',height:'100vh',display:"flex",justifyContent:'center',alignItems:'center'}}>
         <p onClick={()=> setShowAvatar(!showAvatar)} style={{padding:'5px 15px',cursor:'pointer',top:'10px',left:"50%",transform:"translateX(-50%)",position:'absolute',backgroundColor:"white",color:"black",boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'5px',width:'auto',height:'auto',display:"flex",alignItems:"center",justifyContent:"center"}}>back</p>
         { imgUrl===''?<Loader color="dark" variant="dots" />:
-          <img  src ={imgUrl} style={{width:width>500?'500px':width,border:width>500?"5px solid white":"",boxShadow:width>500?'1px 1px 5px rgb(91, 90, 90)':"",height:width>500?'500px':width,objectFit:'cover'}}/>}
+        <div style={{width:width>500?'500px':width,border:width>500?"5px solid white":'',position:'relative',boxShadow:width>500?'1px 1px 5px rgb(91, 90, 90)':"",height:width>500?'500px':width}}>
+          <Image alt='avatar' fill={true} quality={100} src ={imgUrl} blurDataURL='./my_personal_image.jpg' style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+        </div>  
+          }
+        
         </section>
           
     </div>

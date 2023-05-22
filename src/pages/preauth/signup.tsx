@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef} from 'react'
 import styles from './Signup.module.css'
 import { Loader } from '@mantine/core';
 import { Button } from '@mantine/core'
@@ -6,13 +6,23 @@ import Link from 'next/link'
 import ColorThief from "color-thief-ts"
 import useWindowResize from '@/utils/windowdimension';
 import ImageCropper from '@/utils/pre_auth/imageCropper';
+import MainCrop from '@/utils/reactImgCrop/mainCrop';
+import { useDebounceEffect } from '@/utils/useDebounceEffect';
+import { imgPreview } from '@/utils/reactImgCrop/imgPreview';
+import ReactCrop, {
+    centerCrop,
+    makeAspectCrop,
+    Crop,
+    PixelCrop,
+  } from 'react-image-crop'
+
 
 export default function Signup() {
     const [ImageUrl,setImageUrl] = useState<any>('')
     const [showImage, setShowImage] = useState(false)
     const [shownormal,setshowNormal] = useState(true)
     const [cropImage, setCropImage] = useState(false)
-    const [file,setFile] = useState<string>('')
+    const [file,setFile] = useState<any>('')
     const [isLoading, setIsLoading] = useState(false)
     const [imagewidth,setImageWidth] = useState(0)
     const [imageHeight,setImageHeight] = useState(0)
@@ -20,12 +30,35 @@ export default function Signup() {
     const [dominantColor, setDominantColor] = useState<any>(null);
     const uploader = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z"/></svg>;
     const {width,height} = useWindowResize()
+
+    const formData = new FormData()
+
+    function handleUpload(canvasRef:any,formData:any) {
+        const canvas = canvasRef.current;
+        canvas.toBlob((blob:any) => {
+          console.log('b blob')
+          console.log(`${blob} data`)
+          const file = new File([blob], 'filename.png', { type: 'image/jpg' });; // 'filename.png' specifies the desired filename
+          setFile(file)
+          
+          // Perform your upload logic here
+
+          const formDataObject = Object.fromEntries(formData.entries());
+
+          console.log(formDataObject);
+        });
+      }
+
+
     const handleImageLoad = (e:any) => {
         const { width, height } = e.target;
         setImageWidth(70);
         setImageHeight(70);
       };
 
+    const firstImageRef = useRef<HTMLInputElement>(null)
+
+    
 
       interface Image {
         new(): HTMLImageElement;
@@ -43,10 +76,12 @@ export default function Signup() {
     })
 
 
-    const onCancel = ()=>{
+   /**
+    *  const onCancel = ()=>{
         
         setCropImage(false)
     }
+    */
    
 
 
@@ -59,8 +94,16 @@ export default function Signup() {
 
        else{
         setIsLoading(true)
-        const formData = new FormData()
+        
+       /**
+        *  if(previewCanvasRef!==null){
+          console.log('a log')
+             handleUpload(previewCanvasRef,formData)
+        }
+        */
+        
         formData.append('name',enlistUserObj.name)
+        console.log('c blob')
         formData.append('Username',enlistUserObj.username)
         formData.append('Password',enlistUserObj.password)
         formData.append('Email',enlistUserObj.email)
@@ -70,9 +113,12 @@ export default function Signup() {
         enlistUserObj?.instagram?formData.append('instagram',enlistUserObj.instagram): ""
         file!==''?formData.append('backgroundColor',dominantColor): ""
         file!==''?formData.append('avatar',file): ""
-        console.log(formData)
+        //console.log(formData)
+        const formDataObject = Object.fromEntries(formData.entries());
 
-
+    console.log(formDataObject);
+//http://localhost:5005
+//https://fashion-r-services.onrender.com/creator/register
         const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/register', {
             method: 'POST',  
             headers: {
@@ -98,8 +144,8 @@ export default function Signup() {
         const dominantColor = await colorThief.getColorAsync(url);
         console.log(dominantColor)
         setDominantColor(dominantColor);
-        setCropImage(!cropImage)
-        setShowImage(!showImage)
+        setCropImage(true)
+        setShowImage(false)
         
         }
         extractColor(cropImageUrl)
@@ -121,12 +167,112 @@ export default function Signup() {
         setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
         
     }
+//trying out newer package
 
 
-  return (
-    <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',display:"flex",alignItems:"center",flexDirection:'column',justifyContent:"center"}}>
+
+    function centerAspectCrop(
+        mediaWidth: number,
+        mediaHeight: number,
+        aspect: number,
+      ) {
+        return centerCrop(
+          makeAspectCrop(
+            {
+              unit: '%',
+              width: 90,
+            },
+            aspect,
+            mediaWidth,
+            mediaHeight,
+          ),
+          mediaWidth,
+          mediaHeight,
+        )
+      }
+
+
+      const [imgSrc, setImgSrc] = useState('')
+      const [crop, setCrop] = useState<Crop>()
+      const [aspect, setAspect] = useState<number | undefined>(1 / 1)
+      const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+      const [newPIUrl, setNewPIUrl] = useState('')
+      const previewCanvasRef = useRef<HTMLCanvasElement>(null)
+      const [firstImage,setFirstImage] = useState('')
+
+      
+
+     /**
+      * 
+      * @param e  useEffect(()=>{
+        const newUrl = imgPreview()
+      },[completedCrop])
+      */
+
+    
+        const extractColor = async(url:string)=>{
+        const colorThief = new ColorThief();
+        const dominantColor = await colorThief.getColorAsync(url);
+        console.log(dominantColor)
+        setDominantColor(dominantColor);
+      
         
-        {cropImage?<ImageCropper ImageUrl={ImageUrl} onCancel={onCancel} setCroppedImageurl={setCroppedImageurl}/>:""}
+        }
+        
+
+
+        useEffect(()=>{
+           if(firstImage!== ''){
+            extractColor(firstImage)
+           }
+        },[imgSrc])
+
+    function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+        if (e.target.files && e.target.files.length > 0) {
+            const avatarpath = URL.createObjectURL(e.target.files[0])
+            setFirstImage(avatarpath)
+          setCrop(undefined) // Makes crop preview update between images.
+          const reader = new FileReader()
+          reader.addEventListener('load', () =>
+            setImgSrc(reader.result?.toString() || ''),
+          )
+          reader.readAsDataURL(e.target.files[0])
+          setCropImage(true)
+        }
+      }
+    
+      function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+        if (aspect) {
+          const { width, height } = e.currentTarget
+          setCrop(centerAspectCrop(width, height, aspect))
+        }
+      }
+    
+
+      
+      const onCancel = ()=>{
+        setCropImage(false) 
+        setCompletedCrop(undefined)
+        if(firstImageRef.current){
+          firstImageRef.current.value = ''
+        }
+        
+        setCrop(undefined)
+    }
+
+
+const onCrop = ()=>{
+  handleUpload(previewCanvasRef,formData)
+  setCropImage(false) 
+
+}
+//main img html <input type='file'id='avatar' onChange={(event)=>handleFileChange(event)} name='avatar' style={{display:'none'}} />
+//{cropImage?<ImageCropper ImageUrl={ImageUrl} onCancel={onCancel} setCroppedImageurl={setCroppedImageurl}/>:""}
+//<img style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'50%'}}  src={newPIUrl} alt="user avatar"/>  
+return (
+    <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',display:"flex",alignItems:"center",flexDirection:'column',justifyContent:"center"}}>
+        {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} formData={formData} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
+        
         <div style={{width:'85%',margin:'30px auto'}}>
             <p style={{width:'140px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',marginLeft:'0px',textAlign:'center',padding:'10px 15px',boxSizing:'border-box',borderRadius:'15px',color:'black',backgroundColor:"white",fontFamily:'NexaTextLight',fontSize:'18px', letterSpacing:'1.5px',height:'auto'}}>back</p>
         </div>
@@ -172,12 +318,14 @@ export default function Signup() {
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Avatar</p>
                             <div style={{height:'90px',position:'relative',width:'100%',boxSizing:'border-box',backgroundColor:"rgb(228,228,228)",borderRadius:'10px',display:'flex',alignItems:"center",justifyContent:'center'}}>
-                                <p style={{height:'70px',width:'70px',border:'3px solid rgb(70, 70, 70)',borderRadius:'50%',display:showImage?'block':'none'}}><img style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'50%'}}  src={cropImageUrl} alt="user avatar"/></p>
-                                <input type='file'id='avatar' onChange={(event)=>handleFileChange(event)} name='avatar' style={{display:'none'}} />
+                                <p style={{height:'70px',width:'70px',border:'3px solid rgb(70, 70, 70)',borderRadius:'50%',display:'block'}}>{completedCrop && <canvas ref={previewCanvasRef} style={{width:'100%',height:'100%',objectFit:'fill',borderRadius:'50%'}}  />}</p>
+                                
+                                <input type="file" id='avatar' ref={firstImageRef} name='avatar' style={{display:'none'}} accept="image/*" onChange={onSelectFile} />
                                 <label htmlFor= 'avatar' style={{backgroundColor:'rgb(70, 70, 70)',left:'0px',cursor:'pointer',position:'absolute',height:'100%',width:'15%'}}>
                                 <div style={{height:'100%',width:'100%',display:'flex',alignItems:"center",justifyContent:'center'}}><p>{uploader}</p></div>
                                 </label>
                             </div>
+                        
                             </div>
                             
                             <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
