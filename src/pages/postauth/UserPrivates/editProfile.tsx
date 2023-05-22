@@ -216,23 +216,31 @@ formData.append('bio',enlistUserObj.bio)
   console.log(formData)
   console.log(token)
 
-
+const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
+const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Content-Type': 'application/json',}}
 
   //'https://fashion-r-services.onrender.com/creator/editProfile
-  const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {
-      method: 'POST',  
-      headers: {
-          'Accept': '*/*',
-          
-          Authorization: `Bearer ${token}`
-          },    
-      body: formData
-      }); 
-  const res = await createdCreator.json()
+  if(file!==''){
+    console.log('a')
+    const createdCreator =  await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {...withImage,body: formData});
+    const res = await createdCreator.json()
   if(res.verified===true){
+    setEnlistUserObj({...enlistUserObj,bio:res?.bio,hashtag:res?.hashtag,name :res.name,avatarUrl:res.avatarUrl})
+    setDominantColor(res?.backgroundColor)
+    setIsLoading(false)
+  }
+  console.log(`${JSON.stringify(res)} got it out`)}
+  else{
+    console.log('b')
+    const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {...withImage,body: formData});
+    const res = await createdCreator.json()
+  if(res.verified===true){
+    setEnlistUserObj({...enlistUserObj,bio:res?.bio,hashtag:res?.hashtag,name :res?.name})
       setIsLoading(false)
   }
   console.log(`${JSON.stringify(res)} got it out`)
+  } 
+  
  
   
 
@@ -362,7 +370,7 @@ const handleFileChange = (e:any) => {
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             <div style={{height:width>500?"350px":width*0.80,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
-                {completedCrop?<canvas ref={previewCanvasRef} onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>:
+                {completedCrop?<canvas ref={previewCanvasRef} onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',objectFit:"contain",borderRadius:'15px'}}/>:
                     <Image fill={true} onClick={()=>setShowAvatar(true)} src={enlistUserObj?.avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
                     }
                 <p style={{position:'absolute',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',bottom:'15px',right:'15px',width:'35px',height:'35px',padding:'15px',borderRadius:"50%",display:'flex',alignItems:"center",justifyContent:"center"}}><Image src={editIcon} alt='' style={{width:"24px",height:'24px'}}/></p>

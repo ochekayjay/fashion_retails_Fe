@@ -51,7 +51,7 @@ export default function Userpage({data}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName} = useRetailContext()
+  const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName,userbio,setUserbio} = useRetailContext()
 
   
 
@@ -83,6 +83,7 @@ if(typeof window !== 'undefined'){
     setAvatarUrl(data.avatarLink)
     setUsername(data.Username)
     setName(data.name)
+    setUserbio(data.bio)
   }
   },[data])
 
@@ -102,7 +103,7 @@ if(typeof window !== 'undefined'){
 
             <div style={{height:"150px",width:'350px',overflow:'auto',marginBottom:'30px',display:'flex',alignItems:"center",justifyContent:"center"}}>
                 <p style={{fontFamily:'NexaTextLight',fontSize:'15px',margin:'10px',width:"100%",padding:'20px',boxSizing:'border-box'}}>
-                  Lorem Ipsum is simply dummy text of the printing and tyIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                    {userbio}
                 </p>
             </div>
 
@@ -117,13 +118,13 @@ if(typeof window !== 'undefined'){
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundImage: `linear-gradient(to bottom left, white , ${data?.color})`}}>
+        <section style={{width:'100%',position:"relative",margin:"0px auto",height:"600px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{username}</p>
             </div>
             <p style={{fontFamily:'NexaTextLight',fontSize:'15px',margin:'10px',width:"100%",padding:'20px',boxSizing:'border-box'}}>
-            Lorem Ipsum is simply dummy text of the printing and tyIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+              {userbio}
             </p>
             <div style={{width:"100%",paddingLeft:'10px',boxSizing:"border-box"}}>
               <p style={{fontFamily:"NexaTextBold",textAlign:"left",fontSize:'15px'}}><strong>Subscribers</strong> &nbsp; &nbsp; 345</p>
