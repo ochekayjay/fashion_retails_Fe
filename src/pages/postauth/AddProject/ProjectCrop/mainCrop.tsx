@@ -5,10 +5,10 @@ import ReactCrop, {
     Crop,
     PixelCrop,
   } from 'react-image-crop'
-import { imgPreview } from './imgPreview'
+import { imgPreview } from '@/utils/AddProjectCrop/imgPreview'
 import { useDebounceEffect } from '@/utils/useDebounceEffect'
 import 'react-image-crop/dist/ReactCrop.css'
-import { canvasPreview } from './canvasPreview'
+import { canvasPreview } from '@/utils/AddProjectCrop/canvasPreview'
 import useWindowResize from '@/utils/windowdimension'
 
 

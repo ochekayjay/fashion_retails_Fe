@@ -13,7 +13,6 @@ import dropRight from '../../../iconholder/drop_right.svg'
 import ImageCropper from '@/utils/pre_auth/imageCropper';
 import ColorThief from "color-thief-ts"
 import MainCrop from './ProjectCrop/mainCrop';
-import { handleDragEnd, handleDragOver,handleDragStart, handleDrop } from './dragFunctions';
 
 import ReactCrop, {
   centerCrop,
