@@ -96,6 +96,14 @@ export default function CreateProject() {
   const [sectionToShow, setSectionToShow] = useState<any>() 
   const [openBigDiv,setOpenBigDiv] = useState<boolean>(false)
   const [newName,setNewName] = useState('')
+
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [numberDisplay,setNumbDisplay] = useState(false)
+  const [itemNumber,setItemNumber] = useState(0)
+
+
+
   const [enlistUserObj,setEnlistUserObj] = useState<any>({
     name:"",
     bio: "",
@@ -126,9 +134,52 @@ const elements = [1,2,3,4,5]
 
 //Touch events
 
-    const handleTouchStart = (e:any) => {
-    setIsDragging(true);
-  };
+const handleTouchStart = (e:any) => {
+  const touch = e.touches[0];
+  if(itemNumber===5){
+    setTouchStartX(touch.clientX);
+    setTouchStartY(touch.clientY);
+    setItemNumber(()=>itemNumber+1)
+    setNumbDisplay(true)
+  }
+  
+};
+
+
+const saveNewNumber = ()=>{
+
+if(droppableRef.current){
+
+  const { top, left } = droppableRef.current.getBoundingClientRect()!;
+
+        const leftValue = touchStartX-left;
+        const topValue = touchStartY-top
+
+
+        const pTag = document.createElement("p");
+        pTag.textContent = `${itemNumber}`;
+        pTag.style.position = 'absolute';
+        pTag.style.width = '25px';
+        pTag.style.height = '25px';
+        pTag.style.position = 'absolute';
+        pTag.style.top = `${topValue}`;
+        pTag.style.left = `${leftValue}`;
+        pTag.style.borderRadius = "50%";
+        pTag.style.backgroundColor = "black";
+        pTag.style.color = "white";
+        pTag.style.boxShadow = '1px 1px 5px rgb(91, 90, 90)'
+        pTag.style.display = 'flex'
+        pTag.style.alignItems = 'center'
+        pTag.style.justifyContent = "center"
+        
+        setNumbDisplay(false)
+        droppableRef.current!.appendChild(pTag);
+}
+}
+
+
+
+ 
 
 const handleDragTouchMove = (id:any)=>(e: React.TouchEvent<HTMLDivElement>) => {
   
@@ -527,6 +578,12 @@ const handleFileChange = (e:any) => {
                 {completedCrop?
                     <div ref={droppableRef} onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
                     <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
+                    {numberDisplay && <div className={styles.numberPopUp}>
+                      <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
+                        <p style={{textAlign:"center"}}>{itemNumber}</p>
+                        <p onClick={saveNewNumber} style={{color:'black',margin:'10px auto',backgroundColor:'white',width:'auto',padding:'3px 7px',borderRadius:'3px'}}>save</p>
+                      </div>
+                    </div>}
                     </div>
                     :
                     ''
@@ -544,9 +601,6 @@ const handleFileChange = (e:any) => {
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
             {elements.map(element=><p key={element} ref={reffs[elements.indexOf(element)]} 
               draggable
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleDragTouchMove(element)}
-              onTouchEnd={handleTouchEnd}
             onDragStart={handleDragStart(element)}
             onDragEnd={handleDragEnd}
             

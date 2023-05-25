@@ -81,6 +81,34 @@
     transition: max-height 1s ease;
 }
 
+.numberPopUp{
+    width:80px;
+    height:80px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    box-shadow: 1px 1px 5px rgb(91, 90, 90);
+    border-radius: 10px;
+    background-color:black;
+   
+    color:white;
+
+    transform:translate(-50%,-50%);
+    opacity: 10px
+    
+}
+
+.blurr{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(10px);
+  background-color: white;
+  bottom: 0; /* Adjust the blur value as desired */
+  z-index: -1;
+}
+
 .forminputUnfilled{
     height:45px;
     box-sizing:border-box;
