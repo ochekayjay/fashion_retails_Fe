@@ -144,7 +144,8 @@ const handleTouchStart = (e:any) => {
     /*setTouchStartX(touch.clientX);
     setTouchStartY(touch.clientY);*/
     setTouchTimeout(setTimeout(() => {
-      setTouchStartX(e.offsetLeft)
+      setTouchStartX(touch.clientX)
+      setTouchStartY(touch.clientY)
       setItemNumber(()=>itemNumber+1)
       setNumbDisplay(true);
     }, 1000));
