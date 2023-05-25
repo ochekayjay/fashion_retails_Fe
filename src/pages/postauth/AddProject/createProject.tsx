@@ -136,7 +136,7 @@ const elements = [1,2,3,4,5]
 
 const handleTouchStart = (e:any) => {
   const touch = e.touches[0];
-  if(itemNumber===5){
+  if(itemNumber!==5){
     setTouchStartX(touch.clientX);
     setTouchStartY(touch.clientY);
     setItemNumber(()=>itemNumber+1)
