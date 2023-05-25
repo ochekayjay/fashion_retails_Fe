@@ -134,6 +134,16 @@ const elements = [1,2,3,4,5]
 
 //Touch events
 
+const handleTouchStart = (e:any) => {
+  const touch = e.touches[0];
+  if(itemNumber===5){
+    setTouchStartX(touch.clientX);
+    setTouchStartY(touch.clientY);
+    setItemNumber(()=>itemNumber+1)
+    setNumbDisplay(true)
+  }
+  
+};
 
 
 const saveNewNumber = ()=>{
@@ -518,7 +528,8 @@ const handleFileChange = (e:any) => {
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             <div  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
-                    <div ref={droppableRef} onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
+                    <div ref={droppableRef} onTouchStart={handleTouchStart}
+                    onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
                     <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
                     {numberDisplay && <div className={styles.numberPopUp}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
