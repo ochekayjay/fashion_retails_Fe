@@ -123,9 +123,7 @@ const previewCanvasRef = useRef<HTMLCanvasElement>(null)
 const [firstImage,setFirstImage] = useState('')
 const firstImageRef = useRef<HTMLInputElement>(null)
 const [touchTimeout, setTouchTimeout] = useState<any>(null);
-const [bRefOne,setBRefOne] = useState<any>({x:0,y:0})
-const [sRefOne,setSRefOne] = useState<any>({x:0,y:0})
-const [final,setFinal] = useState<any>({x:0,y:0})
+
 
 // drag details here
 
@@ -195,9 +193,7 @@ if(mainHolder.current){
         pTag.style.alignItems = 'center'
         pTag.style.justifyContent = "center"
         
-        setBRefOne({x:leftOne,y:topOne})
-        setSRefOne({x:left,y:top})
-        setFinal({x:leftValue,y:topValue})
+     
         setNumbDisplay(false)
         droppableRef.current!.appendChild(pTag);
 }
@@ -575,12 +571,7 @@ const handleFileChange = (e:any) => {
                 </label>
             </div>
             
-            <div style={{margin:'30px auto',width:'70%',display:"flex",flexDirection:"column",justifyContent:'space-around',alignItems:"center"}}>
-              <p>{`${touchStartX} touch point ${touchStartY}`}</p>
-              <p>{`${bRefOne.x} starting ${bRefOne.y}`}</p>
-              <p>{`${sRefOne.x} second ${sRefOne.y}`}</p>
-              <p>{`${final.x} final ${final.y}`}</p>
-            </div>
+           
             <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
