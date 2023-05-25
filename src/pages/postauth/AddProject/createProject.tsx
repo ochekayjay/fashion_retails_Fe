@@ -73,6 +73,7 @@ export default function CreateProject() {
     const draggableRefThree = useRef<HTMLParagraphElement>(null);
     const draggableRefFour = useRef<HTMLParagraphElement>(null);
     const draggableRefFive = useRef<HTMLParagraphElement>(null);
+    const mainHolder  = useRef<HTMLParagraphElement>(null);
     const droppableRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -136,9 +137,11 @@ const elements = [1,2,3,4,5]
 
 const handleTouchStart = (e:any) => {
   const touch = e.touches[0];
-  if(itemNumber!==5){
-    setTouchStartX(touch.clientX);
-    setTouchStartY(touch.clientY);
+  if(itemNumber!==5 && numberDisplay===false){
+    /*setTouchStartX(touch.clientX);
+    setTouchStartY(touch.clientY);*/
+
+    setTouchStartX(e.offsetLeft)
     setItemNumber(()=>itemNumber+1)
     setNumbDisplay(true)
   }
@@ -150,8 +153,10 @@ const saveNewNumber = ()=>{
 
 if(droppableRef.current){
 
-  const { top, left } = droppableRef.current.getBoundingClientRect()!;
-
+  //const { top, left } = droppableRef.current.getBoundingClientRect()!;
+ 
+  const left = droppableRef.current.offsetLeft
+  const top = droppableRef.current.offsetTop
         const leftValue = touchStartX-left;
         const topValue = touchStartY-top
 
@@ -526,7 +531,7 @@ const handleFileChange = (e:any) => {
       {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} formData={formData} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
-            <div  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+            <div ref={mainHolder} style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
                     <div ref={droppableRef} onTouchStart={handleTouchStart}
                     onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
