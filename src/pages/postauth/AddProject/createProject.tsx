@@ -122,7 +122,10 @@ const [newPIUrl, setNewPIUrl] = useState('')
 const previewCanvasRef = useRef<HTMLCanvasElement>(null)
 const [firstImage,setFirstImage] = useState('')
 const firstImageRef = useRef<HTMLInputElement>(null)
-
+const [touchTimeout, setTouchTimeout] = useState<any>(null);
+const [bRefOne,setBRefOne] = useState<any>({x:0,y:0})
+const [sRefOne,setSRefOne] = useState<any>({x:0,y:0})
+const [final,setFinal] = useState<any>({x:0,y:0})
 
 // drag details here
 
@@ -140,25 +143,39 @@ const handleTouchStart = (e:any) => {
   if(itemNumber!==5 && numberDisplay===false){
     /*setTouchStartX(touch.clientX);
     setTouchStartY(touch.clientY);*/
-
-    setTouchStartX(e.offsetLeft)
-    setItemNumber(()=>itemNumber+1)
-    setNumbDisplay(true)
+    setTouchTimeout(setTimeout(() => {
+      setTouchStartX(e.offsetLeft)
+      setItemNumber(()=>itemNumber+1)
+      setNumbDisplay(true);
+    }, 1000));
+    
   }
   
 };
 
 
+const handleTouchEnd = () => {
+    clearTimeout(touchTimeout);
+    
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(touchTimeout); 
+    };
+  }, [touchTimeout]);
+
+
 const saveNewNumber = ()=>{
 
-if(droppableRef.current){
+if(mainHolder.current){
 
-  //const { top, left } = droppableRef.current.getBoundingClientRect()!;
+  const { top, left } = mainHolder.current.getBoundingClientRect()!;
  
-  const left = droppableRef.current.offsetLeft
-  const top = droppableRef.current.offsetTop
-        const leftValue = touchStartX-left;
-        const topValue = touchStartY-top
+  const leftOne = mainHolder.current.offsetLeft
+  const topOne = mainHolder.current.offsetTop
+        const leftValue = touchStartX-leftOne;
+        const topValue = touchStartY-topOne
 
 
         const pTag = document.createElement("p");
@@ -177,6 +194,9 @@ if(droppableRef.current){
         pTag.style.alignItems = 'center'
         pTag.style.justifyContent = "center"
         
+        setBRefOne({x:leftOne,y:topOne})
+        setSRefOne({x:left,y:top})
+        setFinal({x:leftValue,y:topValue})
         setNumbDisplay(false)
         droppableRef.current!.appendChild(pTag);
 }
@@ -533,7 +553,7 @@ const handleFileChange = (e:any) => {
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             <div ref={mainHolder} style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
-                    <div ref={droppableRef} onTouchStart={handleTouchStart}
+                    <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
                     onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
                     <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
                     {numberDisplay && <div className={styles.numberPopUp}>
@@ -554,6 +574,12 @@ const handleFileChange = (e:any) => {
                 </label>
             </div>
             
+            <div style={{margin:'30px auto',width:'70%',display:"flex",flexDirection:"column",justifyContent:'space-around',alignItems:"center"}}>
+              <p>{`${touchStartX} touch point ${touchStartY}`}</p>
+              <p>{`${bRefOne.x} starting ${bRefOne.y}`}</p>
+              <p>{`${sRefOne.x} second ${sRefOne.y}`}</p>
+              <p>{`${final.x} final ${final.y}`}</p>
+            </div>
             <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
