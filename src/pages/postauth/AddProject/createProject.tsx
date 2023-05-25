@@ -134,16 +134,6 @@ const elements = [1,2,3,4,5]
 
 //Touch events
 
-const handleTouchStart = (e:any) => {
-  const touch = e.touches[0];
-  if(itemNumber===5){
-    setTouchStartX(touch.clientX);
-    setTouchStartY(touch.clientY);
-    setItemNumber(()=>itemNumber+1)
-    setNumbDisplay(true)
-  }
-  
-};
 
 
 const saveNewNumber = ()=>{
@@ -180,54 +170,6 @@ if(droppableRef.current){
 
 
  
-
-const handleDragTouchMove = (id:any)=>(e: React.TouchEvent<HTMLDivElement>) => {
-  
-/**
- * 
-    const { offsetLeft, offsetTop } = reffs[id-1].current!;
-    const x = e.touches[0].clientX - offsetLeft;
-    const y = e.touches[0].clientY - offsetTop;
-
-        setOffset({ x, y });
-        setCurrentRef(reffs[id-1])
-        setDragger('touch')
-        setIsDragging(true);  
-        
- */
-        if (isDragging) {
-      const touch = e.touches[0];
-      const draggable = reffs[id-1].current;
-      if(draggable){
-
-        const offsetX = touch.clientX - draggable.offsetWidth / 2;
-        const offsetY = touch.clientY - draggable.offsetHeight / 2;
-        draggable.style.left = offsetX + 'px';
-        draggable.style.top = offsetY + 'px';
-        setCurrentRef(reffs[id-1])
-      }
-    }
-  };
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    const draggable = currentRef.current;
-    const droppable = droppableRef.current;
-  if(droppable && draggable){
-      const droppableRect = droppable.getBoundingClientRect();
-    const draggableRect = draggable.getBoundingClientRect();
-
-    if (
-      draggableRect.left >= droppableRect.left &&
-      draggableRect.right <= droppableRect.right &&
-      draggableRect.top >= droppableRect.top &&
-      draggableRect.bottom <= droppableRect.bottom
-    ) {
-      droppable.appendChild(draggable);
-    }
-  };
-  }
-
-
 
 
 
