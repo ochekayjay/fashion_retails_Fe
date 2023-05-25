@@ -124,21 +124,80 @@ const elements = [1,2,3,4,5]
 // drag functions
 
 
-const handleDragStart = (id:any)=>(e:any) => {
+//Touch events
 
+    const handleTouchStart = (e:any) => {
+    setIsDragging(true);
+  };
+
+const handleDragTouchMove = (id:any)=>(e: React.TouchEvent<HTMLDivElement>) => {
+  
+/**
+ * 
+    const { offsetLeft, offsetTop } = reffs[id-1].current!;
+    const x = e.touches[0].clientX - offsetLeft;
+    const y = e.touches[0].clientY - offsetTop;
+
+        setOffset({ x, y });
+        setCurrentRef(reffs[id-1])
+        setDragger('touch')
+        setIsDragging(true);  
+        
+ */
+        if (isDragging) {
+      const touch = e.touches[0];
+      const draggable = reffs[id-1].current;
+      if(draggable){
+
+        const offsetX = touch.clientX - draggable.offsetWidth / 2;
+        const offsetY = touch.clientY - draggable.offsetHeight / 2;
+        draggable.style.left = offsetX + 'px';
+        draggable.style.top = offsetY + 'px';
+        setCurrentRef(reffs[id-1])
+      }
+    }
+  };
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    const draggable = currentRef.current;
+    const droppable = droppableRef.current;
+  if(droppable && draggable){
+      const droppableRect = droppable.getBoundingClientRect();
+    const draggableRect = draggable.getBoundingClientRect();
+
+    if (
+      draggableRect.left >= droppableRect.left &&
+      draggableRect.right <= droppableRect.right &&
+      draggableRect.top >= droppableRect.top &&
+      draggableRect.bottom <= droppableRect.bottom
+    ) {
+      droppable.appendChild(draggable);
+    }
+  };
+  }
+
+
+
+
+
+
+
+
+
+
+  const handleDragStart = (id:any)=>(e:any) => {
+    
+    console.log('e')
+    console.log(id)
     const { offsetLeft, offsetTop } = reffs[id-1].current!;
         const x = e.clientX - offsetLeft;
         const y = e.clientY - offsetTop;
 
-        console.log(x)
-        console.log(y)
+        console.log(x, y)
+
         setOffset({ x, y });
         setCurrentRef(reffs[id-1])
         setIsDragging(true);         
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
   };
 
   const handleDragOver = (e:any) => {
@@ -147,6 +206,8 @@ const handleDragStart = (id:any)=>(e:any) => {
 
   const handleDrop = (e:any) => {
     e.preventDefault();
+
+ 
     if(droppableRef.current){
       const { top, left } = droppableRef.current.getBoundingClientRect()!;
       const x = e.clientX - left - 12.5;
@@ -164,6 +225,11 @@ const handleDragStart = (id:any)=>(e:any) => {
       }
     }
    
+  };
+
+
+    const handleDragEnd = () => {
+    setIsDragging(false);
   };
 
 
@@ -477,8 +543,14 @@ const handleFileChange = (e:any) => {
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
             {elements.map(element=><p key={element} ref={reffs[elements.indexOf(element)]} 
-            draggable onDragStart={handleDragStart(element)} 
+              draggable
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleDragTouchMove(element)}
+              onTouchEnd={handleTouchEnd}
+            onDragStart={handleDragStart(element)}
             onDragEnd={handleDragEnd}
+            
+            
             
             style={{width:'25px',height:'25px',position:'absolute',top:"10px",left:element==1?'25px':`calc((${element}px * 25) + ((${element}px - 1px) * 25))`,borderRadius:"50%",backgroundColor:"black",color:"white",boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',alignItems:'center',justifyContent:"center"}}>
                 {element}
