@@ -185,8 +185,8 @@ if(mainHolder.current){
         pTag.style.width = '25px';
         pTag.style.height = '25px';
         pTag.style.position = 'absolute';
-        pTag.style.top = `${topValue}`;
-        pTag.style.left = `${leftValue}`;
+        pTag.style.top = `${topValue}px`;
+        pTag.style.left = `${leftValue}px`;
         pTag.style.borderRadius = "50%";
         pTag.style.backgroundColor = "black";
         pTag.style.color = "white";
