@@ -73,3 +73,11 @@ export default Tester
  * <p ref={draggableRefOne} onClick={()=>console.log('abc')} draggable onDragStart={handleDragStart(draggableRefOne)} onDragEnd={handleDragEnd} style={{width:'50px',height:'50px',position:'absolute',top:"10px",left:'10px',borderRadius:"50%",backgroundColor:"blue"}}></p>   
         <p ref={draggableRefTwo} draggable onDragStart={handleDragStart(draggableRefTwo)} onDragEnd={handleDragEnd} style={{width:'50px',height:'50px',position:'absolute',top:"10px",left:'70px',borderRadius:"50%",backgroundColor:"blue"}}></p>
  */
+
+
+/**
+ * <div style={{margin:'10px auto',width:'auto',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
+                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',height:"auto",padding:"5px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>{closeItem}</p>
+                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"5px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>{addItem}</p>
+                        </div>
+ */
