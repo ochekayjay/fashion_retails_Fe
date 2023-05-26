@@ -105,6 +105,7 @@ export default function CreateProject() {
   const [numberDisplay,setNumbDisplay] = useState(false)
   const [itemNumber,setItemNumber] = useState(0)
   const [popDistance,setPopDistance] = useState<any>({x:0,y:0})
+  const [itemArray,setItemArray] = useState()
 
 
 
@@ -571,7 +572,11 @@ const handleFileChange = (e:any) => {
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
                         <div style={{margin:'10px auto',width:'auto',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
                           
-                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"4px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>{addItem}</p>
+                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"4px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
+                            <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',height:"auto",padding:"5px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/></p>
+                          </p>
                         </div>
                       </div>
                     </div>}
@@ -613,18 +618,28 @@ const handleFileChange = (e:any) => {
                 </div>
 
                 <div style={{margin:'10px auto',width:width*0.8,height:'auto',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:"column"}}>
-                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
+                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
                                 <input  value={enlistUserObj.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
-                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
-                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
+                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
+                                <input  value={enlistUserObj.Email} placeholder='sweatshirt' type='text' name='item Name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
-                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'25px auto'}}>
-                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
-                      </div>
+                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
+                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Brand Name &nbsp; <span style={{color:'red'}}>*</span></p>
+                                <input  value={enlistUserObj.Email} placeholder='Jayy Retails' type='text' name='brand name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                    </div>
+                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
+                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone Number &nbsp; <span style={{color:'red'}}>*</span></p>
+                                <input  value={enlistUserObj.Email} placeholder='+334' type='text' name='item Name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                    </div>
+                    <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
+                                <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
+                                <input  value={enlistUserObj.Email} placeholder='all over the country' type='text' name='delivery' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                    </div>
+
+                    <p style={{width:'auto',height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',padding:'5px 10px',margin:'15px auto',backgroundColor:'black',color:'white',borderRadius:'5px'}}>Add</p>
                 </div>
             </div>)}
         </div>
