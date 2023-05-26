@@ -571,7 +571,7 @@ const handleFileChange = (e:any) => {
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
                         <div style={{margin:'10px auto',width:'auto',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
                           
-                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"5px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>{addItem}</p>
+                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"4px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>{addItem}</p>
                         </div>
                       </div>
                     </div>}
