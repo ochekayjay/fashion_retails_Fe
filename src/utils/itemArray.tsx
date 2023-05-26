@@ -1,0 +1,52 @@
+
+
+export const ListItemArray = [{
+    Email:'',
+    itemName:'',
+    companyName:'',
+    itemNumber:'',
+    Phone:'',
+    verified:false,
+    Delivery:'',
+    distance:''
+},
+{
+    Email:'',
+    itemName:'',
+    companyName:'',
+    itemNumber:'',
+    Phone:'',
+    verified:false,
+    Delivery:'',
+    distance:''
+},
+{
+    Email:'',
+    itemName:'',
+    companyName:'',
+    itemNumber:'',
+    Phone:'',
+    verified:false,
+    Delivery:'',
+    distance:''
+},
+{
+    Email:'',
+    itemName:'',
+    companyName:'',
+    itemNumber:'',
+    Phone:'',
+    verified:false,
+    Delivery:'',
+    distance:''
+},
+{
+    Email:'',
+    itemName:'',
+    companyName:'',
+    itemNumber:'',
+    Phone:'',
+    verified:false,
+    Delivery:'',
+    distance:''
+}]

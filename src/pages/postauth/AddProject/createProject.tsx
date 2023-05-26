@@ -15,6 +15,7 @@ import closeItem from '../../../iconholder/closeItem.svg'
 import ImageCropper from '@/utils/pre_auth/imageCropper';
 import ColorThief from "color-thief-ts"
 import MainCrop from './ProjectCrop/mainCrop';
+import { ListItemArray } from '@/utils/itemArray';
 
 import ReactCrop, {
   centerCrop,
@@ -105,7 +106,7 @@ export default function CreateProject() {
   const [numberDisplay,setNumbDisplay] = useState(false)
   const [itemNumber,setItemNumber] = useState(0)
   const [popDistance,setPopDistance] = useState<any>({x:0,y:0})
-  const [itemArray,setItemArray] = useState()
+  const [itemArray,setItemArray] = useState<any>([...ListItemArray])
 
 
 
@@ -562,6 +563,10 @@ const handleFileChange = (e:any) => {
       {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} formData={formData} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
+            {width<1000 && completedCrop? <div style={{width:'95%',margin:'30px auto',display:'flex',padding:"5px 0px",backgroundColor:'white',justifyContent:'center',alignItems:"center"}}>
+              <p style={{textAlign:"center",fontSize:'11px',fontFamily:'NexaTextLight',color:'black',borderRadius:'10px',opacity:'0.6'}}>5 maximum items!, hold point down to highlight item</p> 
+             </div>: ''
+            }
             <div ref={mainHolder} style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
@@ -570,12 +575,13 @@ const handleFileChange = (e:any) => {
                     {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
-                        <div style={{margin:'10px auto',width:'auto',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
+                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
                           
-                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"4px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
                             <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
-                            <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',height:"auto",padding:"5px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
-                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/></p>
+                          </p>
+                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/>
                           </p>
                         </div>
                       </div>
@@ -593,7 +599,7 @@ const handleFileChange = (e:any) => {
             </div>
             
            
-            <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
+            { width>1000 && <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
             {elements.map(element=><p key={element} ref={reffs[elements.indexOf(element)]} 
@@ -608,7 +614,7 @@ const handleFileChange = (e:any) => {
             </p>)}
         
         </div>
-        </div>
+        </div>}
         <div style={{width:'auto',height:'auto',margin:'30px auto',padding:'10px',display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:'column'}}>
           {elements.map(element=> 
             <div className={openBigDiv===true && element==sectionToShow?styles.sectionMainHolderShow:styles.sectionMainHolderHide}>
@@ -620,7 +626,7 @@ const handleFileChange = (e:any) => {
                 <div style={{margin:'10px auto',width:width*0.8,height:'auto',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:"column"}}>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[0].Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
@@ -639,7 +645,10 @@ const handleFileChange = (e:any) => {
                                 <input  value={enlistUserObj.Email} placeholder='all over the country' type='text' name='delivery' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
 
-                    <p style={{width:'auto',height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',padding:'5px 10px',margin:'15px auto',backgroundColor:'black',color:'white',borderRadius:'5px'}}>Add</p>
+                    <div style={{margin:'15px auto',display:'flex',alignItems:'center',justifyContent:'space-around',width:'75%',height:'auto'}}>
+                      <p style={{width:'70px',display:"flex",alignItems:"center",justifyContent:"center",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',padding:'5px 0px',backgroundColor:'black',color:'white',borderRadius:'5px'}}>Add</p>
+                      <p style={{width:'70px',display:"flex",alignItems:"center",justifyContent:"center",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',padding:'5px 0px',backgroundColor:'black',color:'white',borderRadius:'5px'}}>Clear</p>
+                    </div>
                 </div>
             </div>)}
         </div>
