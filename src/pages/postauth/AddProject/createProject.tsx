@@ -102,6 +102,7 @@ export default function CreateProject() {
   const [touchStartY, setTouchStartY] = useState(0);
   const [numberDisplay,setNumbDisplay] = useState(false)
   const [itemNumber,setItemNumber] = useState(0)
+  const [popDistance,setPopDistance] = useState<any>({x:0,y:0})
 
 
 
@@ -139,15 +140,25 @@ const elements = [1,2,3,4,5]
 const handleTouchStart = (e:any) => {
   const touch = e.touches[0];
   if(itemNumber!==5 && numberDisplay===false){
+    const toucherX = touch.clientX
+    const toucherY = touch.clientY
+
+    if(mainHolder.current){
+      const leftOne = mainHolder.current.offsetLeft
+      const topOne = mainHolder.current.offsetTop
+      const leftValue = toucherX-leftOne + 40;
+      const topValue = toucherY-topOne + 40;
+
+      setTouchTimeout(setTimeout(() => {
+        setTouchStartX(touch.clientX)
+        setTouchStartY(touch.clientY)
+        setPopDistance({x:leftValue,y:topValue})
+        setItemNumber(()=>itemNumber+1)
+        setNumbDisplay(true);
+      }, 500));
+    }
     /*setTouchStartX(touch.clientX);
     setTouchStartY(touch.clientY);*/
-    setTouchTimeout(setTimeout(() => {
-      setTouchStartX(touch.clientX)
-      setTouchStartY(touch.clientY)
-      setItemNumber(()=>itemNumber+1)
-      setNumbDisplay(true);
-    }, 1000));
-    
   }
   
 };
@@ -553,7 +564,7 @@ const handleFileChange = (e:any) => {
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
                     onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
                     <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
-                    {numberDisplay && <div className={styles.numberPopUp}>
+                    {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
                         <p style={{textAlign:"center"}}>{itemNumber}</p>
                         <p onClick={saveNewNumber} style={{color:'black',margin:'10px auto',backgroundColor:'white',width:'auto',padding:'3px 7px',borderRadius:'3px'}}>save</p>
