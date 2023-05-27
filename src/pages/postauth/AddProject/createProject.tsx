@@ -129,6 +129,8 @@ const [firstImage,setFirstImage] = useState('')
 const firstImageRef = useRef<HTMLInputElement>(null)
 const [touchTimeout, setTouchTimeout] = useState<any>(null);
 
+const itemIds = ['refOne','refTwo','refThree','refFour','refFive']
+
 
 // drag details here
 
@@ -159,7 +161,7 @@ const handleTouchStart = (e:any) => {
         setPopDistance({x:leftValue,y:topValue})
         setItemNumber(()=>itemNumber+1)
         setNumbDisplay(true);
-      }, 500));
+      }, 700));
     }
     /*setTouchStartX(touch.clientX);
     setTouchStartY(touch.clientY);*/
@@ -180,7 +182,15 @@ const handleTouchEnd = () => {
   }, [touchTimeout]);
 
 
-const saveNewNumber = ()=>{
+const deleteAppends = ()=>{
+  let arrToDelete:any = []
+  itemIds.map(i=>arrToDelete.append(document.getElementById(i)))
+
+  arrToDelete.map((item:any)=>droppableRef.current!.removeChild(item))
+}
+
+
+const saveNewNumber = (id:any)=>{
 
 if(mainHolder.current){
 
@@ -207,12 +217,15 @@ if(mainHolder.current){
         pTag.style.display = 'flex'
         pTag.style.alignItems = 'center'
         pTag.style.justifyContent = "center"
+        pTag.id = itemIds[id-1]
         
      
         setNumbDisplay(false)
         droppableRef.current!.appendChild(pTag);
 }
 }
+
+
 
 
 
@@ -378,6 +391,20 @@ const updateUserObj = (event:any)=>{
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
     console.log(enlistUserObj)
     
+}
+
+const updateList = (id:any) => (event:any)=>{
+  let itemHolder = itemArray
+  const updatedSection = itemArray.map((i:any)=>{
+    if(itemArray.indexOf(i)===id-1){
+        const data = {...itemArray[id-1],[event.target.name] : event.target.value}
+        return data
+    }
+  }
+  )
+
+  itemHolder[id-1] = updatedSection
+  setItemArray(itemHolder)
 }
 
 
@@ -577,7 +604,7 @@ const handleFileChange = (e:any) => {
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
                         <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
                           
-                          <p onClick={saveNewNumber} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                          <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
                             <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
                           </p>
                           <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
@@ -594,7 +621,7 @@ const handleFileChange = (e:any) => {
                 <input type='file'id='avatar' ref={firstImageRef} name='avatar' style={{display:'none'}} accept="image/*" onChange={onSelectFile} />
                 <label htmlFor= 'avatar' className={completedCrop?styles.labelCropComplete:styles.labelCropIncomplete} >
                       {!completedCrop && <p style={{textAlign:"center",marginBottom:"15px"}}>Create Project</p>}
-                      <Image src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
+                      <Image onClick={deleteAppends} src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
                 </label>
             </div>
             
@@ -626,23 +653,23 @@ const handleFileChange = (e:any) => {
                 <div style={{margin:'10px auto',width:width*0.8,height:'auto',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:"column"}}>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[0].Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[element-1].Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='sweatshirt' type='text' name='item Name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[element-1].itemName} placeholder='sweatshirt' type='text' name='item Name' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Brand Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='Jayy Retails' type='text' name='brand name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[element-1].companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone Number &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='+334' type='text' name='item Name' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[element-1].Phone} placeholder='+334' type='text' name='Phone' onChange= {(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={enlistUserObj.Email} placeholder='all over the country' type='text' name='delivery' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArray[element-1].Delivery} placeholder='all over the country' type='text' name='Delivery' onChange= {(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
 
                     <div style={{margin:'15px auto',display:'flex',alignItems:'center',justifyContent:'space-around',width:'75%',height:'auto'}}>
