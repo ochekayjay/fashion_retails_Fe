@@ -197,6 +197,14 @@ const deleteAppends = ()=>{
 }
 
 
+const clearHistoricalData = ()=>{
+  if(firstImageRef.current){
+    firstImageRef.current.value = ''
+  }
+  setItemNumber(0)
+
+}
+
 const saveNewNumber = (id:any)=>{
 
 if(mainHolder.current){
@@ -635,7 +643,7 @@ const handleFileChange = (e:any) => {
                 <input type='file'id='avatar' ref={firstImageRef} name='avatar' style={{display:'none'}} accept="image/*" onChange={onSelectFile} />
                 <label htmlFor= 'avatar' className={completedCrop?styles.labelCropComplete:styles.labelCropIncomplete} >
                       {!completedCrop && <p style={{textAlign:"center",marginBottom:"15px"}}>Create Project</p>}
-                      <Image onClick={()=>{setItemNumber(0)}} src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
+                      <Image onClick={clearHistoricalData} src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
                 </label>
             </div>
             
