@@ -641,7 +641,7 @@ const handleFileChange = (e:any) => {
             
            
             <div>
-              <p>{pTagArray[0].left}</p>
+              <p>{pTagArray[0]?.left}</p>
               <p>{pTagArray.length}</p>
             </div>
             { width>1000 && <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
