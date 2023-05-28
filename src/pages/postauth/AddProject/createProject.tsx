@@ -213,8 +213,8 @@ if(mainHolder.current){
  
   const leftOne = mainHolder.current.offsetLeft
   const topOne = mainHolder.current.offsetTop
-        const leftValue = touchStartX-leftOne;
-        const topValue = touchStartY-topOne
+        const leftValue = touchStartX-leftOne-12.5;
+        const topValue = touchStartY-topOne-12.5;
 
 /**
  * 
