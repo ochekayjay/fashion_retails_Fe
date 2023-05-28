@@ -640,6 +640,10 @@ const handleFileChange = (e:any) => {
             </div>
             
            
+            <div>
+              <p>{pTagArray[0].left}</p>
+              <p>{pTagArray.length}</p>
+            </div>
             { width>1000 && <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
