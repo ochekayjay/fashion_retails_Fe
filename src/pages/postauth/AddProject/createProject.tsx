@@ -647,15 +647,6 @@ const handleFileChange = (e:any) => {
                 </label>
             </div>
             
-           
-            <div>
-              <p>{pTagArray[0]?.left}</p>
-              <p>{pTagArray.length}</p>
-            </div>
-
-            {pTagArray.length>0 && <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'space-around',height:'auto',width:'80px',margin:'15px auto'}}>
-                    {pTagArray.map((val:any)=><p style={{backgroundColor:'black',color:'white',padding:'10px',width:'auto'}}>{val.value}</p>)}
-            </div>}
             { width>1000 && <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
