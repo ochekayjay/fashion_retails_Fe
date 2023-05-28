@@ -112,10 +112,10 @@ export default function CreateProject() {
 
 
   const [enlistUserObj,setEnlistUserObj] = useState<any>({
-    name:"",
-    bio: "",
+    title:"",
+    photoDescription: "",
     hashtag:"",
-    avatarUrl:''
+    avatarUrl:'',
 })
 
 
@@ -184,18 +184,6 @@ const handleTouchEnd = () => {
   }, [touchTimeout]);
 
 
-const deleteAppends = ()=>{
-  let arrToDelete:any = []
-  itemIds.map(i=>{
-    console.log(document.getElementById(i))
-    arrToDelete.append(document.getElementById(i))})
-  if(arrToDelete.length>0){
-    console.log(arrToDelete)
-    arrToDelete.map((item:any)=>droppableRef.current!.removeChild(item))}
-
-  
-}
-
 
 const clearHistoricalData = ()=>{
   if(firstImageRef.current){
@@ -209,6 +197,11 @@ const saveNewNumber = (id:any)=>{
 
 if(mainHolder.current){
 
+  let itemHolder = itemArray
+
+
+ 
+
   const { top, left } = mainHolder.current.getBoundingClientRect()!;
  
   const leftOne = mainHolder.current.offsetLeft
@@ -216,29 +209,19 @@ if(mainHolder.current){
         const leftValue = touchStartX-leftOne-12.5;
         const topValue = touchStartY-topOne-12.5;
 
-/**
- * 
-        const pTag = document.createElement("p");
-        pTag.textContent = `${itemNumber}`;
-        pTag.style.position = 'absolute';
-        pTag.style.width = '25px';
-        pTag.style.height = '25px';
-        pTag.style.position = 'absolute';
-        pTag.style.top = `${topValue}px`;
-        pTag.style.left = `${leftValue}px`;
-        pTag.style.borderRadius = "50%";
-        pTag.style.backgroundColor = "black";
-        pTag.style.color = "white";
-        pTag.style.boxShadow = '1px 1px 5px rgb(91, 90, 90)'
-        pTag.style.display = 'flex'
-        pTag.style.alignItems = 'center'
-        pTag.style.justifyContent = "center"
-        pTag.id = itemIds[id-1]
- */
+        const updatedSection = itemArray.map((i:any)=>{
+          if(itemArray.indexOf(i)===id-1 && mainHolder.current){
+          
+              const data = {...itemArray[id-1],itemNumber:id,verified:false,distance : {x:leftValue/mainHolder.current.offsetWidth,y:topValue/mainHolder.current.offsetHeight}}
+              return data
+          } } )
+
+        itemHolder[id-1] = updatedSection
         
         const pData = {value:`${itemNumber}`,key:itemIds[id-1],justifyContent : "center",alignItems : 'center',display : 'flex',color:"white",boxShadow : '1px 1px 5px rgb(91, 90, 90)',position:'absolute',width:'25px',height:'25px',top:`${topValue}px`,left:`${leftValue}px`,borderRadius:'50%',backgroundColor:'black'}
      
         setPTagArray(()=>[...pTagArray,pData])
+        setItemArray(itemHolder)
         setNumbDisplay(false)
         //droppableRef.current!.appendChild(pTag);
 }
@@ -442,12 +425,10 @@ console.log(enlistUserObj)
   const token = window.localStorage.getItem('token')
   setIsLoading(true)
   
- formData.append('name',enlistUserObj.name)
-formData.append('bio',enlistUserObj.bio)
+  formData.append('title',enlistUserObj.title)
+  formData.append('photoDescription',enlistUserObj.photoDescription)
   formData.append('hashtag',enlistUserObj.hashtag)
-  enlistUserObj?.twitter?formData.append('twitter',enlistUserObj.twitter): ""
-  enlistUserObj?.facebook?formData.append('facebook',enlistUserObj.facebook): ""
-  enlistUserObj?.instagram?formData.append('instagram',enlistUserObj.instagram): ""
+  formData.append('itemArray',JSON.stringify(itemArray))
   file!==''?formData.append('backgroundColor',dominantColor): ""
   file!==''?formData.append('avatar',file): ""
   console.log(formData)
@@ -459,27 +440,22 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
   //'https://fashion-r-services.onrender.com/creator/editProfile
   if(file!==''){
     console.log('a')
-    const createdCreator =  await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {...withImage,body: formData});
-    const res = await createdCreator.json()
-  if(res.verified===true){
-    setEnlistUserObj({...enlistUserObj,bio:res?.bio,hashtag:res?.hashtag,name :res.name,avatarUrl:res.avatarUrl})
-    setDominantColor(res?.backgroundColor)
-    setIsLoading(false)
+
+    const formDataObject = Object.fromEntries(formData.entries());
+
+    console.log(formDataObject);
+
+    const createdCreator =  await fetch('http://localhost:5005/contentRoutes/creation', {...withImage,body: formData});
+
+   
   }
-  console.log(`${JSON.stringify(res)} got it out`)}
   else{
-    console.log('b')
-    const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/editProfile', {...withImage,body: formData});
-    const res = await createdCreator.json()
-  if(res.verified===true){
-    setEnlistUserObj({...enlistUserObj,bio:res?.bio,hashtag:res?.hashtag,name :res?.name})
-      setIsLoading(false)
-  }
-  console.log(`${JSON.stringify(res)} got it out`)
+
+    const formDataObject = Object.fromEntries(formData.entries());
+
+    console.log(formDataObject);
+    
   } 
-  
- 
-  
 
 }
 
@@ -496,19 +472,6 @@ const handleFileChange = (e:any) => {
   //setShowImage(true)
 
 };
-
-
-//useeffect to change avatars to be displayed
-
-  useEffect(()=>{
-    if(cropImageUrl===''){
-      setNewAvatar(false)
-    }
-    else{
-      setNewAvatar(true)
-    }
-},[cropImageUrl])
- 
 
 
 

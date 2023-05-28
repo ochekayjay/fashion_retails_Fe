@@ -8,7 +8,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
-    distance:''
+    distance:{}
 },
 {
     Email:'',
@@ -18,7 +18,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
-    distance:''
+    distance:{}
 },
 {
     Email:'',
@@ -28,7 +28,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
-    distance:''
+    distance:{}
 },
 {
     Email:'',
@@ -38,7 +38,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
-    distance:''
+    distance:{}
 },
 {
     Email:'',
@@ -48,5 +48,5 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
-    distance:''
+    distance:{}
 }]
