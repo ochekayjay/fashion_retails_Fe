@@ -611,8 +611,8 @@ const handleFileChange = (e:any) => {
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
                     onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
                     {pTagArray.map((P:any)=>
-                      <p key={P.key} style={{justifyContent :P.justifyContent,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)}
-                    <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
+                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)}
+                    <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"contain",borderRadius:'15px',position:'absolute',top:'0px',left:'0px',bottom:'0px'}}/>
                     {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
@@ -635,7 +635,7 @@ const handleFileChange = (e:any) => {
                 <input type='file'id='avatar' ref={firstImageRef} name='avatar' style={{display:'none'}} accept="image/*" onChange={onSelectFile} />
                 <label htmlFor= 'avatar' className={completedCrop?styles.labelCropComplete:styles.labelCropIncomplete} >
                       {!completedCrop && <p style={{textAlign:"center",marginBottom:"15px"}}>Create Project</p>}
-                      <Image src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
+                      <Image onClick={()=>{setItemNumber(0)}} src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
                 </label>
             </div>
             
@@ -644,6 +644,10 @@ const handleFileChange = (e:any) => {
               <p>{pTagArray[0]?.left}</p>
               <p>{pTagArray.length}</p>
             </div>
+
+            {pTagArray.length>0 && <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'space-around',height:'auto',width:'80px',margin:'15px auto'}}>
+                    {pTagArray.map((val:any)=><p style={{backgroundColor:'black',color:'white',padding:'10px',width:'auto'}}>{val.value}</p>)}
+            </div>}
             { width>1000 && <div style={{width:'auto',height:'auto',margin:'40px auto',display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
             <p style={{fontFamily:'NexaTextLight',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'center'}}>Drag numbers to selected item</p>
             <div style={{position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:"275px",height:"45px",margin:'10px auto',backgroundColor:"white",borderRadius:"15px"}}>
