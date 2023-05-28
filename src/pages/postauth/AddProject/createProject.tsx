@@ -107,6 +107,7 @@ export default function CreateProject() {
   const [itemNumber,setItemNumber] = useState(0)
   const [popDistance,setPopDistance] = useState<any>({x:0,y:0})
   const [itemArray,setItemArray] = useState<any>([...ListItemArray])
+  const [pTagArray,setPTagArray] = useState<any>([])
 
 
 
@@ -128,6 +129,7 @@ const previewCanvasRef = useRef<HTMLCanvasElement>(null)
 const [firstImage,setFirstImage] = useState('')
 const firstImageRef = useRef<HTMLInputElement>(null)
 const [touchTimeout, setTouchTimeout] = useState<any>(null);
+
 
 const itemIds = ['refOne','refTwo','refThree','refFour','refFive']
 
@@ -184,9 +186,14 @@ const handleTouchEnd = () => {
 
 const deleteAppends = ()=>{
   let arrToDelete:any = []
-  itemIds.map(i=>arrToDelete.append(document.getElementById(i)))
+  itemIds.map(i=>{
+    console.log(document.getElementById(i))
+    arrToDelete.append(document.getElementById(i))})
+  if(arrToDelete.length>0){
+    console.log(arrToDelete)
+    arrToDelete.map((item:any)=>droppableRef.current!.removeChild(item))}
 
-  arrToDelete.map((item:any)=>droppableRef.current!.removeChild(item))
+  
 }
 
 
@@ -201,7 +208,8 @@ if(mainHolder.current){
         const leftValue = touchStartX-leftOne;
         const topValue = touchStartY-topOne
 
-
+/**
+ * 
         const pTag = document.createElement("p");
         pTag.textContent = `${itemNumber}`;
         pTag.style.position = 'absolute';
@@ -218,10 +226,13 @@ if(mainHolder.current){
         pTag.style.alignItems = 'center'
         pTag.style.justifyContent = "center"
         pTag.id = itemIds[id-1]
+ */
         
+        const pData = {value:`${itemNumber}`,key:itemIds[id-1],justifyContent : "center",alignItems : 'center',display : 'flex',color:"white",boxShadow : '1px 1px 5px rgb(91, 90, 90)',position:'absolute',width:'25px',height:'25px',top:`${topValue}px`,left:`${leftValue}px`,borderRadius:'50%',backgroundColor:'black'}
      
+        setPTagArray(()=>[...pTagArray,pData])
         setNumbDisplay(false)
-        droppableRef.current!.appendChild(pTag);
+        //droppableRef.current!.appendChild(pTag);
 }
 }
 
@@ -362,6 +373,7 @@ function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
       const avatarpath = URL.createObjectURL(e.target.files[0])
       setFirstImage(avatarpath)
     setCrop(undefined) // Makes crop preview update between images.
+    setPTagArray([])
     const reader = new FileReader()
     reader.addEventListener('load', () =>
       setImgSrc(reader.result?.toString() || ''),
@@ -598,6 +610,8 @@ const handleFileChange = (e:any) => {
                 {completedCrop?
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
                     onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
+                    {pTagArray.map((P:any)=>
+                      <p key={P.key} style={{justifyContent :P.justifyContent,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)}
                     <canvas ref={previewCanvasRef}  onClick={()=>setShowAvatar(true)}   style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
                     {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
@@ -621,7 +635,7 @@ const handleFileChange = (e:any) => {
                 <input type='file'id='avatar' ref={firstImageRef} name='avatar' style={{display:'none'}} accept="image/*" onChange={onSelectFile} />
                 <label htmlFor= 'avatar' className={completedCrop?styles.labelCropComplete:styles.labelCropIncomplete} >
                       {!completedCrop && <p style={{textAlign:"center",marginBottom:"15px"}}>Create Project</p>}
-                      <Image onClick={deleteAppends} src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
+                      <Image src={!completedCrop? imageicon: editIcon} alt='' style={{width:"24px",height:'24px'}}/>
                 </label>
             </div>
             
