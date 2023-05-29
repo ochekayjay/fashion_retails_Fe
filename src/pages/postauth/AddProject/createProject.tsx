@@ -198,7 +198,7 @@ const saveNewNumber = (id:any)=>{
 
 if(mainHolder.current){
 
-  let itemHolder = itemArray
+  let itemHolder = [...itemArray]
 
 
  
@@ -210,6 +210,12 @@ if(mainHolder.current){
         const leftValue = touchStartX-leftOne-12.5;
         const topValue = touchStartY-topOne-12.5;
 
+
+        const dat = {...itemHolder[id-1],itemNumber:id,verified:false,distance : {x:leftValue/mainHolder.current.offsetWidth,y:topValue/mainHolder.current.offsetHeight}}
+        console.log(dat)
+        itemHolder[id-1] = dat
+        
+      
         const updatedSection = itemArray.map((i:any)=>{
           if(itemArray.indexOf(i)===id-1 && mainHolder.current){
           
