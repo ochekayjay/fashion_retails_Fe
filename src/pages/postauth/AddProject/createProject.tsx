@@ -217,15 +217,6 @@ if(mainHolder.current){
         console.log(dat)
         itemHolder[id-1] = dat
         
-      
-        const updatedSection = itemArray.map((i:any)=>{
-          if(itemArray.indexOf(i)===id-1 && mainHolder.current){
-          
-              const data = {...itemArray[id-1],itemNumber:id,verified:false,distance : {x:leftValue/mainHolder.current.offsetWidth,y:topValue/mainHolder.current.offsetHeight}}
-              return data
-          } } )
-
-        itemHolder[id-1] = updatedSection
         
         const pData = {value:`${itemNumber}`,key:itemIds[id-1],justifyContent : "center",alignItems : 'center',display : 'flex',color:"white",boxShadow : '1px 1px 5px rgb(91, 90, 90)',position:'absolute',width:'25px',height:'25px',top:`${topValue}px`,left:`${leftValue}px`,borderRadius:'50%',backgroundColor:'black'}
      
