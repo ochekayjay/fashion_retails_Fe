@@ -576,6 +576,36 @@ const handleFileChange = (e:any) => {
 
   return (
     <div style={{width:'100vw',minHeight:'100vh',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:width>500?'30px 0px':'0px'}}>
+      {itemPop && 
+                  <div style={{position:'fixed',height:'100vh',width:'100vh',background:'black',opacity:'0.6'}}>
+                  <div style={{position:'absolute',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
+                      <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
+                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
+                          <input value={itemArray[itemNumber-1]?.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
+                      </div>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
+                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
+                          <input  value={itemArray[itemNumber-1]?.itemName} placeholder='sweatshirt' type='text' name='itemName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={ styles.forminputPop}/>
+                      </div>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
+                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Company &nbsp; <span style={{color:'red'}}>*</span></p>
+                          <input value={itemArray[itemNumber-1]?.companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
+                      </div>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
+                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone &nbsp; <span style={{color:'red'}}>*</span></p>
+                          <input value={itemArray[itemNumber-1]?.Phone} placeholder='+334' type='text' name='Phone' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
+                      </div>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
+                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
+                          <input value={itemArray[itemNumber-1]?.Delivery} placeholder='all over the country' type='text' name='Delivery' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
+                      </div>
+
+                      <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>
+                      </div>
+                     </div> 
+                    }
+        
       {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
@@ -606,34 +636,7 @@ const handleFileChange = (e:any) => {
                       </div>
                     </div>}
 
-                    {itemPop && <div style={{position:'absolute',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:`calc(${popDistance.y}px + 25px`,left:'50%',transform:'translateX(-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
-                      <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
-                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
-                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
-                      </div>
-                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
-                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input  value={itemArray[itemNumber-1]?.itemName} placeholder='sweatshirt' type='text' name='itemName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={ styles.forminputPop}/>
-                      </div>
-                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
-                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Company &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
-                      </div>
-                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
-                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Phone} placeholder='+334' type='text' name='Phone' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
-                      </div>
-                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
-                          <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Delivery} placeholder='all over the country' type='text' name='Delivery' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
-                      </div>
-
-                      <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>
-                      </div>
-                      
-                    }
-                    </div>
+                                </div>
                     <div style={{width:'100%',height:'100%',position:'relative'}}>
                     
                     <canvas ref={previewCanvasRef} style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
