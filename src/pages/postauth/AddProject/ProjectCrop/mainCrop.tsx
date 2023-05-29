@@ -32,7 +32,7 @@ function centerAspectCrop(
     )
   }
 
-function MainCrop({imgSrc,setImgSrc,crop,firstImageRef,formData,handleUpload,onCancel,onCrop,setCropImage, previewCanvasRef,setCrop, aspect,completedCrop,setNewPIUrl,setCompletedCrop}:any) {
+function MainCrop({imgSrc,setImgSrc,crop,firstImageRef,handleUpload,onCancel,onCrop,setCropImage, previewCanvasRef,setCrop, aspect,completedCrop,setNewPIUrl,setCompletedCrop}:any) {
 
     //const [imgSrc, setImgSrc] = useState('')
   //const previewCanvasRef = useRef<HTMLCanvasElement>(null)

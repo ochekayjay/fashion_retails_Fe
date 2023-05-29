@@ -119,7 +119,7 @@ export default function CreateProject() {
 })
 
 
-const formData = new FormData()
+
 const [imgSrc, setImgSrc] = useState('')
 const [crop, setCrop] = useState<Crop>()
 const [aspect, setAspect] = useState<number | undefined>(9 / 16)
@@ -141,6 +141,7 @@ const reffs = [draggableRefOne,draggableRefTwo,draggableRefThree,draggableRefFou
 //elements
 const elements = [1,2,3,4,5]
 // drag functions
+
 
 
 //Touch events
@@ -306,7 +307,7 @@ if(mainHolder.current){
 
 // crop details
 const onCrop = ()=>{
-  handleUpload(previewCanvasRef,formData)
+  handleUpload(previewCanvasRef)
   setCropImage(false) 
 
 }
@@ -375,19 +376,14 @@ function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
 }
 
 
-function handleUpload(canvasRef:any,formData:any) {
+function handleUpload(canvasRef:any) {
   const canvas = canvasRef.current;
   canvas.toBlob((blob:any) => {
     console.log('b blob')
     console.log(`${blob} data`)
     const file = new File([blob], 'filename.png', { type: 'image/jpg' });; // 'filename.png' specifies the desired filename
     setFile(file)
-    
-    // Perform your upload logic here
-
-    const formDataObject = Object.fromEntries(formData.entries());
-
-    console.log(formDataObject);
+ 
   });
 }
 const updateUserObj = (event:any)=>{
@@ -396,18 +392,14 @@ const updateUserObj = (event:any)=>{
     
 }
 
-const updateList = (id:any) => (event:any)=>{
-  let itemHolder = itemArray
-  const updatedSection = itemArray.map((i:any)=>{
-    if(itemArray.indexOf(i)===id-1){
-        const data = {...itemArray[id-1],[event.target.name] : event.target.value}
-        return data
-    }
-  }
-  )
-
-  itemHolder[id-1] = updatedSection
-  setItemArray(itemHolder)
+const updateList =  (event:any,id:any)=>{
+  console.log('abc')
+  let itemH = [...itemArray]
+    const dat = {...itemH[id],[event.target.name] : event.target.value}
+    console.log(dat)
+    itemH[id] = dat
+    
+  setItemArray(itemH) 
 }
 
 
@@ -418,10 +410,11 @@ const updateList = (id:any) => (event:any)=>{
 */
 
 
-const submitUserInfo = async (event:any,enlistUserObj:any)=>{
+const submitUserInfo = async (event:any,enlistUserObj:any,itemArray:any)=>{
   event.preventDefault()
   
 console.log(enlistUserObj)
+const formData = new FormData()
   const token = window.localStorage.getItem('token')
   setIsLoading(true)
   
@@ -435,7 +428,7 @@ console.log(enlistUserObj)
   console.log(token)
 
 const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
-const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Content-Type': 'application/json',}}
+const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Content-Type': 'application/json',Authorization: `Bearer ${token}`}}
 
   //'https://fashion-r-services.onrender.com/creator/editProfile
   if(file!==''){
@@ -445,7 +438,7 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
 
     console.log(formDataObject);
 
-    const createdCreator =  await fetch('http://localhost:5005/content/creation', {...withImage,body: formData});
+    const createdCreator =  await fetch('http://localhost:5005/content/creation', {...withImage,body:formData});
 
    
   }
@@ -570,7 +563,7 @@ const handleFileChange = (e:any) => {
 
   return (
     <div style={{width:'100vw',minHeight:'100vh',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:width>500?'30px 0px':'0px'}}>
-      {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} formData={formData} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
+      {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             {width<1000 && completedCrop? <div style={{width:'95%',margin:'30px auto',display:'flex',padding:"5px 0px",backgroundColor:'white',justifyContent:'center',alignItems:"center"}}>
@@ -627,33 +620,34 @@ const handleFileChange = (e:any) => {
         </div>
         </div>}
         <div style={{width:'auto',height:'auto',margin:'30px auto',padding:'10px',display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:'column'}}>
-          {elements.map(element=> 
-            <div className={openBigDiv===true && element==sectionToShow?styles.sectionMainHolderShow:styles.sectionMainHolderHide}>
-                <div onClick={()=>controlSectionShown(element)} style={{width:width*0.8,height:'50px',boxSizing:'border-box',display:'flex',alignItems:'center',justifyContent:"space-between",padding:'15px'}}>
-                  <p style={{width:'30px',height:'30px',display:'flex',borderRadius:'50%',justifyContent:"center",alignItems:"center",backgroundColor:'black',color:'white'}}>{element}</p>
-                  <Image src={element==sectionToShow?dropDown:dropRight} alt='' style={{width:"40px",height:'40px'}}/>
+          {itemArray.map((itemArr:any,index:any)=> 
+            <div className={openBigDiv===true && index+1==sectionToShow?styles.sectionMainHolderShow:styles.sectionMainHolderHide}>
+                <div onClick={()=>controlSectionShown(index+1)} style={{width:width*0.8,height:'50px',boxSizing:'border-box',display:'flex',alignItems:'center',justifyContent:"space-between",padding:'15px'}}>
+                  <p style={{width:'30px',height:'30px',display:'flex',borderRadius:'50%',justifyContent:"center",alignItems:"center",backgroundColor:'black',color:'white'}}>{index+1}</p>
+                  <Image src={index+1==sectionToShow?dropDown:dropRight} alt='' style={{width:"40px",height:'40px'}}/>
                 </div>
 
                 <div style={{margin:'10px auto',width:width*0.8,height:'auto',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:"column"}}>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[element-1].Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input value={itemArr?.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateList(event,index)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                          
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[element-1].itemName} placeholder='sweatshirt' type='text' name='item Name' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArr?.itemName} placeholder='sweatshirt' type='text' name='itemName' onChange={(event)=>{updateList(event,index)}} className={ styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Brand Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[element-1].companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArr?.companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(event)=>{updateList(event,index)}} className={styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone Number &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[element-1].Phone} placeholder='+334' type='text' name='Phone' onChange= {(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArr?.Phone} placeholder='+334' type='text' name='Phone' onChange= {(event)=>{updateList(event,index)}} className={styles.forminput}/>
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArray[element-1].Delivery} placeholder='all over the country' type='text' name='Delivery' onChange= {(element)=>{updateList(element)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArr?.Delivery} placeholder='all over the country' type='text' name='Delivery' onChange= {(event)=>{updateList(event,index)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
 
                     <div style={{margin:'15px auto',display:'flex',alignItems:'center',justifyContent:'space-around',width:'75%',height:'auto'}}>
@@ -665,7 +659,7 @@ const handleFileChange = (e:any) => {
         </div>
             <div style={{height:"50px",width:width>500?'350px':width*0.80,margin:'30px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Title &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input value={enlistUserObj?.name} type='text' placeholder="title" name='title' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.name===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input value={enlistUserObj?.title} type='text' placeholder="title" name='title' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.name===""?styles.forminputUnfilled: styles.forminput}/>
             </div>
 
 
@@ -679,7 +673,7 @@ const handleFileChange = (e:any) => {
                             <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
             </div>
 
-            <p onClick={(event)=>submitUserInfo(event,enlistUserObj)} style={{width:'100px',cursor:'pointer',height:'50px',display:'flex',alignItems:"center",justifyContent:"center",backgroundColor:'white',margin:'30px auto',fontFamily:"NexaTextight",borderRadius:'7px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>{isLoading?<Loader color="black" size="sm" variant="bars" />:'Save'}</p>
+            <p onClick={(event)=>submitUserInfo(event,enlistUserObj,itemArray)} style={{width:'100px',cursor:'pointer',height:'50px',display:'flex',alignItems:"center",justifyContent:"center",backgroundColor:'white',margin:'30px auto',fontFamily:"NexaTextight",borderRadius:'7px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>{isLoading?<Loader color="black" size="sm" variant="bars" />:'Save'}</p>
             </section>
     </div>
   )
