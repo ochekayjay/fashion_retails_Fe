@@ -605,25 +605,25 @@ const handleFileChange = (e:any) => {
                     </div>}
                     {itemPop && <div style={{position:'absolute',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:`calc(${popDistance.y}px + 25px`,left:'50%',transform:'translateX(-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
                       <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
-                      <div style={{width:'95%',height:'40px',margin:'15px auto'}}>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminput}/>
+                          <input value={itemArray[itemNumber-1]?.Email} placeholder='user@gmail.com' type='email' name='Email' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
                       </div>
-                      <div style={{width:'95%',height:'40px',margin:'15px auto'}}>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Item Name &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input  value={itemArray[itemNumber-1]?.itemName} placeholder='sweatshirt' type='text' name='itemName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={ styles.forminput}/>
+                          <input  value={itemArray[itemNumber-1]?.itemName} placeholder='sweatshirt' type='text' name='itemName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={ styles.forminputPop}/>
                       </div>
-                      <div style={{width:'95%',height:'40px',margin:'15px auto'}}>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Company &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminput}/>
+                          <input value={itemArray[itemNumber-1]?.companyName} placeholder='Jayy Retails' type='text' name='companyName' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
                       </div>
-                      <div style={{width:'95%',height:'40px',margin:'15px auto'}}>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Phone &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Phone} placeholder='+334' type='text' name='Phone' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminput}/>
+                          <input value={itemArray[itemNumber-1]?.Phone} placeholder='+334' type='text' name='Phone' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
                       </div>
-                      <div style={{width:'95%',height:'40px',margin:'15px auto'}}>
+                      <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Delivery &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.Delivery} placeholder='all over the country' type='text' name='Delivery' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminput}/>
+                          <input value={itemArray[itemNumber-1]?.Delivery} placeholder='all over the country' type='text' name='Delivery' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
                       </div>
 
                       <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>

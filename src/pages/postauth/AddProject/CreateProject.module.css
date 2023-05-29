@@ -178,6 +178,22 @@
         border-color:rgba(95, 94, 94, 0.698);
         text-align:left
     }
+
+    .forminputPop{
+        height:25px;
+        box-sizing:border-box;
+        border-radius:10px;
+        width:100%;
+        margin: 0px auto;
+        font-size:15px;
+        background-color: rgb(40, 40, 40);
+        color: white;
+        outline:none;
+        border-width:0px 0px 1px;
+        border: 1px solid white;
+        border-width:0px 0px 1px;
+        text-align:left
+    }
     
     
     .forminputUnfilled{
