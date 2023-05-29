@@ -576,9 +576,37 @@ const handleFileChange = (e:any) => {
 
   return (
     <div style={{width:'100vw',minHeight:'100vh',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:width>500?'30px 0px':'0px'}}>
-      {itemPop && 
-                  <div style={{position:'fixed',height:'100vh',width:'100vh',background:'black',opacity:'0.6'}}>
-                  <div style={{position:'absolute',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
+      {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
+        <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
+            {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
+            {width<1000 && completedCrop? <div style={{width:'95%',margin:'30px auto',display:'flex',padding:"5px 0px",backgroundColor:'white',justifyContent:'center',alignItems:"center"}}>
+              <p style={{textAlign:"center",fontSize:'11px',fontFamily:'NexaTextLight',color:'black',borderRadius:'10px',opacity:'0.6'}}>5 maximum items!, hold point down to highlight item</p> 
+             </div>: ''
+            }
+            <div ref={mainHolder}  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+                {completedCrop?
+                    <>
+                    <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
+                    onDragOver={handleDragOver} onDrop={handleDrop}  style={{width:"100%",position:'absolute',backgroundColor:"transparent",zIndex:10,top:'0px',left:'0px',height:"100%"}}>
+                    {pTagArray.map((P:any)=>
+                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
+                      }
+                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
+                      <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
+                        <div style={{textAlign:"center"}}>{itemNumber}</div>
+                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
+                          
+                          <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
+                          </p>
+                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/>
+                          </p>
+                        </div>
+                      </div>
+                    </div>}
+
+                    {itemPop && <div style={{position:'fixed',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:`calc(${popDistance.y}px + 25px`,left:'50%',transform:'translateX(-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
                       <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
                       <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
@@ -603,40 +631,9 @@ const handleFileChange = (e:any) => {
 
                       <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>
                       </div>
-                     </div> 
+                      
                     }
-        
-      {cropImage && <MainCrop imgSrc={imgSrc} onCancel={onCancel} onCrop={onCrop} firstImageRef={firstImageRef} handleUpload={handleUpload} previewCanvasRef={previewCanvasRef} setNewPIUrl={setNewPIUrl} setImgSrc={setImgSrc} completedCrop={completedCrop} setCompletedCrop={setCompletedCrop} crop={crop} setCrop={setCrop} setCropImage={setCropImage} aspect={aspect}/>}
-        <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
-            {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
-            {width<1000 && completedCrop? <div style={{width:'95%',margin:'30px auto',display:'flex',padding:"5px 0px",backgroundColor:'white',justifyContent:'center',alignItems:"center"}}>
-              <p style={{textAlign:"center",fontSize:'11px',fontFamily:'NexaTextLight',color:'black',borderRadius:'10px',opacity:'0.6'}}>5 maximum items!, hold point down to highlight item</p> 
-             </div>: ''
-            }
-            <div ref={mainHolder}  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
-                {completedCrop?
-                    <>
-                    <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
-                    onDragOver={handleDragOver} onDrop={handleDrop}  style={{width:"100%",position:'absolute',backgroundColor:"transparent",zIndex:'3',top:'0px',left:'0px',height:"100%"}}>
-                    {pTagArray.map((P:any)=>
-                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
-                      }
-                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
-                      <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
-                        <div style={{textAlign:"center"}}>{itemNumber}</div>
-                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
-                          
-                          <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
-                            <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
-                          </p>
-                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
-                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/>
-                          </p>
-                        </div>
-                      </div>
-                    </div>}
-
-                                </div>
+                    </div>
                     <div style={{width:'100%',height:'100%',position:'relative'}}>
                     
                     <canvas ref={previewCanvasRef} style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
