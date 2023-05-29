@@ -583,14 +583,15 @@ const handleFileChange = (e:any) => {
               <p style={{textAlign:"center",fontSize:'11px',fontFamily:'NexaTextLight',color:'black',borderRadius:'10px',opacity:'0.6'}}>5 maximum items!, hold point down to highlight item</p> 
              </div>: ''
             }
-            <div ref={mainHolder} style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+            <div ref={mainHolder}  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
+                    <>
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
-                    onDragOver={handleDragOver} onDrop={handleDrop} style={{width:'100%',height:'100%',position:'relative'}}>
+                    onDragOver={handleDragOver} onDrop={handleDrop}  style={{width:"100%",position:'absolute',backgroundColor:"transparent",zIndex:'3',top:'0px',left:'0px',height:"100%"}}>
                     {pTagArray.map((P:any)=>
-                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)}
-                    <canvas ref={previewCanvasRef} style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
-                    {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
+                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
+                      }
+                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
                         <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
@@ -604,6 +605,7 @@ const handleFileChange = (e:any) => {
                         </div>
                       </div>
                     </div>}
+
                     {itemPop && <div style={{position:'absolute',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:`calc(${popDistance.y}px + 25px`,left:'50%',transform:'translateX(-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
                       <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
                       <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
@@ -632,6 +634,13 @@ const handleFileChange = (e:any) => {
                       
                     }
                     </div>
+                    <div style={{width:'100%',height:'100%',position:'relative'}}>
+                    
+                    <canvas ref={previewCanvasRef} style={{width:'100%',height:'100%',padding:"0px",objectFit:"cover",borderRadius:'15px',position:'relative'}}/>
+                    
+                    
+                    </div>
+                    </>
                     :
                     ''
                     }
