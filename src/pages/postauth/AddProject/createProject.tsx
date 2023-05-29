@@ -438,9 +438,13 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
 
     console.log(formDataObject);
 
-    const createdCreator =  await fetch('http://localhost:5005/content/creation', {...withImage,body:formData});
+    const createdCreator =  await fetch('https://fashion-r-services.onrender.com/content/creation', {...withImage,body:formData});
 
-   
+    if(createdCreator){
+      console.log(createdCreator)
+        setIsLoading(false)
+    }
+   console.log(createdCreator)
   }
   else{
 
