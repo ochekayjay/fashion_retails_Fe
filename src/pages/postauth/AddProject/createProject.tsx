@@ -164,6 +164,7 @@ const handleTouchStart = (e:any) => {
         setTouchStartY(touch.clientY)
         setPopDistance({x:leftValue,y:topValue})
         setItemNumber(()=>itemNumber+1)
+        setItemPop(false)
         setNumbDisplay(true);
       }, 700));
     }
