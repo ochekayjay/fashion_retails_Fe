@@ -157,7 +157,7 @@ const handleTouchStart = (e:any) => {
       const leftOne = mainHolder.current.offsetLeft
       const topOne = mainHolder.current.offsetTop
       const leftValue = toucherX-leftOne - 40;
-      const topValue = toucherY-topOne - 40;
+      const topValue = toucherY + window.scrollY -topOne - 40 ;
 
       setTouchTimeout(setTimeout(() => {
         setTouchStartX(touch.clientX)
@@ -211,7 +211,7 @@ if(mainHolder.current){
   const leftOne = mainHolder.current.offsetLeft
   const topOne = mainHolder.current.offsetTop
         const leftValue = touchStartX-leftOne-12.5;
-        const topValue = touchStartY-topOne-12.5;
+        const topValue = touchStartY + window.scrollY -topOne-12.5;
 
 
         const dat = {...itemHolder[id-1],itemNumber:id,verified:false,distance : {x:leftValue/mainHolder.current.offsetWidth,y:topValue/mainHolder.current.offsetHeight}}
