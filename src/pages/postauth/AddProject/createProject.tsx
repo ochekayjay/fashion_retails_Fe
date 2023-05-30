@@ -192,6 +192,7 @@ const clearHistoricalData = ()=>{
   if(firstImageRef.current){
     firstImageRef.current.value = ''
   }
+  setItemPop(false)
   setItemNumber(0)
 
 }
