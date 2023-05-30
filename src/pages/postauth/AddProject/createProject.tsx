@@ -579,7 +579,8 @@ const handleFileChange = (e:any) => {
                 {completedCrop?
                     <>
 
-{itemPop && <div style={{position:'fixed',zIndex:'10000',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
+{itemPop && <div style={{position:'fixed',zIndex:'10000',height:'auto',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',}}>
+                  <div className={styles.popupInner}>
                       <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
                       <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
@@ -603,7 +604,8 @@ const handleFileChange = (e:any) => {
                       </div>
 
                       <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>
-                      </div>
+                  </div>
+              </div>
                       
                     }
                     <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
