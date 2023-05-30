@@ -82,7 +82,7 @@ export default function signin() {
 
 //'https://fashion-r-services.onrender.com/creator/signin',
   return (
-    <div style={{backgroundColor:'rgb(228,228,228)',height:'100vh',width:'100vw',flexDirection:"column",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',flexDirection:"column",display:"flex",alignItems:"center",justifyContent:"center"}}>
         
         <div style={{width:width>850?"65%":'85%',margin:'30px auto'}}>
             <p style={{width:'140px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',marginLeft:'0px',textAlign:'center',padding:'10px 15px',boxSizing:'border-box',borderRadius:'15px',color:'black',backgroundColor:"white",fontFamily:'NexaTextLight',fontSize:'18px', letterSpacing:'1.5px',height:'auto'}}>back</p>
