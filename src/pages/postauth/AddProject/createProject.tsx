@@ -577,27 +577,8 @@ const handleFileChange = (e:any) => {
             <div ref={mainHolder}  style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
                     <>
-                    <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
-                    onDragOver={handleDragOver} onDrop={handleDrop}  style={{width:"100%",position:'absolute',backgroundColor:"transparent",zIndex:10,top:'0px',left:'0px',height:"100%"}}>
-                    {pTagArray.map((P:any)=>
-                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
-                      }
-                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
-                      <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
-                        <div style={{textAlign:"center"}}>{itemNumber}</div>
-                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
-                          
-                          <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
-                            <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
-                          </p>
-                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
-                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/>
-                          </p>
-                        </div>
-                      </div>
-                    </div>}
 
-                    {itemPop && <div style={{position:'fixed',zIndex:'50',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
+{itemPop && <div style={{position:'fixed',zIndex:'10000',display:"flex",alignItems:'center',justifyContent:'space-around',flexDirection:'column',height:'auto',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'250px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white'}}>
                       <p style={{width:'80%',textAlign:"center",margin:'15px auto',fontFamily:"NexaTextBold",fontSize:'18px'}}>Item{` ${itemNumber}`}</p>
                       <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Email &nbsp; <span style={{color:'red'}}>*</span></p>
@@ -624,6 +605,27 @@ const handleFileChange = (e:any) => {
                       </div>
                       
                     }
+                    <div ref={droppableRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
+                    onDragOver={handleDragOver} onDrop={handleDrop}  style={{width:"100%",position:'absolute',backgroundColor:"transparent",zIndex:10,top:'0px',left:'0px',height:"100%"}}>
+                    {pTagArray.map((P:any)=>
+                      <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
+                      }
+                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
+                      <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
+                        <div style={{textAlign:"center"}}>{itemNumber}</div>
+                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
+                          
+                          <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>
+                          </p>
+                          <p onClick={()=>{setNumbDisplay(false);setItemNumber(()=>itemNumber-1)}} style={{width:'auto',display:"flex",justifyContent:"center",alignItems:"center",height:"auto",padding:"3px",textAlign:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
+                            <Image alt=''  src={closeItem} style={{width:"20px",height:'20px'}}/>
+                          </p>
+                        </div>
+                      </div>
+                    </div>}
+
+                    
                     </div>
                     <div style={{width:'100%',height:'100%',position:'relative'}}>
                     
