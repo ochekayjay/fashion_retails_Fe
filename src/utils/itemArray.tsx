@@ -8,6 +8,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
+    businessLink: '',
     distance:{}
 },
 {
@@ -18,6 +19,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
+    businessLink: '',
     distance:{}
 },
 {
@@ -28,6 +30,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
+    businessLink: '',
     distance:{}
 },
 {
@@ -38,6 +41,7 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
+    businessLink: '',
     distance:{}
 },
 {
@@ -48,5 +52,6 @@ export const ListItemArray = [{
     Phone:'',
     verified:false,
     Delivery:'',
+    businessLink: '',
     distance:{}
 }]
