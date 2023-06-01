@@ -1,6 +1,7 @@
 import React,{useEffect,useState,useRef} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
 import menuIcon from '../../iconholder/menu.svg'
+import styles from './Userpage.module.css'
 import Image from 'next/image'
 import addIcon from '../../iconholder/addIcon.svg'
 import editIcon from '../../iconholder/editIcon.svg'
@@ -8,6 +9,9 @@ import likeIcon from '../../iconholder/like.svg'
 import tagIcon from '../../iconholder/tag.svg'
 import shareIcon from '../../iconholder/share.svg'
 import bookmarkIcon from '../../iconholder/bookmark.svg'
+import rowIcon from '../../iconholder/rows.svg'
+import columnIcon from '../../iconholder/column.svg'
+import collectionIcon from '../../iconholder/bookmarkCollection.svg'
 import useWindowResize from '@/utils/windowdimension'
 import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
@@ -58,6 +62,7 @@ export default function Userpage({data}:any) {
   const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName,userbio,setUserbio} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
+  const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   
 
   useEffect(()=>{
@@ -90,15 +95,17 @@ if(typeof window !== 'undefined'){
     setName(data.userDetail.name)
     setUserbio(data.userDetail.bio)
   }
+  },[data])
 
+
+useEffect(()=>{
+  
   if(imageHolderRef?.current){
     const height = imageHolderRef.current?.offsetWidth*1.777
 
     setImgHeight(height)
   }
-
-  },[data])
-
+},[mainContentDiv])
 
   return (
     <div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',backgroundColor:'rgb(228,228,228)',boxSizing:"border-box",paddingBottom:'30px'}}>
@@ -152,9 +159,24 @@ if(typeof window !== 'undefined'){
                 <Image fill={true}  quality={100} onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
-        <section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'150px',display:'grid',gridTemplateColumns: 'auto auto',gap:'5px',padding:'5px'}}>
-            {data?.userImages.map((d:any)=><div ref={imageHolderRef} style={{display:'flex',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(data.userImages.indexOf(d)+2)%2===0?'column':'column-reverse'}}>
-              <div style={{width:'100%',height:imgHeight ,position:'relative'}}>
+        <section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'150px'}}>
+          <div style={{width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>
+            <div onClick={()=>setMainContentDiv(true)}  style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"24px",height:'24px'}}><Image src={columnIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+            </div>
+            <div onClick={()=>setMainContentDiv(false)} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"24px",height:'24px'}}><Image src={rowIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+            </div>
+            <div style={{width:"35px",height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"24px",height:'24px'}}><Image src={collectionIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+            </div>
+          </div>
+          <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
+            {data?.userImages.map((d:any)=><div ref={imageHolderRef} style={{display:'flex',boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(data.userImages.indexOf(d)+2)%2===0?'column':'column-reverse'}}>
+              <div style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
               <div  style={{width:'100%',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>
@@ -164,6 +186,7 @@ if(typeof window !== 'undefined'){
               <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
               </div>
             </div>)}
+          </div>
         </section>
     </div>
   )

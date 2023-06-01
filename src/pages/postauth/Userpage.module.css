@@ -1,0 +1,23 @@
+.userMainUploads{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:auto auto;
+    gap:5px;
+    padding:5px;
+    position: relative;
+    z-index: 10;
+    transition: grid-template-columns 3.5s ease;
+}
+
+.userMainUploadsColumn{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:auto;
+    gap:5px;
+    padding:5px;
+    position: relative;
+    z-index: 10;
+    transition: grid-template-columns 3.5s ease;
+}
