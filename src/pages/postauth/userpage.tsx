@@ -1,9 +1,13 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
 import menuIcon from '../../iconholder/menu.svg'
 import Image from 'next/image'
 import addIcon from '../../iconholder/addIcon.svg'
 import editIcon from '../../iconholder/editIcon.svg'
+import likeIcon from '../../iconholder/like.svg'
+import tagIcon from '../../iconholder/tag.svg'
+import shareIcon from '../../iconholder/share.svg'
+import bookmarkIcon from '../../iconholder/bookmark.svg'
 import useWindowResize from '@/utils/windowdimension'
 import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
@@ -21,7 +25,7 @@ export async function getServerSideProps(context:any) {
   //https://fashion-r-services.onrender.com
   //http://localhost:5005
   if(id && token){
-    const res = await fetch(`https://fashion-r-services.onrender.com/creator/personal/${id}`,{
+    const res = await fetch(`https://fashion-r-services.onrender.com/content/user`,{
     method: 'GET',  
     headers: {
       'Accept': 'application/json',
@@ -52,18 +56,19 @@ export default function Userpage({data}:any) {
   const router = useRouter()
   const {width,height} = useWindowResize()
   const {viewmobile,setViewMobile,signed,name,username,avatarUrl,setAvatarUrl,setUsername,setName,userbio,setUserbio} = useRetailContext()
-
+  const imageHolderRef = useRef<HTMLDivElement>(null)
+  const [imgHeight,setImgHeight] = useState<any>(0)
   
 
   useEffect(()=>{
 if(typeof window !== 'undefined'){
 
   const id = window.localStorage.getItem('id');
-  if(data?.avatarLink && data?.Username && data?.name){
+  if(data?.userDetail.avatarLink && data?.userDetail.Username && data?.userDetail.name){
     setUserId(id)
-    setAvatarUrl(data.avatarLink)
-    setUsername(data.Username)
-    setName(data.name)
+    setAvatarUrl(data.userDetail.avatarLink)
+    setUsername(data.userDetail.Username)
+    setName(data.userDetail.name)
   }
 
   else{
@@ -80,18 +85,25 @@ if(typeof window !== 'undefined'){
     const id = window.localStorage.getItem('id');
   if(data){
     setUserId(id)
-    setAvatarUrl(data.avatarLink)
-    setUsername(data.Username)
-    setName(data.name)
-    setUserbio(data.bio)
+    setAvatarUrl(data.userDetail.avatarLink)
+    setUsername(data.userDetail.Username)
+    setName(data.userDetail.name)
+    setUserbio(data.userDetail.bio)
   }
+
+  if(imageHolderRef?.current){
+    const height = imageHolderRef.current?.offsetWidth*1.777
+
+    setImgHeight(height)
+  }
+
   },[data])
 
 
   return (
     <div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',backgroundColor:'rgb(228,228,228)',boxSizing:"border-box",paddingBottom:'30px'}}>
-        {showAvatar && <Profilepictures color={data?.color} userId={userId} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
-        {width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${data?.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
+        {showAvatar && <Profilepictures color={data?.userDetail.color} userId={userId} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
+        {width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${data?.userDetail.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px',position:'relative'}}>
                 <Image fill={true}  onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
@@ -140,8 +152,18 @@ if(typeof window !== 'undefined'){
                 <Image fill={true}  quality={100} onClick={()=>setShowAvatar(true)} src={avatarUrl} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
-        <section style={{width:width>1100?'65%':'100%',height:width>1100?'100vh':'75vh',backgroundColor:'red'}}>
-
+        <section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'150px',display:'grid',gridTemplateColumns: 'auto auto',gap:'5px',padding:'5px'}}>
+            {data?.userImages.map((d:any)=><div ref={imageHolderRef} style={{display:'flex',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(data.userImages.indexOf(d)+2)%2===0?'column':'column-reverse'}}>
+              <div style={{width:'100%',height:imgHeight ,position:'relative'}}>
+                  <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
+              </div>
+              <div  style={{width:'100%',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>
+              <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+              <p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+              <p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+              <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+              </div>
+            </div>)}
         </section>
     </div>
   )
