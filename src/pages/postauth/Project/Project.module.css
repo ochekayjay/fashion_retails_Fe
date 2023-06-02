@@ -1,0 +1,26 @@
+
+.itemPop{
+    position:absolute;
+    z-index:1;
+    top:0px;
+    background-color:transparent;
+    left:0px;
+    height:100%;
+    width:100%;
+    animation-name: popShow;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
+
+
+
+
+@keyframes popShow{
+    from{ transform: scale(0)}
+    to{ transform: scale(1);
+        height:auto;
+        width: 100%;
+       }
+  }
