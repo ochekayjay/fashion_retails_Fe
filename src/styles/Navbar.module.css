@@ -14,7 +14,7 @@
     left:0px;
     width:25%;
     background-color:white;
-    height:100vh;
+    min-height:100vh;
     overflow:auto
 }
 
@@ -84,7 +84,7 @@
         z-index:300;
         width:85%;
         background-color:white;
-        height:100vh;
+        min-height:100vh;
         overflow:auto
     
     }
@@ -99,7 +99,7 @@
         top:0px;
         z-index:300000;
         width:350px;
-        height:100vh;
+        min-height:100vh;
     }
 }
 
