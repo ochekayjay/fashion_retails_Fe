@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 
 export default function signin() {
 
-    const {setUsername,setAvatarUrl,setName,setSigned,setId,setUserbio} = useRetailContext()
+    const {setUsername,setAvatarUrl,setName,setSigned,setId,setUserbio,setUserData} = useRetailContext()
     const {width,height} = useWindowResize()
     const [shownormal,setshowNormal] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
@@ -62,6 +62,7 @@ export default function signin() {
             setSigned(true)
             setId(_id)
             setUserbio(bio)
+            setUserData(res)
             push('/postauth/landingpage')
 
         }

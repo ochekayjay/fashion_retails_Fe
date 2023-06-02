@@ -14,7 +14,11 @@ type showMobile = {
     signed:boolean,
     setSigned: any,
     userbio:string,
-    setUserbio: any
+    setUserbio: any,
+    userData: any,
+    setUserData: any,
+    galleryData: any,
+    setGalleryData: any
 }
 
 type ChildrenProps = {
@@ -35,7 +39,11 @@ const retailContext = createContext<showMobile>
   name:'',
   userbio : '',
   setUserbio: ()=>{},
-  username:''})
+  username:'',
+  userData: null,
+  setUserData: ()=>{},
+  galleryData: null,
+  setGalleryData: ()=>{}})
 
 
 
@@ -47,8 +55,10 @@ export const ContextProvider = ({children}:ChildrenProps) => {
     const [avatarUrl, setAvatarUrl] = useState('')
     const [signed,setSigned] = useState(false)
     const [id,setId] = useState('')
+    const [userData,setUserData] = useState(null)
+    const [galleryData,setGalleryData] = useState(null)
   return (
-    <retailContext.Provider value={{viewmobile,setViewMobile,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId}}>
+    <retailContext.Provider value={{galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId}}>
         {children}
     </retailContext.Provider>
   )

@@ -96,6 +96,7 @@ const [newPIUrl, setNewPIUrl] = useState('')
 const previewCanvasRef = useRef<HTMLCanvasElement>(null)
 const [firstImage,setFirstImage] = useState('')
 const firstImageRef = useRef<HTMLInputElement>(null)
+const {userData,setUserData} = useRetailContext()
 
 
 
@@ -277,32 +278,17 @@ const handleFileChange = (e:any) => {
 
 //useEffect for refreshing site and setting states to be edited
     useEffect(()=>{
-      //setDataChecker(data)
-      //setNewName(data?.name)
+
+      setDominantColor(userData.color)
+      setEnlistUserObj({ name:userData.name,bio:userData.bio,hashtag:userData.hashtag,avatarUrl:userData.avatarLink})
+     
         if(typeof window !== 'undefined'){
-          //setDataChecker(data)
-          //setNewName(data?.name)
-          console.log('abc')
           const id = window.localStorage.getItem('id');
-          console.log(data)
+          
           if(data !== null){
-            console.log('def')
-            console.log(data.name)
-            const dat = {...enlistUserObj,name :data.name}
             setUserId(id)
-            setAvatarUrl(data.avatarLink)
-            setUsername(data.Username)
-            setName(data.name)
-            setEnlistUserObj({...enlistUserObj,bio:data?.bio,hashtag:data?.hashtag,name :data.name})
-            //setEnlistUserObj({...enlistUserObj,bio : data?.bio})
-            //setEnlistUserObj({...enlistUserObj,hashtags : data?.hashtags})
           }
         
-          else if(data!==null){
-            console.log('manifesting...')
-            const {name} = data
-            //setDataChecker(true)
-          }
           else{
             console.log('ghi')
             const id = window.localStorage.getItem('id');
