@@ -124,7 +124,7 @@ useEffect(()=>{
   }
 },[mainContentDiv,galleryData,mainContentDiv])
 
-  return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',backgroundColor:'rgb(228,228,228)',boxSizing:"border-box",paddingBottom:'30px'}}>
+  return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
         {showAvatar && <Profilepictures color={userData.color} userId={userData._id} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
        
        {userData? <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
@@ -154,7 +154,7 @@ useEffect(()=>{
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
+        <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center',position:'fixed',top:'0px',backgroundColor:'white',zIndex:"50000000",width:"100%",padding:'20px'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.Username}</p>
@@ -179,9 +179,13 @@ useEffect(()=>{
         </>:<p>trying stuff</p>}
         
 
-        <div style={{width:'85%',height:'130px',display:'flex',overflow:'auto',padding:"10px",justifyContent:'space-around',flexWrap:'wrap',boxShadow:'1px 1px 5px rgb(91, 90, 90)',margin:"15px auto",marginTop:'150px'}}>
-                {userData.hashtag.split(' ').map((hash:any)=><p style={{width:'45%',margin:'15px 5px',height:"50px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',alignItems:"center",justifyContent:"center"}}>{hash}</p>)}
-            </div>
+        {userData?
+        <div style={{marginTop:'150px',width:'100%',height:'auto'}}>
+        <p style={{width:'85%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>Hashtags</p>
+        <div style={{width:'85%',height:'130px',display:'flex',overflow:'auto',padding:"10px",justifyContent:'space-around',flexWrap:'wrap',backgroundColor:'rgb(228,228,228)',margin:"15px auto"}}>
+                {userData.hashtag.split(' ').map((hash:any)=><p style={{width:'45%',margin:'15px 5px',height:"50px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',display:'flex',alignItems:"center",justifyContent:"center"}}>{hash}</p>)}
+        </div>
+        </div>:<p>problem</p>}
 
         {galleryData?<section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'15px'}}>
           <div style={{width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>

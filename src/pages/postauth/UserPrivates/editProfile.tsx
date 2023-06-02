@@ -279,8 +279,8 @@ const handleFileChange = (e:any) => {
 //useEffect for refreshing site and setting states to be edited
     useEffect(()=>{
 
-      setDominantColor(userData.color)
-      setEnlistUserObj({ name:userData.name,bio:userData.bio,hashtag:userData.hashtag,avatarUrl:userData.avatarLink})
+      setDominantColor(userData?.color)
+      setEnlistUserObj({ name:userData?.name,bio:userData?.bio,hashtag:userData?.hashtag,avatarUrl:userData?.avatarLink})
      
         if(typeof window !== 'undefined'){
           const id = window.localStorage.getItem('id');
