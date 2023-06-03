@@ -8,11 +8,37 @@ import { useRetailContext } from '@/context/context';
 import Image from 'next/image';
 
 
-export default function Project() {
+
+export async function getServerSideProps(context:any){
+  const { params,query} = context
+  const id = params?.id
+  const token = query?.token
+
+  if(id && token){
+    const res = await fetch(`https://fashion-r-services.onrender.com/content/user/${id}`,{
+    method: 'GET',  
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+        }
+    });
+    const data = await res.json()
+    
+  return { props: { data} };
+  }
+
+  else{
+    const data = null
+    return { props: { data} };
+  }
+}
+
+export default function Project({data}:any) {
     const router = useRouter()
     const { query: { id } } = router;
     const {width,height} = useWindowResize()
-    const {focusedItem,userData} = useRetailContext()
+    const {focusedItem,userData,setFocusedItem,setUserData} = useRetailContext()
     const imageHolderRef = useRef<HTMLDivElement>(null)
     const [dynamicDimension,setDynamicDimension] = useState<any>({x:0,y:0})
     const [imageLoader,setImageLoader] = useState<boolean>(false)
@@ -20,23 +46,49 @@ export default function Project() {
 
 
     useEffect(()=>{
-      console.log('a in userp')
-      console.log(focusedItem)
-      if(imageHolderRef?.current){
-    
-        console.log('b in userp')
-        console.log(focusedItem)
-        console.log(focusedItem.itemsArray[0].distance.x)
-        const newWidth = imageHolderRef.current?.offsetWidth
-        const newHeight = imageHolderRef.current?.offsetHeight
-    
-        setDynamicDimension({x:newWidth,y:newHeight})
+      console.log(userData)
+  if(typeof window !== 'undefined'){
+  
+    const id = window.localStorage.getItem('id');
+    if(data){
+      
+    }
+  
+    else{
+      const { query: { id } } = router;
+      const token = window.localStorage.getItem('token')
+      const queryParam = token ? `?token=${token}` : '';
+      router.push(`../../postauth/Project/${id}${queryParam}`)
+    }
+  }
+      
+    },[])
+
+
+
+
+    useEffect(()=>{
+      if(data){
+
+        setFocusedItem(data.content)
+        setUserData(data.userDetail)
+        if(imageHolderRef?.current){
+      
+          console.log('b in userp')
+          console.log(focusedItem)
+          console.log(focusedItem.itemsArray[0].distance.x)
+          const newWidth = imageHolderRef.current?.offsetWidth
+          const newHeight = imageHolderRef.current?.offsetHeight
+      
+          setDynamicDimension({x:newWidth,y:newHeight})
+        }
       }
-    },[imageLoader])
+    },[imageLoader,data])
     
 
   return (
-    <div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem.backgroundColor},white)`,padding:'0px'}}>
+    <>
+    {focusedItem?<div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem.backgroundColor},white)`,padding:'0px'}}>
         <section style={{width:width>500?'auto':'100%',minHeight:width>500?'auto':'100vh',padding:'15px',position:'relative',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
         {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
         {hideItem?<div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
@@ -126,7 +178,9 @@ export default function Project() {
             </div>
         </div>
         </section>
-    </div>
+    </div>:<p>''</p>}
+
+    </>
   )
 }
 
