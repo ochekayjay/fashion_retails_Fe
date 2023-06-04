@@ -5,6 +5,7 @@ import styles from './Project.module.css'
 import { Carousel } from '@mantine/carousel';
 import useWindowResize from '@/utils/windowdimension';
 import { useRetailContext } from '@/context/context';
+import mailicon from '../../../iconholder/mailIcon.svg'
 import Image from 'next/image';
 
 
@@ -111,47 +112,48 @@ export default function Project({data}:any) {
                 </Carousel.Slide>
                 {focusedItem.itemsArray.map((item:any)=> 
                 <Carousel.Slide>
-                    <div style={{height: width*0.8*1.7777, width: width*0.8,color:'white',backgroundColor:focusedItem.backgroundColor,display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
+                    <div style={{height: '100%',padding:'15px 0px',paddingBottom:'20px',boxSizing:'border-box', width: width*0.8,color:'white',backgroundColor:focusedItem.backgroundColor,display:item.distance?.x?"flex":"none",flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:"center",width:'100%',height:'100%'}}>
-                            <p>Item Number</p>
-                            <p style={{display:item.itemNumber===''?'none':'block'}}>{item.itemNumber}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+                            <p>Item Number :</p>
+                            <p style={{display:'block',overflow:'hidden'}}>{item.itemNumber?item.itemNumber:''}</p>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:"center",width:'100%',height:'100%'}}>
-                            <p>Item Name</p>
-                            <p style={{display:item.itemName===''?'none':'block'}}>{item.itemName}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+                            <p>Item Name :</p>
+                            <p style={{display:'block',overflow:'hidden'}}>{item.itemName?item.itemName:''}</p>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:"center",width:'100%',height:'100%'}}>
-                            <p>Email</p>
-                            <p style={{display:item.Email===''?'none':'block'}}>{item.Email}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+                            <p>Email :</p>
+                          
+                            <a href={item.Email?item.Email:''}><Image alt='' src={mailicon} style={{width:'30px',height:'30px',display:'flex',alignItems:'center',justifyContent:"center"}}/></a>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:'center',width:'100%',height:'100%'}}>
-                            <p>Company Name</p>
-                            <p style={{display:item.companyName===''?'none':'block'}}>{item.companyName}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:'center',width:'100%',height:'100%'}}>
+                            <p>Company Name :</p>
+                            <p style={{display:'block',overflow:'hidden'}}>{item.companyName?item.companyName:''}</p>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:"black",position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:'center',width:'100%',height:'100%'}}>
-                            <p>Phone</p>
-                            <p style={{display:item.Phone===''?'none':'block'}}>{item.Phone}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:'10px',boxSizing:'border-box',alignItems:'center',width:'100%',height:'100%'}}>
+                            <p>Phone :</p>
+                            <p style={{display:item.Phone===''?'none':'block'}}>{item.Phone?item.Phone:''}</p>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:"black",position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
-                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-around',alignItems:'center',width:'100%',height:'100%'}}>
-                            <p>Delivery</p>
-                            <p style={{display:item.Delivery===''?'none':'block'}}>{item.Delivery}</p>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:'10px',boxSizing:'border-box',alignItems:'center',width:'100%',height:'100%'}}>
+                            <p>Delivery :</p>
+                            <p style={{display:'block',overflow:'hidden'}}>{item.Delivery?item.Delivery:''}</p>
                           </div>
                         </div>
                     </div>

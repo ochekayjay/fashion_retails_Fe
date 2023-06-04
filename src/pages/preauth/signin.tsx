@@ -52,6 +52,7 @@ export default function signin() {
             }); 
         const res = await createdCreator.json()
         if(res.status==='successful'){
+            console.log(res.status)
             const {Username,name,avatarLink,Token,_id,bio} = res
             window.localStorage.setItem('token',Token)
             window.localStorage.setItem('id',_id)
@@ -77,6 +78,7 @@ export default function signin() {
     }
 
     catch(error){
+        console.log('error here')
         setIsLoading(false)
     }
        } }

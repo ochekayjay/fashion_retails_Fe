@@ -114,7 +114,7 @@ export default function CreateProject() {
 
   const [enlistUserObj,setEnlistUserObj] = useState<any>({
     title:"",
-    photoDescription: "",
+    projectDescription: "",
     hashtag:"",
     avatarUrl:'',
 })
@@ -420,7 +420,7 @@ const formData = new FormData()
   setIsLoading(true)
   
   formData.append('title',enlistUserObj.title)
-  formData.append('photoDescription',enlistUserObj.photoDescription)
+  formData.append('projectDescription',enlistUserObj.projectDescription)
   formData.append('hashtag',enlistUserObj.hashtag)
   formData.append('itemArray',JSON.stringify(itemArray))
   file!==''?formData.append('backgroundColor',dominantColor): ""
@@ -712,18 +712,18 @@ const handleFileChange = (e:any) => {
         </div>
             <div style={{height:"50px",width:width>500?'350px':width*0.80,margin:'30px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Title &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input value={enlistUserObj?.title} type='text' placeholder="title" name='title' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminput:enlistUserObj.name===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input value={enlistUserObj?.title} type='text' placeholder="title" name='title' onChange={(event)=>{updateUserObj(event)}} className={styles.forminput}/>
             </div>
 
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Photo Description &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={enlistUserObj?.bio} placeholder='description' name='photo descr' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
+                            <textarea value={enlistUserObj.projectDescription} placeholder='description' name='photo descr' onChange={(event)=>{updateUserObj(event)}} className={styles.forminputTextArea}/>
             </div>
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Hashtags &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateUserObj(event)}} className={shownormal?styles.forminputTextArea:enlistUserObj.bio===""?styles.forminputTextAreaUnfilled: styles.forminputTextArea}/>
+                            <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateUserObj(event)}} className={styles.forminputTextArea}/>
             </div>
 
             <p onClick={(event)=>submitUserInfo(event,enlistUserObj,itemArray)} style={{width:'100px',cursor:'pointer',height:'50px',display:'flex',alignItems:"center",justifyContent:"center",backgroundColor:'white',margin:'30px auto',fontFamily:"NexaTextight",borderRadius:'7px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>{isLoading?<Loader color="black" size="sm" variant="bars" />:'Save'}</p>
