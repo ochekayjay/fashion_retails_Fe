@@ -9,6 +9,9 @@ import likeIcon from '../../iconholder/like.svg'
 import tagIcon from '../../iconholder/tag.svg'
 import shareIcon from '../../iconholder/share.svg'
 import bookmarkIcon from '../../iconholder/bookmark.svg'
+import smalleditIcon from '../../iconholder/smallEditIcon.svg'
+import smalldeleteicon from '../../iconholder/smallDeleteIcon.svg'
+import searchIcon from '../../iconholder/search.svg'
 import rowIcon from '../../iconholder/rows.svg'
 import columnIcon from '../../iconholder/column.svg'
 import collectionIcon from '../../iconholder/bookmarkCollection.svg'
@@ -60,10 +63,12 @@ export default function Userpage({data}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {setFocusedItem,galleryData,setGalleryData,userData,setUserData,name,username,avatarUrl,setAvatarUrl,setUsername,setName,userbio,setUserbio} = useRetailContext()
+  const {setSearchedUserId,setUserHashatags,setFocusedItem,galleryData,setGalleryData,userData,setUserData} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
+  const [moreOptions,setMoreOptions] = useState<any>(false)
+  const [itemClicked,setItemClicked] = useState<any>('')
   
 
   useEffect(()=>{
@@ -73,9 +78,7 @@ if(typeof window !== 'undefined'){
   const id = window.localStorage.getItem('id');
   if(data?.userDetail.avatarLink && data?.userDetail.Username && data?.userDetail.name){
     setUserId(id)
-    setAvatarUrl(data.userDetail.avatarLink)
-    setUsername(data.userDetail.Username)
-    setName(data.userDetail.name)
+
   }
 
   else{
@@ -123,6 +126,13 @@ useEffect(()=>{
     setImgHeight(height)
   }
 },[mainContentDiv,galleryData,mainContentDiv])
+
+const searchUserFunc = ()=>{
+  const hashArray = userData.hashtag.split(' ')
+    setSearchedUserId(userData._id)
+    setUserHashatags(hashArray)
+    router.push('./Search/searchUserContent')
+}
 
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
         {showAvatar && <Profilepictures color={userData.color} userId={userData._id} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
@@ -179,13 +189,14 @@ useEffect(()=>{
         </>:<p>trying stuff</p>}
         
 
-        {userData?
-        <div style={{marginTop:'150px',width:'100%',height:'auto'}}>
-        <p style={{width:'85%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>Hashtags</p>
-        <div style={{width:'85%',height:'130px',display:'flex',overflow:'auto',padding:"10px",justifyContent:'space-around',flexWrap:'wrap',backgroundColor:'rgb(228,228,228)',margin:"15px auto"}}>
-                {userData.hashtag.split(' ').map((hash:any)=><p style={{width:'45%',margin:'15px 5px',height:"50px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',display:'flex',alignItems:"center",justifyContent:"center"}}>{hash}</p>)}
+       
+
+      {userData && <div style={{marginTop:'150px',width:'100%',height:'auto'}}>
+        <p style={{width:'85%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>Search</p>
+        <div onClick={()=> searchUserFunc()} style={{width:'85%',position:'relative',height:'40px',borderRadius:'15px',padding:"10px",backgroundColor:'rgb(228,228,228)',margin:"15px auto"}}>
+        <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
         </div>
-        </div>:<p>problem</p>}
+        </div>}
 
         {galleryData?<section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'15px'}}>
           <div style={{width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>
@@ -208,15 +219,24 @@ useEffect(()=>{
               <div onClick={()=>{setFocusedItem(d);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
-              <div  style={{width:"35px",cursor:'pointer',height:'35px',position:'absolute',bottom:'10px',right:'10px',display:mainContentDiv?'none':'flex',alignItems:"center",justifyContent:'center'}}>
-                <p style={{width:"24px",height:'24px'}}><Image src={moreIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.5',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
-            </div>
+              {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
+                <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+              </div>: null}
+              
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
-              <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-              <p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-              <p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-              <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+              </div>
+              </div>
+              <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'absolute',bottom:'10px',right:'10px',display:mainContentDiv?'none':'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
               </div>
             </div>)}
           </div>

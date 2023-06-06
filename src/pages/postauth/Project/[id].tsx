@@ -166,8 +166,8 @@ export default function Project({data}:any) {
         </div>
         <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
           <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
-          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBoldNexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
-          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.hashtag}</p>
+          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
+          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span style={{margin:'0px 5px'}}>{hash}</span>)}</p>
 
         </div>
 

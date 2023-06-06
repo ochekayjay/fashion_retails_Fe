@@ -241,10 +241,6 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
   }
   console.log(`${JSON.stringify(res)} got it out`)
   } 
-  
- 
-  
-
 }
 
 
