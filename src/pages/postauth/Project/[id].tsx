@@ -107,9 +107,7 @@ export default function Project({data}:any) {
         setUserData(data.userDetail)
         if(imageHolderRef?.current){
       
-          console.log('b in userp')
-          console.log(focusedItem)
-          console.log(focusedItem.itemsArray[0].distance.x)
+          
           const newWidth = imageHolderRef.current?.offsetWidth
           const newHeight = imageHolderRef.current?.offsetHeight
       
