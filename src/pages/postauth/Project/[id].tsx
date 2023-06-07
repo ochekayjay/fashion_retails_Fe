@@ -58,7 +58,7 @@ export default function Project({data}:any) {
       const { query: { id } } = router;
       //const token = window.localStorage.getItem('token')
       //const queryParam = token ? `?token=${token}` : '';
-      if(!focusedItem && !userData){
+      if(!focusedItem || !userData){
 
         router.push(`../../postauth/Project/${id}`)
       }
@@ -91,10 +91,10 @@ export default function Project({data}:any) {
 
   return (
     <>
-    {focusedItem?<div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem.backgroundColor},white)`,padding:'0px'}}>
+  <div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem.backgroundColor},white)`,padding:'0px'}}>
         <section style={{width:width>500?'auto':'100%',minHeight:width>500?'auto':'100vh',padding:'15px',position:'relative',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
         {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
-        {hideItem?<div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+        {focusedItem? <>{hideItem?<div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
             <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
                 <Image fill={true} src={focusedItem.imageLink} onLoadingComplete={()=>setImageLoader(!imageLoader)} alt={focusedItem.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
             </div>
@@ -161,28 +161,28 @@ export default function Project({data}:any) {
                     </div>
                 </Carousel.Slide>)}
           </Carousel>
-        }
-        <div style={{display:'flex',justifyContent:'space-around',marginTop:'25px',width:width*0.8,height:'auto'}}>
-          <p onClick={()=>setHideItem(false)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>show Items</p>
-          <p onClick={()=>setHideItem(true)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>Hide Items</p>
-        </div>
-        <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
-          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
-          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
-          <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span style={{margin:'0px 5px'}}>{hash}</span>)}</p>
+        }<div style={{display:'flex',justifyContent:'space-around',marginTop:'25px',width:width*0.8,height:'auto'}}>
+        <p onClick={()=>setHideItem(false)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>show Items</p>
+        <p onClick={()=>setHideItem(true)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>Hide Items</p>
+      </div>
+      <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span style={{margin:'0px 5px'}}>{hash}</span>)}</p>
 
-        </div>
+      </div></>
+        :<p>''</p>}
 
-        <div style={{margin:'20px auto',width:width*0.8,display:'flex',justifyContent:"space-around",alignItems:"center",boxSizing:'border-box',flexDirection:'column',height:'auto'}}>
+        {userData?<div style={{margin:'20px auto',width:width*0.8,display:'flex',justifyContent:"space-around",alignItems:"center",boxSizing:'border-box',flexDirection:'column',height:'auto'}}>
 
             <div onClick={()=>router.push(`../UserPrivates/${userData._id}`)} style={{height:'80px',cursor:'pointer',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image quality={100} fill={true} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={userData.avatarLink} alt="user avatar"/></div>
             <div style={{height:'auto',display:'flex',flexDirection:'column',justifyContent:"space-around",marginTop:'15px',alignItems:"center"}}>
               <p onClick={()=>router.push(`../UserPrivates/${userData._id}`)} style={{fontFamily:"NexaTextLight",cursor:'pointer',fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{userData.Username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{userData.name}</p>
             </div>
-        </div>
+        </div>:<p>''</p>}
         </section>
-    </div>:<p>''</p>}
+    </div>
 
     </>
   )
