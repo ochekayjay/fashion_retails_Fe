@@ -291,7 +291,10 @@ const handleFileChange = (e:any) => {
             console.log(id)
             const token = window.localStorage.getItem('token')
             const queryParam = token ? `?id=${id}&token=${token}` : '';
-            router.push(`../../postauth/UserPrivates/editProfile${queryParam}`)
+            if(!userData){
+
+              router.push(`../../postauth/UserPrivates/editProfile${queryParam}`)
+            }
           }
         }
             
