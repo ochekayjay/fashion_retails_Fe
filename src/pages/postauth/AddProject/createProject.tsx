@@ -215,7 +215,7 @@ if(mainHolder.current){
 
 
         const dat = {...itemHolder[id-1],itemNumber:id,verified:false,distance : {x:leftValue/mainHolder.current.offsetWidth,y:topValue/mainHolder.current.offsetHeight}}
-        console.log(dat)
+        
         itemHolder[id-1] = dat
         
         
@@ -244,14 +244,9 @@ if(mainHolder.current){
 
   const handleDragStart = (id:any)=>(e:any) => {
     
-    console.log('e')
-    console.log(id)
     const { offsetLeft, offsetTop } = reffs[id-1].current!;
         const x = e.clientX - offsetLeft;
         const y = e.clientY - offsetTop;
-
-        console.log(x, y)
-
         setOffset({ x, y });
         setCurrentRef(reffs[id-1])
         setIsDragging(true);         
@@ -269,12 +264,7 @@ if(mainHolder.current){
       const { top, left } = droppableRef.current.getBoundingClientRect()!;
       const x = e.clientX - left - 12.5;
       const y = e.clientY - top - 12.5;
-      console.log( left)
-      console.log( top)
-      console.log(e.clientX)
-      console.log(e.clientY)
-      console.log(x)
-      console.log(y)
+   
       if(currentRef?.current){
           currentRef.current.style.left = `${x}px`;
           currentRef.current.style.top = `${y}px`;
@@ -326,7 +316,7 @@ const onCancel = ()=>{
 const extractColor = async(url:string)=>{
   const colorThief = new ColorThief();
   const dominantColor = await colorThief.getColorAsync(url);
-  console.log(dominantColor)
+  
   setDominantColor(dominantColor);
 
   
@@ -380,8 +370,6 @@ function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
 function handleUpload(canvasRef:any) {
   const canvas = canvasRef.current;
   canvas.toBlob((blob:any) => {
-    console.log('b blob')
-    console.log(`${blob} data`)
     const file = new File([blob], 'filename.png', { type: 'image/jpg' });; // 'filename.png' specifies the desired filename
     setFile(file)
  
@@ -389,15 +377,13 @@ function handleUpload(canvasRef:any) {
 }
 const updateUserObj = (event:any)=>{
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
-    console.log(enlistUserObj)
+    
     
 }
 
 const updateList =  (event:any,id:any)=>{
-  console.log('abc')
   let itemH = [...itemArray]
     const dat = {...itemH[id],[event.target.name] : event.target.value}
-    console.log(dat)
     itemH[id] = dat
     
   setItemArray(itemH) 
@@ -413,8 +399,7 @@ const updateList =  (event:any,id:any)=>{
 
 const submitUserInfo = async (event:any,enlistUserObj:any,itemArray:any)=>{
   event.preventDefault()
-  
-console.log(enlistUserObj)
+  setItemArray((prev:any)=>prev.filter(prev.distance.x && prev.itemName!==''))
 const formData = new FormData()
   const token = window.localStorage.getItem('token')
   setIsLoading(true)
@@ -425,27 +410,23 @@ const formData = new FormData()
   formData.append('itemArray',JSON.stringify(itemArray))
   file!==''?formData.append('backgroundColor',dominantColor): ""
   file!==''?formData.append('avatar',file): ""
-  console.log(formData)
-  console.log(token)
+ 
 
 const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
 const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Content-Type': 'application/json',Authorization: `Bearer ${token}`}}
 
   //'https://fashion-r-services.onrender.com/creator/editProfile
   if(file!==''){
-    console.log('a')
 
     const formDataObject = Object.fromEntries(formData.entries());
-
-    console.log(formDataObject);
 
     const createdCreator =  await fetch('https://fashion-r-services.onrender.com/content/creation', {...withImage,body:formData});
 
     if(createdCreator){
-      console.log(createdCreator)
+      
         setIsLoading(false)
     }
-   console.log(createdCreator)
+   
   }
   else{
 
@@ -457,19 +438,6 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
 
 }
 
-
-
-const handleFileChange = (e:any) => {
-  console.log('in')
-  const file = e.target.files[0];
-  const imageUrl = URL.createObjectURL(file);
-  //console.log(imageUrl)
-  setFile(file)
-  setImageUrl(imageUrl);
-  setCropImage(true)
-  //setShowImage(true)
-
-};
 
 
 
@@ -547,11 +515,9 @@ const handleFileChange = (e:any) => {
 
         //effect to be display crop section and get dominant colors
            useEffect( ()=>{
-            console.log(enlistUserObj)
             const extractColor = async(url:string)=>{
             const colorThief = new ColorThief();
             const dominantColor = await colorThief.getColorAsync(url);
-            console.log(dominantColor)
             setDominantColor(dominantColor);
             setCropImage(!cropImage)
             setShowImage(!showImage)

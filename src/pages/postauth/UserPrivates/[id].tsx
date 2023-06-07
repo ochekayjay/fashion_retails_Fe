@@ -136,7 +136,7 @@ const searchUserFunc = ()=>{
   const hashArray = userData.hashtag.split(' ')
     setSearchedUserId(userData._id)
     setUserHashatags(hashArray)
-    router.push('./Search/searchUserContent')
+    router.push('../Search/searchUserContent')
 }
 
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
