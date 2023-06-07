@@ -148,14 +148,14 @@ export default function Project({data}:any) {
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
-                            <p>Item Number :</p>
+                            <p>Number :</p>
                             <p style={{display:'block',overflow:'hidden'}}>{item.itemNumber?item.itemNumber:''}</p>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
-                            <p>Item Name :</p>
+                            <p>Item:</p>
                             <p style={{display:'block',overflow:'hidden'}}>{item.itemName?item.itemName:''}</p>
                           </div>
                         </div>
@@ -170,7 +170,7 @@ export default function Project({data}:any) {
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:'center',width:'100%',height:'100%'}}>
-                            <p>Company Name :</p>
+                            <p>Company:</p>
                             <p style={{display:'block',overflow:'hidden'}}>{item.companyName?item.companyName:''}</p>
                           </div>
                         </div>
@@ -198,7 +198,7 @@ export default function Project({data}:any) {
       <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
-        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span onClick={()=>filterbyHash(hash)} style={{margin:'0px 5px'}}>{hash}</span>)}</p>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span onClick={()=>filterbyHash(hash)} style={{margin:'0px 5px',color:'blue'}}>{hash}</span>)}</p>
 
       </div></>
         :<p>''</p>}
