@@ -1,21 +1,20 @@
 import React,{useEffect,useState,useRef} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
-import menuIcon from '../../iconholder/menu.svg'
 import styles from './Userpage.module.css'
 import Image from 'next/image'
-import addIcon from '../../iconholder/addIcon.svg'
-import editIcon from '../../iconholder/editIcon.svg'
-import likeIcon from '../../iconholder/like.svg'
-import tagIcon from '../../iconholder/tag.svg'
-import shareIcon from '../../iconholder/share.svg'
-import bookmarkIcon from '../../iconholder/bookmark.svg'
-import smalleditIcon from '../../iconholder/smallEditIcon.svg'
-import smalldeleteicon from '../../iconholder/smallDeleteIcon.svg'
-import searchIcon from '../../iconholder/search.svg'
-import rowIcon from '../../iconholder/rows.svg'
-import columnIcon from '../../iconholder/column.svg'
-import collectionIcon from '../../iconholder/bookmarkCollection.svg'
-import moreIcon from '../../iconholder/moreIcon.svg'
+import addIcon from '../../../iconholder/addIcon.svg'
+import editIcon from '../../../iconholder/editIcon.svg'
+import likeIcon from '../../../iconholder/like.svg'
+import tagIcon from '../../../iconholder/tag.svg'
+import shareIcon from '../../../iconholder/share.svg'
+import bookmarkIcon from '../../../iconholder/bookmark.svg'
+import smalleditIcon from '../../../iconholder/smallEditIcon.svg'
+import smalldeleteicon from '../../../iconholder/smallDeleteIcon.svg'
+import searchIcon from '../../../iconholder/search.svg'
+import rowIcon from '../../../iconholder/rows.svg'
+import columnIcon from '../../../iconholder/column.svg'
+import collectionIcon from '../../../iconholder/bookmarkCollection.svg'
+import moreIcon from '../../../iconholder/moreIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
 import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
@@ -23,22 +22,23 @@ import Profilepictures from '@/utils/Pictures/profilepictures'
 
 
 export async function getServerSideProps(context:any) {
-  const { query } = context;
+  const { params,query} = context
+
+  const id = params?.id
   // Fetch data from external API
-  const id = query?.id
-  const token = query?.token
+
 
   console.log(id)
-  console.log(token)
+
   //https://fashion-r-services.onrender.com
   //http://localhost:5005
-  if(id && token){
-    const res = await fetch(`https://fashion-r-services.onrender.com/content/user`,{
+  if(id){
+    const res = await fetch(`https://fashion-r-services.onrender.com/content/user/contents/${id}`,{
     method: 'GET',  
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+    
         }
     });
     const data = await res.json()
@@ -82,13 +82,14 @@ if(typeof window !== 'undefined'){
   }
 
   else{
-    const id = window.localStorage.getItem('id');
-    const token = window.localStorage.getItem('token')
-    const queryParam = token ? `?id=${id}&token=${token}` : '';
+    const { query: { id } } = router;
+    //const id = window.localStorage.getItem('id');
+    //const token = window.localStorage.getItem('token')
+    //const queryParam = token ? `?id=${id}&token=${token}` : '';
 
     if(!userData && !galleryData){
 
-      router.push(`../../postauth/userpage${queryParam}`)
+      router.push(`../../postauth/userpage${id}`)
     }
   }
 }
@@ -163,8 +164,8 @@ const searchUserFunc = ()=>{
             </div>
 
             <div style={{height:"150px",width:'350px',display:'flex',flexDirection:'column',alignItems:"center",justifyContent:"space-around",marginBottom:'30px'}}>
-              <section onClick={()=> router.push('./AddProject/createProject')} style={{width:'70%',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
-              <section onClick={()=>router.push('./UserPrivates/editProfile')} style={{width:'70%',cursor:'pointer',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
+              <section onClick={()=> router.push('../AddProject/createProject')} style={{width:'70%',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
+              <section onClick={()=>router.push('./editProfile')} style={{width:'70%',cursor:'pointer',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
             </div>
 
         </section>:
@@ -182,8 +183,8 @@ const searchUserFunc = ()=>{
             </div>
 
             <div style={{width:"90%",boxSizing:"border-box",marginTop:'40px',display:'flex',alignItems:"center",justifyContent:"space-around"}}>
-              <section onClick={()=> router.push('./AddProject/createProject')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
-              <section onClick={()=>router.push('./UserPrivates/editProfile')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',cursor:'pointer',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
+              <section onClick={()=> router.push('../AddProject/createProject')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
+              <section onClick={()=>router.push('./editProfile')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',cursor:'pointer',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
             </div>
 
             <div style={{boxShadow:'1px 1px 5px rgb(91, 90, 90)',position:'absolute',bottom:'-80px',left:'10px',border:'3px solid white',borderRadius:"15px",width:'150px',backgroundColor:"white",height:'150px'}}>
@@ -220,7 +221,7 @@ const searchUserFunc = ()=>{
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {galleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
-              <div onClick={()=>{setFocusedItem(d);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
+              <div onClick={()=>{setFocusedItem(d);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>

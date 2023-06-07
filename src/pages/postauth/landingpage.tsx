@@ -2,7 +2,7 @@
 import React, {useState,useEffect,useRef} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
 import { useRouter } from 'next/router'
-import styles from './Userpage.module.css'
+import styles from './UserPrivates/Userpage.module.css'
 import menuIcon from '../../iconholder/menu.svg'
 import rowIcon from '../../iconholder/rows.svg'
 import columnIcon from '../../iconholder/column.svg'
