@@ -35,7 +35,7 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
         @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&display=swap');
       </style>
     </Head>
-    <section className={width>800?styles.navMainHolder:viewmobile?styles.navMainMobile:styles.navMobileOf}>
+    <section className={width>800?styles.navMainHolder:viewmobile?styles.navMainMobile:styles.navMobileOff}>
         <div style={{width:'100%',margin:'20px auto',display:'flex',justifyContent:'space-between',padding:'15px 10px',alignItems:"center",height:'40px'}}>
         <p style={{width:'80%',alignItems:'center',display:'flex',justifyContent:'left',padding:'10px 0px 0px',fontSize:width>800?'30px':'20px',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
           <span style={{padding:'10px',width:'auto',borderRadius:"50%",display:'flex',alignItems:'center',justifyContent:'center'}}><Image alt='test' src={creatorIcon}/></span>
@@ -46,6 +46,7 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
         </p>
         </div>
 
+      <div style={{width:'100%',minHeight:'100vh',overflow: 'auto'}}>
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='searchCreator' src={seachcreatorIcon}/></span><span className={styles.navlogospan}>Search for Creators</span></p>
           <p style={{width:'80%',position:'relative',height:'50px',marginTop:'15px',borderRadius:'10px'}}>
@@ -65,7 +66,7 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
               <p style={{fontFamily:"NexaTextLight",fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{name}</p>
               <Link href={'../../postauth/userpage'}>
-                <p style={{padding:'5px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',borderRadius:"3px",textAlign:"center",width:'60%',margin:'0px auto'}}>profile</p>
+                <p onClick={()=>setViewMobile(!viewmobile)} style={{padding:'5px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',borderRadius:"3px",textAlign:"center",width:'60%',margin:'0px auto'}}>profile</p>
               </Link>
               
             </div>
@@ -74,10 +75,11 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
       </div>:
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>Become a Creator</span></p>
-          <Link href={'../../preauth/signup'}><p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signupIcon} alt='signup'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN UP</span></p></p></Link>
-          <Link href={'../../preauth/signin'}><p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signinIcon} alt='signin'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN IN</span></p></p></Link>
+          <Link href={'../../preauth/signup'}><p onClick={()=>setViewMobile(!viewmobile)} className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signupIcon} alt='signup'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN UP</span></p></p></Link>
+          <Link href={'../../preauth/signin'}><p onClick={()=>setViewMobile(!viewmobile)} className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signinIcon} alt='signin'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN IN</span></p></p></Link>
           <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
         </div>}
+        </div>
     </section>
     </>
   )

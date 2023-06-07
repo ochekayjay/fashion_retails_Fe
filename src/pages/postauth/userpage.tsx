@@ -85,7 +85,11 @@ if(typeof window !== 'undefined'){
     const id = window.localStorage.getItem('id');
     const token = window.localStorage.getItem('token')
     const queryParam = token ? `?id=${id}&token=${token}` : '';
-    router.push(`../../postauth/userpage${queryParam}`)
+
+    if(!userData && !galleryData){
+
+      router.push(`../../postauth/userpage${queryParam}`)
+    }
   }
 }
     

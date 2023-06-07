@@ -59,7 +59,10 @@ export default function Project({data}:any) {
       const { query: { id } } = router;
       const token = window.localStorage.getItem('token')
       const queryParam = token ? `?token=${token}` : '';
-      router.push(`../../postauth/Project/${id}${queryParam}`)
+      if(!focusedItem && !userData){
+
+        router.push(`../../postauth/Project/${id}${queryParam}`)
+      }
     }
   }
       

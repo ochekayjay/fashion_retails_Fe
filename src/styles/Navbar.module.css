@@ -14,7 +14,7 @@
     left:0px;
     width:25%;
     background-color:white;
-    min-height:100vh;
+    height:100vh;
     overflow:auto
 }
 
@@ -81,6 +81,8 @@
         position:absolute;
         display: block;
         left:0px;
+        bottom:0px;
+        top: 0px;
         z-index:300;
         width:85%;
         background-color:white;
@@ -96,10 +98,13 @@
         display:block;
         background-color:white;
         overflow: auto;
+        position: fixed;
         top:0px;
+        bottom: 0px;
+        left: 0px;
         z-index:300000;
         width:350px;
-        min-height:100vh;
+        height:100%;
     }
 }
 
