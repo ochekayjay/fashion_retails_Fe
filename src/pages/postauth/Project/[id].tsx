@@ -38,11 +38,41 @@ export default function Project({data}:any) {
     const router = useRouter()
     const { query: { id } } = router;
     const {width,height} = useWindowResize()
-    const {focusedItem,userData,setFocusedItem,setUserData} = useRetailContext()
+    const {focusedItem,userData,setFocusedItem,setUserData,setGalleryData} = useRetailContext()
     const imageHolderRef = useRef<HTMLDivElement>(null)
     const [dynamicDimension,setDynamicDimension] = useState<any>({x:0,y:0})
     const [imageLoader,setImageLoader] = useState<boolean>(false)
     const [hideItem,setHideItem] = useState<any>(true)
+
+
+
+    const filterbyHash = async (hash:any)=>{
+      
+      const hashed = `%23${hash.slice(1)}`
+    
+      const projects = await fetch(`https://fashion-r-services.onrender.com/content/allHash?hashtag=${hashed}`,{
+        method: 'GET',  
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+    
+            }
+        });
+        
+      const searchCollect = await projects.json()
+  
+      if(searchCollect.userImages.length>=1){
+        
+        setGalleryData(searchCollect.userImages)
+        router.push('../Search/searchUserContent')
+      }
+
+      else{
+        console.log('cant work')
+        
+      }
+      
+    }
 
 
     useEffect(()=>{
@@ -168,7 +198,7 @@ export default function Project({data}:any) {
       <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
-        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span style={{margin:'0px 5px'}}>{hash}</span>)}</p>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span onClick={()=>filterbyHash(hash)} style={{margin:'0px 5px'}}>{hash}</span>)}</p>
 
       </div></>
         :<p>''</p>}

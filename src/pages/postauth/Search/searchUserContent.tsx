@@ -76,12 +76,13 @@ function SearchUserContent() {
 
 
     const enterSearchdata = async(Id:any)=>{
+      
        const data = await fetch(`https://fashion-r-services.onrender.com/content/user/${Id}`,{
         method: 'GET',  
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tokenString}`
+      
     
             }
         });
@@ -95,6 +96,29 @@ function SearchUserContent() {
 
     const onSearhChange = async(event:any)=>{
       setSearchLoading(true)
+
+      if(!searchedUserId){
+        let fetchData = await fetch(`https://fashion-r-services.onrender.com/content/allSearch?message=${event.target.value}`,{
+          method: 'GET',  
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+      
+              }
+          });
+
+          let newfetch  = await fetchData.json()
+
+          if(newfetch.state){
+              setSearchResults(newfetch.textdata)
+              setSearchLoading(false)
+          }
+          else{
+            setSearchLoading(true)
+          }
+      }
+
+      else{
         let fetchData = await fetch(`https://fashion-r-services.onrender.com/content/user/search/${searchedUserId}?message=${event.target.value}`,{
           method: 'GET',  
           headers: {
@@ -113,6 +137,8 @@ function SearchUserContent() {
           else{
             setSearchLoading(true)
           }
+      }
+       
     }
 
 
@@ -136,7 +162,7 @@ function SearchUserContent() {
               <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
             </p>
             <div style={{width:'100%',height:'auto',display:searchValue===''?'none':'block',padding:'15px'}}>
-                <div style={{width:'80%',margin:'auto',backgroundColor:'white ',minHeight:'50px',borderRadius:'10px',display:'flex',alignItems:"center",justifyContent:"center"}}>
+                <div style={{width:'80%',margin:'auto',backgroundColor:'white ',minHeight:'50px',maxHeight:'250px',overflow:'auto',borderRadius:'10px',display:'flex',alignItems:"center",justifyContent:"center"}}>
                     {searchLoading?<Loader color="black" size="sm" variant="bars" />:
                     <div style={{width:'100%',padding:'5px',height:'auto',}}>
                         {searchResults.map((result:any)=>
