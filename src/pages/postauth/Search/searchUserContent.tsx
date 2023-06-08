@@ -177,10 +177,10 @@ function SearchUserContent() {
 
         </div>
 
-        {isLoading && galleryData[0]===''?
+        {isLoading && galleryData?
         <div style={{width:'90%',height:'150px',backgroundColor:'white',position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',zIndex:'1',borderRadius:'15px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <Loader color="black" size="sm" variant="bars" />
-        </div>: galleryData[0]==='' && isLoading===false?
+        </div>: galleryData && isLoading===false?
         <div style={{display:userHashTags?'block':'null',width:'90%',height:'auto',backgroundColor:'white',position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',zIndex:'1',borderRadius:'15px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>
         {userHashTags?.map((hash:any)=><p onClick={()=> filterbyHash(hash)} style={{width:'100%',color:'black',fontFamily:'NexaTextBold',fontSize:'20px',margin:'10px 0px 0px',height:'40px',display:'flex',alignItems:"center",justifyContent:"left",paddingLeft:'20px',border:userHashTags.indexOf(hash)===userHashTags.length-1?'': '1px solid black',borderWidth:userHashTags.indexOf(hash)===userHashTags.length-1?"0px 0px 0px":'0px 0px 1px'}}>{hash}</p>)}
         </div>:
