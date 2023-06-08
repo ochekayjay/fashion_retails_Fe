@@ -1,5 +1,6 @@
 import React,{useEffect,useState,useRef} from 'react'
 import Navbar from '@/utils/pre_auth/navbar'
+import UserProfileSkeleton from '@/utils/Skeleton/userProfileSkeleton'
 import styles from './Userpage.module.css'
 import Image from 'next/image'
 import addIcon from '../../../iconholder/addIcon.svg'
@@ -72,8 +73,19 @@ export default function Userpage({data}:any) {
   
 
   useEffect(()=>{
-    console.log(userData)
-    console.log(router.pathname)
+    if(router.isReady){
+      console.log('user page')
+      console.log(router.pathname)
+
+    }
+
+    else{
+      console.log('user page not ready')
+      console.log(router.pathname)
+    }
+  
+
+
 if(typeof window !== 'undefined'){
 
   const id = window.localStorage.getItem('id');
@@ -140,6 +152,10 @@ const searchUserFunc = ()=>{
       setUserHashatags(hashArray)
     }
   }
+
+  else{
+    setUserHashatags(null)
+  }
   
     setSearches(null)
     setSearchedUserId(userData._id)
@@ -150,7 +166,7 @@ const searchUserFunc = ()=>{
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
         {showAvatar && <Profilepictures color={userData.color} userId={userData._id} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
        
-       {userData? <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
+       <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px',position:'relative'}}>
                 <Image fill={true}  onClick={()=>setShowAvatar(true)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
@@ -177,7 +193,7 @@ const searchUserFunc = ()=>{
             </div>
 
         </section>:
-        <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
+        <>{!userData|| !router.isReady? <UserProfileSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center',position:'fixed',top:'0px',backgroundColor:'white',zIndex:"50000000",width:"100%",padding:'20px'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.Username}</p>
@@ -199,7 +215,8 @@ const searchUserFunc = ()=>{
                 <Image fill={true}  quality={100} onClick={()=>setShowAvatar(true)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
-        </>:<p>trying stuff</p>}
+        </>}
+        </>
         
 
        

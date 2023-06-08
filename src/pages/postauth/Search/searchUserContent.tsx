@@ -37,6 +37,19 @@ function SearchUserContent() {
     useEffect(()=>{
      
       
+
+      if(router.isReady){
+        console.log('search page')
+        console.log(router.pathname)
+  
+      }
+  
+      else{
+        console.log('search page not ready')
+        console.log(router.pathname)
+      }
+
+
       const token = window.localStorage.getItem('token')
       setTokenString(token)
 
