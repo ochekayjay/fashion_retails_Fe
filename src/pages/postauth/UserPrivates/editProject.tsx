@@ -57,7 +57,7 @@ const submitUserInfo = async (event:any,enlistUserObj:any)=>{
     //'https://fashion-r-services.onrender.com/creator/editProfile
     
       console.log('a')
-      const createdCreator =  await fetch(`http://localhost:5005/content/creation/edit/${focusedItem._id}`, {...withoutImage,body: JSON.stringify(enlistUserObj)});
+      const createdCreator =  await fetch(`https://fashion-r-services.onrender.com/content/creation/edit/${focusedItem._id}`, {...withoutImage,body: JSON.stringify(enlistUserObj)});
       const res = await createdCreator.json()
     if(res.verified===true){
       
@@ -73,7 +73,7 @@ const submitUserInfo = async (event:any,enlistUserObj:any)=>{
     <>
     {focusedItem?<div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem.backgroundColor},white)`,padding:'0px'}}>
         <section style={{width:width>500?'auto':'100%',minHeight:width>500?'auto':'100vh',padding:'15px',position:'relative',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
-        {width<500 && <p onClick={()=>router.push('../../postauth/userpage')} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
+        {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
         <div style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
             <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
                 <Image fill={true} src={focusedItem.imageLink}  alt={focusedItem.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>

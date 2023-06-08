@@ -49,7 +49,7 @@ export default function Project({data}:any) {
     const filterbyHash = async (hash:any)=>{
       
       const hashed = `%23${hash.slice(1)}`
-    
+      console.log(hashed)
       const projects = await fetch(`https://fashion-r-services.onrender.com/content/allHash?hashtag=${hashed}`,{
         method: 'GET',  
         headers: {

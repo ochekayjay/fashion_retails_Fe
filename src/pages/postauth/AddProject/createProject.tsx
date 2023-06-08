@@ -109,6 +109,7 @@ export default function CreateProject() {
   const [itemArray,setItemArray] = useState<any>([...ListItemArray])
   const [pTagArray,setPTagArray] = useState<any>([])
   const [itemPop,setItemPop] = useState<any>(false)
+  const [hashtagHold,setHashtagHold] = useState<any>('')
 
 
 
@@ -379,6 +380,18 @@ const updateUserObj = (event:any)=>{
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
     
     
+}
+
+
+const updateHashtag = (event:any)=>{
+  const hashArray = event.target.value
+  const hashholder  = hashArray.split(' ')
+  console.log(enlistUserObj)
+
+  console.log(hashholder)
+  console.log(hashtagHold)
+  setHashtagHold(event.target.value)
+  setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
 }
 
 const updateList =  (event:any,id:any)=>{
@@ -684,12 +697,12 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Photo Description &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={enlistUserObj.projectDescription} placeholder='description' name='photo descr' onChange={(event)=>{updateUserObj(event)}} className={styles.forminputTextArea}/>
+                            <textarea value={enlistUserObj.projectDescription} placeholder='description' name='projectDescription' onChange={(event)=>{updateUserObj(event)}} className={styles.forminputTextArea}/>
             </div>
 
             <div style={{width:width>500?'100%':width*0.80,height:'auto',margin:'30px auto'}}>
                             <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Hashtags &nbsp; <span style={{color:'red'}}>*</span></p>
-                            <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateUserObj(event)}} className={styles.forminputTextArea}/>
+                            <textarea value={enlistUserObj.hashtag} placeholder='#summer #outdoor #date-nights' name='hashtag' onChange={(event)=>{updateHashtag(event)}} className={styles.forminputTextArea}/>
             </div>
 
             <p onClick={(event)=>submitUserInfo(event,enlistUserObj,itemArray)} style={{width:'100px',cursor:'pointer',height:'50px',display:'flex',alignItems:"center",justifyContent:"center",backgroundColor:'white',margin:'30px auto',fontFamily:"NexaTextight",borderRadius:'7px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>{isLoading?<Loader color="black" size="sm" variant="bars" />:'Save'}</p>

@@ -20,9 +20,9 @@ import Image from 'next/image';
 function SearchUserContent() {
     const router = useRouter()
     const {width,height} = useWindowResize()
-    const {userHashTags,searchedUserId,setFocusedItem,setUserData} = useRetailContext()
+    const {userHashTags,searchedUserId,setFocusedItem,setUserData,galleryData,setGalleryData} = useRetailContext()
     const [isLoading,setIsLoading] = useState<any>(false)
-    const [galleryData,setGalleryData] = useState<any>([''])
+    //const [galleryData,setGalleryData] = useState<any>([''])
     const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
     const [moreOptions,setMoreOptions] = useState<any>(false)
     const imageHolderRef = useRef<HTMLDivElement>(null)
@@ -156,6 +156,7 @@ function SearchUserContent() {
 
   return (
     <div style={{width:'100%',minHeight:'100vh',position:'relative'}}>
+        <div style={{width:'100%',display:searchValue===''?'none':'block',height:'100%',filter:'blur(4px)',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}></div>
         <div className={searchValue===''?styles.searchSectionSmall:styles.searchSectionBig}>
             <p style={{width:'80%',position:'relative',height:'50px',margin:'15px auto',borderRadius:'10px'}}>
               <input value={searchValue} onChange={(event)=>{setSearchValue(event.target.value);onSearhChange(event)}} placeholder='search user contents' style={{width:'100%',fontFamily:'NexaTextLight',color:'black',height:'100%',borderRadius:'10px',paddingLeft:'10px',outline:'none',borderWidth:'0px 0px 0px'}}/>

@@ -133,9 +133,15 @@ useEffect(()=>{
 },[mainContentDiv,galleryData,mainContentDiv])
 
 const searchUserFunc = ()=>{
-  const hashArray = userData.hashtag.split(' ')
+  if(userData?.hashtag){
+    const hashArray = userData?.hashtag.split(' ')
+    if(hashArray){
+      setUserHashatags(hashArray)
+    }
+  }
+  
     setSearchedUserId(userData._id)
-    setUserHashatags(hashArray)
+    
     router.push('../Search/searchUserContent')
 }
 
@@ -225,7 +231,7 @@ const searchUserFunc = ()=>{
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
-                <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>{setFocusedItem(d);router.push('./editProject')}} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
