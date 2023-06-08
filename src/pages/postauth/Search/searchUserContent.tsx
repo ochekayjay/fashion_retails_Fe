@@ -40,7 +40,10 @@ function SearchUserContent() {
       const token = window.localStorage.getItem('token')
       setTokenString(token)
 
-      setSearchGalleryData(searches)
+      if(searches){
+
+        setSearchGalleryData(searches)
+      }
       
     },[])
 

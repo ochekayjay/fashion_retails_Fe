@@ -63,7 +63,7 @@ export default function Userpage({data}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {setSearchedUserId,setUserHashatags,setFocusedItem,galleryData,setGalleryData,userData,setUserData} = useRetailContext()
+  const {setSearchedUserId,setUserHashatags,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
@@ -141,6 +141,7 @@ const searchUserFunc = ()=>{
     }
   }
   
+    setSearches(null)
     setSearchedUserId(userData._id)
     
     router.push('../Search/searchUserContent')
