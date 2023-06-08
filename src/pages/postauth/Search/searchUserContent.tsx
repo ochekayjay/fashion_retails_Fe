@@ -20,7 +20,7 @@ import Image from 'next/image';
 function SearchUserContent() {
     const router = useRouter()
     const {width,height} = useWindowResize()
-    const {userHashTags,searchedUserId,setFocusedItem,setUserData,galleryData,setGalleryData} = useRetailContext()
+    const {userHashTags,searchedUserId,setFocusedItem,setUserData,searches} = useRetailContext()
     const [isLoading,setIsLoading] = useState<any>(false)
     const [searchgalleryData,setSearchGalleryData] = useState<any>([''])
     const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
@@ -36,10 +36,11 @@ function SearchUserContent() {
 
     useEffect(()=>{
      
+      
       const token = window.localStorage.getItem('token')
       setTokenString(token)
 
-      setSearchGalleryData(galleryData)
+      setSearchGalleryData(searches)
       
     },[])
 
@@ -79,7 +80,7 @@ function SearchUserContent() {
 
     const enterSearchdata = async(Id:any)=>{
       
-       const data = await fetch(`https://fashion-r-services.onrender.com/content/user/${Id}`,{
+       const data = await fetch(`https://fashion-r-services.onrender.com/content/user/singlecontent/${Id}`,{
         method: 'GET',  
         headers: {
           'Accept': 'application/json',
@@ -90,7 +91,7 @@ function SearchUserContent() {
         });
 
         const newdata = await data.json()
-
+        console.log(newdata)
         setFocusedItem(newdata.content)
         setUserData(newdata.userDetail)
         router.push(`../Project/${Id}`)
@@ -158,7 +159,10 @@ function SearchUserContent() {
 
   return (
     <div style={{width:'100%',minHeight:'100vh',position:'relative'}}>
-        <div style={{width:'100%',display:searchValue===''?'none':'block',height:'100%',filter:'blur(4px)',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}></div>
+        <div style={{width:'100%',display:searchValue===''?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
+          
+        </div>
+        
         <div className={searchValue===''?styles.searchSectionSmall:styles.searchSectionBig}>
             <p style={{width:'80%',position:'relative',height:'50px',margin:'15px auto',borderRadius:'10px'}}>
               <input value={searchValue} onChange={(event)=>{setSearchValue(event.target.value);onSearhChange(event)}} placeholder='search user contents' style={{width:'100%',fontFamily:'NexaTextLight',color:'black',height:'100%',borderRadius:'10px',paddingLeft:'10px',outline:'none',borderWidth:'0px 0px 0px'}}/>

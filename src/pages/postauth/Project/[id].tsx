@@ -38,7 +38,7 @@ export default function Project({data}:any) {
     const router = useRouter()
     const { query: { id } } = router;
     const {width,height} = useWindowResize()
-    const {focusedItem,userData,setFocusedItem,setUserData,setGalleryData} = useRetailContext()
+    const {focusedItem,userData,setFocusedItem,setUserData,setGalleryData,searches,setSearches} = useRetailContext()
     const imageHolderRef = useRef<HTMLDivElement>(null)
     const [dynamicDimension,setDynamicDimension] = useState<any>({x:0,y:0})
     const [imageLoader,setImageLoader] = useState<boolean>(false)
@@ -63,7 +63,7 @@ export default function Project({data}:any) {
   
       if(searchCollect.userImages.length>=1){
         
-        setGalleryData(searchCollect.userImages)
+        setSearches(searchCollect.userImages)
         router.push('../Search/searchUserContent')
       }
 

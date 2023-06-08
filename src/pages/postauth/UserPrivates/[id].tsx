@@ -73,6 +73,7 @@ export default function Userpage({data}:any) {
 
   useEffect(()=>{
     console.log(userData)
+    console.log(router.pathname)
 if(typeof window !== 'undefined'){
 
   const id = window.localStorage.getItem('id');

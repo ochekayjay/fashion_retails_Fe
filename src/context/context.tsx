@@ -26,7 +26,9 @@ type showMobile = {
     searchedUserId: any,
     setSearchedUserId: any,
     allGallery: any,
-    setAllGallery: any
+    setAllGallery: any,
+    searches: any,
+    setSearches: any
 }
 
 type ChildrenProps = {
@@ -59,7 +61,9 @@ const retailContext = createContext<showMobile>
   searchedUserId : null,
   setSearchedUserId: ()=>{},
   allGallery : null,
-  setAllGallery : ()=>{}})
+  setAllGallery : ()=>{},
+  searches : null,
+  setSearches : ()=>{}})
 
 
 
@@ -77,8 +81,9 @@ export const ContextProvider = ({children}:ChildrenProps) => {
     const [userHashTags,setUserHashatags] = useState(null)
     const [searchedUserId,setSearchedUserId] = useState(null)
     const [allGallery,setAllGallery] = useState(null)
+    const [searches,setSearches] = useState(null)
   return (
-    <retailContext.Provider value={{allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId}}>
+    <retailContext.Provider value={{searches,setSearches,allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId}}>
         {children}
     </retailContext.Provider>
   )
