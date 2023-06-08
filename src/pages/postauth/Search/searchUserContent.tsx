@@ -22,7 +22,7 @@ function SearchUserContent() {
     const {width,height} = useWindowResize()
     const {userHashTags,searchedUserId,setFocusedItem,setUserData,galleryData,setGalleryData} = useRetailContext()
     const [isLoading,setIsLoading] = useState<any>(false)
-    //const [galleryData,setGalleryData] = useState<any>([''])
+    const [searchgalleryData,setSearchGalleryData] = useState<any>([''])
     const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
     const [moreOptions,setMoreOptions] = useState<any>(false)
     const imageHolderRef = useRef<HTMLDivElement>(null)
@@ -38,6 +38,8 @@ function SearchUserContent() {
      
       const token = window.localStorage.getItem('token')
       setTokenString(token)
+
+      setSearchGalleryData(galleryData)
       
     },[])
 
@@ -63,7 +65,7 @@ function SearchUserContent() {
       console.log(searchCollect)
       if(searchCollect.userImages.length>=1){
         console.log('works')
-        setGalleryData(searchCollect.userImages)
+        setSearchGalleryData(searchCollect.userImages)
         setIsLoading(false)
       }
 
@@ -152,7 +154,7 @@ function SearchUserContent() {
     
         setImgHeight(height)
       }
-    },[mainContentDiv,galleryData,mainContentDiv])
+    },[mainContentDiv,searchgalleryData,mainContentDiv])
 
   return (
     <div style={{width:'100%',minHeight:'100vh',position:'relative'}}>
@@ -177,10 +179,10 @@ function SearchUserContent() {
 
         </div>
 
-        {isLoading && galleryData?
+        {isLoading && searchgalleryData[0]===''?
         <div style={{width:'90%',height:'150px',backgroundColor:'white',position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',zIndex:'1',borderRadius:'15px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <Loader color="black" size="sm" variant="bars" />
-        </div>: galleryData && isLoading===false?
+        </div>: searchgalleryData[0]==='' && isLoading===false?
         <div style={{display:userHashTags?'block':'null',width:'90%',height:'auto',backgroundColor:'white',position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',zIndex:'1',borderRadius:'15px',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>
         {userHashTags?.map((hash:any)=><p onClick={()=> filterbyHash(hash)} style={{width:'100%',color:'black',fontFamily:'NexaTextBold',fontSize:'20px',margin:'10px 0px 0px',height:'40px',display:'flex',alignItems:"center",justifyContent:"left",paddingLeft:'20px',border:userHashTags.indexOf(hash)===userHashTags.length-1?'': '1px solid black',borderWidth:userHashTags.indexOf(hash)===userHashTags.length-1?"0px 0px 0px":'0px 0px 1px'}}>{hash}</p>)}
         </div>:
@@ -200,8 +202,8 @@ function SearchUserContent() {
           </div>
         </div>
         <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
-          {galleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
-                                                                                      {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
+          {searchgalleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(searchgalleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
+                                                                                      {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(searchgalleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
             <div onClick={()=>{setFocusedItem(d);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                 <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
             </div>
