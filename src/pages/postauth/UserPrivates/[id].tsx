@@ -20,17 +20,12 @@ import useWindowResize from '@/utils/windowdimension'
 import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
 import Profilepictures from '@/utils/Pictures/profilepictures'
+import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 
 
 export async function getServerSideProps(context:any) {
   const { params,query} = context
-
   const id = params?.id
-  // Fetch data from external API
-
-
-  console.log(id)
-
   //https://fashion-r-services.onrender.com
   //http://localhost:5005
   if(id){
@@ -51,11 +46,9 @@ export async function getServerSideProps(context:any) {
     const data = null
     return { props: { data} };
   }
-  
- 
-  // Pass data to the page via props
-  
 }
+ 
+
 
 
 export default function Userpage({data}:any) {
@@ -70,22 +63,19 @@ export default function Userpage({data}:any) {
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
+  const [firstLoad,setFirstLoad] = useState<any>(true)
   
+
+
+
+  const setPrimarydata = (data:any)=>{
+    setGalleryData(data.userImages)
+    setUserData(data.userDetail)
+    
+  }
+
 
   useEffect(()=>{
-    if(router.isReady){
-      console.log('user page')
-      console.log(router.pathname)
-
-    }
-
-    else{
-      console.log('user page not ready')
-      console.log(router.pathname)
-    }
-  
-
-
 if(typeof window !== 'undefined'){
 
   const id = window.localStorage.getItem('id');
@@ -106,17 +96,26 @@ if(typeof window !== 'undefined'){
     }
   }
 }
+ 
     
-  },[])
+},[])
 
-  const setPrimarydata = (data:any)=>{
-    setGalleryData(data.userImages)
-    setUserData(data.userDetail)
-    
-  }
+ 
+
+useEffect(()=>{
+if(data){
+
+          setGalleryData(data.userImages);
+          setUserData(data.userDetail);
+          setFirstLoad(false)
+}
+
+},[data])
+ 
 
 
-
+/**
+ * 
   useEffect(()=>{
     const id = window.localStorage.getItem('id');
   if(data){
@@ -127,18 +126,19 @@ if(typeof window !== 'undefined'){
     setUsername(data.userDetail.Username)
     setName(data.userDetail.name)
     setUserbio(data.userDetail.bio)
-   */
+   
 
     setPrimarydata(data)
   }
   },[data])
+ */
 
 
 useEffect(()=>{
-  console.log('a in userp')
+  
   if(imageHolderRef?.current){
 
-    console.log('b in userp')
+    
     const height = imageHolderRef.current?.offsetWidth*1.777
 
     setImgHeight(height)
@@ -161,6 +161,11 @@ const searchUserFunc = ()=>{
     setSearchedUserId(userData._id)
     
     router.push('../Search/searchUserContent')
+}
+
+
+if(firstLoad){
+  return <FullUserSkeleton/>
 }
 
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
@@ -193,7 +198,7 @@ const searchUserFunc = ()=>{
             </div>
 
         </section>:
-        <>{!userData|| !router.isReady? <UserProfileSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
+        <>{!userData|| !router.isReady? <FullUserSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center',position:'fixed',top:'0px',backgroundColor:'white',zIndex:"50000000",width:"100%",padding:'20px'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.Username}</p>
