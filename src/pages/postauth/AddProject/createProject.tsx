@@ -377,6 +377,8 @@ function handleUpload(canvasRef:any) {
   });
 }
 const updateUserObj = (event:any)=>{
+  console.log(event.target.name)
+  console.log(enlistUserObj.projectDescription)
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
     
     
@@ -391,7 +393,7 @@ const updateHashtag = (event:any)=>{
   console.log(hashholder)
   console.log(hashtagHold)
   setHashtagHold(event.target.value)
-  setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
+  setEnlistUserObj({...enlistUserObj, hashtag : hashArray})   
 }
 
 const updateList =  (event:any,id:any)=>{
@@ -412,7 +414,6 @@ const updateList =  (event:any,id:any)=>{
 
 const submitUserInfo = async (event:any,enlistUserObj:any,itemArray:any)=>{
   event.preventDefault()
-  setItemArray((prev:any)=>prev.filter(prev.distance.x && prev.itemName!==''))
 const formData = new FormData()
   const token = window.localStorage.getItem('token')
   setIsLoading(true)

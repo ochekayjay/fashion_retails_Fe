@@ -22,6 +22,7 @@ import Image from 'next/image'
 import { Loader } from '@mantine/core';
 import useWindowResize from '@/utils/windowdimension'
 import { useRetailContext } from '@/context/context'
+import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 
 
 
@@ -60,6 +61,7 @@ const Landingpage = ()=> {
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [showfulluser,setShowfulluser] = useState<boolean>(false)
   const router = useRouter()
 
 
@@ -133,7 +135,8 @@ useEffect(()=>{
 
   return (
     <div style={{display:'flex'}}>
-        <Navbar viewmobile={viewmobile} setViewMobile={setViewMobile}/>
+        {showfulluser && <FullUserSkeleton/>}
+        <Navbar viewmobile={viewmobile} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
           <div onClick={()=>setViewMobile(!viewmobile)} style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
             <p style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>

@@ -20,10 +20,11 @@ import { useRetailContext } from '@/context/context'
 type showMobile = {
   viewmobile: boolean,
   setViewMobile : any,
+  setShowfulluser : any,
 
 }
 
-function Navbar({viewmobile,setViewMobile}:showMobile) {
+function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
   const {width,height} = useWindowResize()
   const {signed,name,username,avatarUrl,id} = useRetailContext()
   return (
@@ -66,7 +67,7 @@ function Navbar({viewmobile,setViewMobile}:showMobile) {
               <p style={{fontFamily:"NexaTextLight",fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{name}</p>
               <Link href={`./UserPrivates/${id}`}>
-                <p onClick={()=>setViewMobile(!viewmobile)} style={{padding:'5px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',borderRadius:"3px",textAlign:"center",width:'60%',margin:'0px auto'}}>profile</p>
+                <p onClick={()=>{ setShowfulluser(true);setViewMobile(!viewmobile)}} style={{padding:'5px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',borderRadius:"3px",textAlign:"center",width:'60%',margin:'0px auto'}}>profile</p>
               </Link>
               
             </div>

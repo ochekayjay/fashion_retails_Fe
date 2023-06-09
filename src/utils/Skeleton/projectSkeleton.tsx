@@ -4,7 +4,7 @@ import useWindowResize from '../windowdimension'
 function ProjectSkeleton() {
     const {width,height} = useWindowResize()
   return (
-    <div>
+    <div style={{width:'100vw',minHeight:'100vh',position:'fixed',top:'0px',left:'0px',right:'0px',bottom:'0px',zIndex:'3000000000',backgroundColor:'white'}}>
         <div style={{width:width*0.8,height:width*0.80*1.7777,margin:'30px auto'}}>
             <Skeleton height="100%"  width="100%" radius={10}/>
         </div>

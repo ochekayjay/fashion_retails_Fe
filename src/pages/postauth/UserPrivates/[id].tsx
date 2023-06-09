@@ -21,6 +21,7 @@ import { useRouter } from 'next/router'
 import { useRetailContext } from '@/context/context'
 import Profilepictures from '@/utils/Pictures/profilepictures'
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
+import ProjectSkeleton from '../../../utils/Skeleton/projectSkeleton'
 
 
 export async function getServerSideProps(context:any) {
@@ -64,6 +65,7 @@ export default function Userpage({data}:any) {
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
   const [firstLoad,setFirstLoad] = useState<any>(true)
+  const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   
 
 
@@ -169,6 +171,8 @@ if(firstLoad){
 }
 
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
+        {loadProSkeleton && <ProjectSkeleton/>}
+        
         {showAvatar && <Profilepictures color={userData.color} userId={userData._id} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
        
        <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
@@ -251,7 +255,7 @@ if(firstLoad){
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {galleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
-              <div onClick={()=>{setFocusedItem(d);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
+              <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
