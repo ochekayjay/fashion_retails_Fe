@@ -23,6 +23,7 @@ import { Loader } from '@mantine/core';
 import useWindowResize from '@/utils/windowdimension'
 import { useRetailContext } from '@/context/context'
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
+import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton'
 
 
 
@@ -54,7 +55,7 @@ import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 const Landingpage = ()=> {
   
   const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem} = useRetailContext()
+  const {viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id} = useRetailContext()
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
@@ -62,6 +63,7 @@ const Landingpage = ()=> {
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [isLoading, setIsLoading] = useState(false)
   const [showfulluser,setShowfulluser] = useState<boolean>(false)
+  const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   const router = useRouter()
 
 
@@ -135,7 +137,7 @@ useEffect(()=>{
 
   return (
     <div style={{display:'flex'}}>
-        {showfulluser && <FullUserSkeleton/>}
+        {loadProSkeleton && <ProjectSkeleton/>}
         <Navbar viewmobile={viewmobile} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
           <div onClick={()=>setViewMobile(!viewmobile)} style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
@@ -164,12 +166,12 @@ useEffect(()=>{
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {allGallery.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(allGallery.indexOf(d)+2)%2===0?'column':'column-reverse'}:
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(allGallery.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
-              <div onClick={()=>{setFocusedItem(d);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
+              <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
-                <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
-                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div style={{display: id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
               </div>: null}

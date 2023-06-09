@@ -6,7 +6,7 @@ type showMobile = {
     avatarUrl: string,
     name: string,
     username: string,
-    id: string,
+    id: any,
     setName: any,
     setId: any,
     setAvatarUrl: any,
@@ -41,7 +41,7 @@ const retailContext = createContext<showMobile>
   setSigned:()=>{},
   setViewMobile:()=>{},
   avatarUrl:'',
-  id: '',
+  id: null,
   setId: ()=>{},
   setName :()=>{},
   setAvatarUrl:()=>{},
@@ -74,7 +74,7 @@ export const ContextProvider = ({children}:ChildrenProps) => {
     const [username,setUsername] = useState('')
     const [avatarUrl, setAvatarUrl] = useState('')
     const [signed,setSigned] = useState(false)
-    const [id,setId] = useState('')
+    const [id,setId] = useState(null)
     const [userData,setUserData] = useState(null)
     const [galleryData,setGalleryData] = useState(null)
     const [focusedItem,setFocusedItem] = useState(null)
