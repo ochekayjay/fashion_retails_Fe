@@ -74,17 +74,19 @@ function MiniLandingPage() {
     useEffect(()=>{
         let arr = dataArr
         let newArr = []
-        
-        for(let i=0;i<4;i++){
-            const rand = Math.random()
-            let val = rand * arr.length
-            val = Math.ceil(val)
-            newArr.unshift(dataArr[val])
-            arr.splice(val,1)
-        }
+        if(!retails){
 
-        setSectHolder(newArr)
-        setRetails(true)
+          for(let i=0;i<4;i++){
+              const rand = Math.random()
+              let val = rand * arr.length
+              val = Math.ceil(val)
+              newArr.unshift(dataArr[val])
+              arr.splice(val,1)
+          }
+  
+          setSectHolder(newArr)
+          setRetails(true)
+        }
     },[])
   return (
     <div className={styles.mainview}>
@@ -98,17 +100,19 @@ function MiniLandingPage() {
       </div>
 
 
-      {retails && <>{sectHolder.map((sect:any)=><div style={{margin:'20px auto',width:'90%',height:'auto'}}>
+      {retails && <>{sectHolder.map((sect:any)=><div style={{margin:'35px auto',width:'90%',height:'auto',position:'relative'}}>
         
-        <div style={{width:'100%',backgroundColor:sect.color,position:'relative',zIndex:'4',boxShadow:'0px 1px 0px rgb(196, 192, 192)',borderRadius:'10px',padding:'10px',height:'auto',display:'flex',justifyContent:'space-around',alignItems:'center'}}>
+        <div style={{width:'100%',backgroundColor:sect?.color,position:'relative',zIndex:'4',boxShadow:'0px 1px 0px rgb(196, 192, 192)',borderRadius:'10px',padding:'10px',height:'auto',display:'flex',justifyContent:'space-around',paddingTop:'30px',alignItems:'center'}}>
+        <p style={{width:'60px',position:'absolute',height:'60px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-3',borderRadius:"50%",backgroundColor:sect?.color}}></p>
+        <p style={{width:'30px',position:'absolute',height:'30px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-2',borderRadius:"50%",backgroundColor:'rgb(228,228,228)'}}></p>
             <div style={{width:'47%',height:'250px'}}>
-              <img src={sect.link.src} alt='' style={{width:'100%',borderRadius:'10px 0px 0px 10px',height:'100%',objectFit:"cover"}}/>
+              <img src={sect?.link.src} alt='' style={{width:'100%',borderRadius:'10px 0px 0px 10px',height:'100%',objectFit:"cover"}}/>
             </div>
 
             <div style={{width:'47%',height:'250px',position:'relative',backgroundColor:'transparent'}}>
               <div style={{position:'absolute',zIndex:'3',backgroundColor:'black',opacity:'0.3',borderRadius:'0px 10px 10px 0px',top:'0px',left:'0px',height:'100%',width:'100%'}}></div>
               <div style={{position:'absolute',zIndex:'5',backgroundColor:'transparent',top:'0px',left:'0px',height:'100%',width:'100%',color:'black',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
-                {sect.items.map((item:any)=><div style={{width:'90%',margin:'auto',display:'flex',justifyContent:'space-between',alignItems:"center",color:'white',fontFamily:'NexaTextLight'}}><p style={{padding:'5px',height:'auto',borderRadius:'2.5px',width:'auto',backgroundColor:'white'}}><img src={item.img.src} style={{width:'40px',height:'40px',objectFit:'cover'}}/></p> <p>{item.item}</p></div>)}
+                {sect?.items.map((item:any)=><div style={{width:'90%',margin:'auto',display:'flex',justifyContent:'space-between',alignItems:"center",color:'white',fontFamily:'NexaTextLight'}}><p style={{padding:'5px',height:'auto',borderRadius:'2.5px',width:'auto',backgroundColor:'white'}}><img src={item?.img?.src} style={{width:'40px',height:'40px',objectFit:'cover'}}/></p> <p>{item?.item}</p></div>)}
               </div>
             </div>
         </div>
