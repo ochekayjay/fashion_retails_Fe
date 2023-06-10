@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import imgOne from '../../public/images/1681676340516.jpg'
@@ -10,6 +10,25 @@ import { crop_one,crop_two,crop_three } from '@/utils/cropImage'
 import useWindowResize from '@/utils/windowdimension'
 import Imagecarousel from '@/utils/carousel'
 import Link from 'next/link'
+import cropbone from '../../public/crops/crop_babe_one.jpg'
+import cropbtwo from '../../public/crops/crop_babe_two.jpg'
+import cropgone from '../../public/crops/crop_guy_one.jpg'
+import croppgtwo from '../../public/crops/crop_guy_two.jpg'
+import secondcfo from '../../public/crops/SecondCFO.jpg'
+import secondcft from '../../public/crops/SecondCFT.jpg'
+import secondcmo from '../../public/crops/SecondCMO.jpg'
+import secondcmt from '../../public/crops/SecondCMT.jpg'
+import thirdcfo from '../../public/crops/ThirdCFO.jpg'
+import thhirdcft from '../../public/crops/ThirdCFT.jpg'
+import thirdcmo from '../../public/crops/ThirdCMO.jpg'
+import thirdcmt from '../../public/crops/ThirdCMT.jpg'
+import ring from '../../src/iconForLanding/rings.svg'
+import necklace from '../../src/iconForLanding/necklace.svg'
+import wig from '../../src/iconForLanding/wig.svg'
+
+import MiniLandingPage from './preauth/miniLandingPage'
+
+import ColorThief from "color-thief-ts"
 
 
 
@@ -40,6 +59,35 @@ export default function Home() {
     {source:crop_two[3],alt:'crop babe one',id:2,views:41},
     {source:crop_three[3],alt:'crop guy two',id:3,views:100}]
   ])
+
+  const imgs = [cropbone,cropbtwo,cropgone,croppgtwo,secondcfo,secondcft,secondcmo,secondcmt,thirdcfo,thhirdcft,thirdcmo,thirdcmt]
+  
+  let finalcol : any []
+  const extractColor = async(url:any)=>{
+    const colorThief = new ColorThief();
+    const dominantColor = await colorThief.getColorAsync(url);  
+    }
+
+    const extractedColorArr = ['#8d5942','#857f7e','#b4aaaf','#936b57','#231c1b','#9f9f9f','#ced5e9','#7f7c80','#6D7075','#BBAA77','#EBECF1','#494838','#F269A9','#2C575A','#D4511B']
+    useEffect(()=>{
+        const getColor = async()=>{
+            console.log(imgs[0])
+            const col = await extractColor(imgs[0].src)
+
+            console.log(col)
+         
+
+        
+        }
+        getColor()
+        //console.log(finalcol)
+    },[])
+
+    
+  
+  
+  
+  
   return (
     <>
     <Head>
@@ -49,7 +97,7 @@ export default function Home() {
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&display=swap');
 </style>
     </Head>
-    <div className={styles.mainview}>
+    {width>750?<div className={styles.mainview}>
         <section style={{width:width>750?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
           get paid for posting pictures today!
         </section>
@@ -106,7 +154,7 @@ export default function Home() {
           
         </section>
         
-    </div>
+    </div>: <MiniLandingPage/>}
     </>
   )
 }
