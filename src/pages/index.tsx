@@ -26,7 +26,7 @@ import ring from '../../src/iconForLanding/rings.svg'
 import necklace from '../../src/iconForLanding/necklace.svg'
 import wig from '../../src/iconForLanding/wig.svg'
 
-import MiniLandingPage from './preauth/miniLandingPage'
+import MiniLandingPage from '../utils/pre_auth/miniLandingPage'
 
 import ColorThief from "color-thief-ts"
 
