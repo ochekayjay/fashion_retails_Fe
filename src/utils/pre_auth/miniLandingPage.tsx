@@ -1,5 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import styles from '../../styles/Home.module.css'
+import Stylestwo from './MiniLandingPage.module.css'
 import Link from 'next/link'
 import useWindowResize from '@/utils/windowdimension'
 import imgOne from '../../../public/miniSize/crop_babe_one.jpg'
@@ -48,8 +49,20 @@ function MiniLandingPage() {
     const [retails,setRetails] = useState<any>(false)
     const [sectHolder,setSectHolder] = useState<any>()
     const {width,height} = useWindowResize()
+    const [refState,setRefState] = useState<any>({refOne:false,refTwo:false,refThree:false,refFour:false})
+    const [reffone,setreffone] = useState<boolean>(false)
+    const [refftwo,setrefftwo] = useState<boolean>(false)
+    const [reffthree,setreffthree] = useState<boolean>(false)
+    const [refffour,setrefffour] = useState<boolean>(false)
+    
+    const RefOne = useRef<HTMLDivElement>(null);
+    const RefTwo = useRef<HTMLDivElement>(null);
+    const RefThree = useRef<HTMLDivElement>(null);
+    const RefFour = useRef<HTMLDivElement>(null);
 
 
+
+    const refArray = ['ref_0','ref_1','ref_2','ref_3']
     const extractedColorArr = ['#8d5942','#857f7e','#b4aaaf','#936b57','#231c1b','#9f9f9f','#ced5e9','#7f7c80','#6D7075','#BBAA77','#EBECF1','#494838','#F269A9','#2C575A','#D4511B']
 
     const dataArr = [{link:imgOne,color:'#8d5942',items:[{item:'Necklace',img:necklace},{item:'Ring',img:ring},{item:'Wig',img:wig}]},
@@ -62,7 +75,7 @@ function MiniLandingPage() {
     {link:imgEight,color:'#7f7c80',items:[{item:'Coat',img:coat},{item:'handbag',img:handbag},{item:'Blouse',img:blouse},{item:'pants',img:pants}]},
     {link:imgNine,color:'#6D7075',items:[{item:'handbag',img:handbag},{item:'Blouse',img:blouse},{item:'pants',img:pants}]},
     {link:imgTen,color:'#BBAA77',items:[{item:'Shorts',img:shorts},{item:'shirt',img:shirt},{item:'sneakers',img:sneakers},{item:'Wig',img:wig}]},
-,{link:imgEleven,color:'#EBECF1',items:[{item:'Shorts',img:shorts},{item:'shirt',img:shirt},{item:'sneakers',img:sneakers},{item:'Shades',img:shades}]},
+{link:imgEleven,color:'#EBECF1',items:[{item:'Shorts',img:shorts},{item:'shirt',img:shirt},{item:'sneakers',img:sneakers},{item:'Shades',img:shades}]},
 {link:imgTwelve,color:'#494838',items:[{item:'Shorts',img:shorts},{item:'shirt',img:shirt},{item:'Shades',img:shades}]},
 {link:imgThirteen,color:'#F269A9',items:[{item:'Pants',img:pants},{item:'blouse',img:blouse},{item:'Wig',img:wig}]},
 {link:imgFourteen,color:'#2C575A',items:[{item:'Pants',img:pants},{item:'Braids',img:braids},{item:'sweater',img:sweater}]},
@@ -72,22 +85,108 @@ function MiniLandingPage() {
 
 
     useEffect(()=>{
-        let arr = dataArr
+        let arr = [...dataArr]
         let newArr = []
         if(!retails){
 
           for(let i=0;i<4;i++){
               const rand = Math.random()
               let val = rand * arr.length
-              val = Math.ceil(val)
-              newArr.unshift(dataArr[val])
+              val = Math.floor(val)
+            
+              newArr.unshift(arr[val])
               arr.splice(val,1)
+              
           }
   
           setSectHolder(newArr)
           setRetails(true)
         }
     },[])
+
+
+    useEffect(() => {
+      const handleScroll = () => {
+        const viewportHeight = window.innerHeight - window.scrollY;
+        const refArrays= [RefOne,RefTwo,RefThree,RefFour]
+if(retails){
+  
+  for(let i=0;i<refArrays.length;i++){
+    
+    if(refArrays[i].current){
+ 
+     const divTop = refArrays[i].current!.getBoundingClientRect().top ;
+     const divBottom = refArrays[i].current!.getBoundingClientRect().bottom
+     
+       if (divTop < height || divBottom<height) {
+      
+        if(i===0){setreffone(true)}
+
+        else if(i===1){setrefftwo(true)}
+        else if(i===2){setreffthree(true)}
+        else{setrefffour(true)}
+        
+     }
+
+     else if(divTop> height || divBottom>height){
+
+      if(i===0){setreffone(false)}
+
+        else if(i===1){setrefftwo(false)}
+        else if(i===2){setreffthree(false)}
+        else{setrefffour(false)}
+
+     }
+    }
+ }
+
+}
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, [retails]);
+
+
+const getClass = (id:any)=>{
+  if(id===0){
+    if(reffone){
+      return Stylestwo.divHolderRef
+    }
+    else{
+      return Stylestwo.divHolder
+    }
+  }
+  else if(id ===1){
+    if(refftwo){
+      return Stylestwo.divHolderRefRight
+    }
+    else{
+      return Stylestwo.divHolderRight
+    }
+  }
+
+  else if(id===2){
+    if(reffthree){
+      return Stylestwo.divHolderRef
+    }
+    else{
+      return Stylestwo.divHolder
+    }
+  }
+
+  else if(id===3){
+    if(refffour){
+      return Stylestwo.divHolderRefRight
+    }
+    else{
+      return Stylestwo.divHolderRight
+    }
+  }
+}
+
   return (
     <div className={styles.mainview}>
     <section style={{width:width>750?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
@@ -100,9 +199,11 @@ function MiniLandingPage() {
       </div>
 
 
-      {retails && <>{sectHolder.map((sect:any)=><div style={{margin:'35px auto',width:'90%',height:'auto',position:'relative'}}>
+      {retails && <>{sectHolder.map((sect:any,index:any)=><div style={{margin:'55px auto',width:'90%',height:'auto',position:'relative'}}>
         
-        <div style={{width:'100%',backgroundColor:sect?.color,position:'relative',zIndex:'4',boxShadow:'0px 1px 0px rgb(196, 192, 192)',borderRadius:'10px',padding:'10px',height:'auto',display:'flex',justifyContent:'space-around',paddingTop:'30px',alignItems:'center'}}>
+        <div ref= {index===0?RefOne:index===1?RefTwo:index===2?RefThree:RefFour} style={{height:'300px',width:'100%'}}>
+        <div className={getClass(index)}>
+        <div style={{width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'4',boxShadow:'0px 1px 0px rgb(196, 192, 192)',backgroundColor:sect?.color,padding:'10px',height:'100%',borderRadius:'10px',display:'flex',justifyContent:'space-around',paddingTop:'30px',alignItems:'center'}}>
         <p style={{width:'60px',position:'absolute',height:'60px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-3',borderRadius:"50%",backgroundColor:sect?.color}}></p>
         <p style={{width:'30px',position:'absolute',height:'30px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-2',borderRadius:"50%",backgroundColor:'rgb(228,228,228)'}}></p>
             <div style={{width:'47%',height:'250px'}}>
@@ -115,6 +216,8 @@ function MiniLandingPage() {
                 {sect?.items.map((item:any)=><div style={{width:'90%',margin:'auto',display:'flex',justifyContent:'space-between',alignItems:"center",color:'white',fontFamily:'NexaTextLight'}}><p style={{padding:'5px',height:'auto',borderRadius:'2.5px',width:'auto',backgroundColor:'white'}}><img src={item?.img?.src} style={{width:'40px',height:'40px',objectFit:'cover'}}/></p> <p>{item?.item}</p></div>)}
               </div>
             </div>
+        </div>
+        </div>
         </div>
 
       </div>)}</>}
