@@ -117,8 +117,17 @@ if(retails){
  
      const divTop = refArrays[i].current!.getBoundingClientRect().top ;
      const divBottom = refArrays[i].current!.getBoundingClientRect().bottom
-     
-       if (divTop < height || divBottom<height) {
+  
+     if(divBottom<0){
+      if(i===0){setreffone(false)}
+
+      else if(i===1){setrefftwo(false)}
+      else if(i===2){setreffthree(false)}
+      else{setrefffour(false)}
+     }
+
+
+       else if (divTop < height || divBottom<height) {
       
         if(i===0){setreffone(true)}
 
@@ -137,6 +146,7 @@ if(retails){
         else{setrefffour(false)}
 
      }
+  
     }
  }
 

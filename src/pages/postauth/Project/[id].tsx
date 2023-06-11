@@ -149,7 +149,7 @@ export default function Project({data}:any) {
         {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
         {focusedItem? <>{hideItem?<div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
             <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
-                <Image fill={true} src={focusedItem.imageLink} onLoadingComplete={()=>setImageLoader(!imageLoader)} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
+                <img  src={focusedItem.imageLink}  alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
             </div>
             
         </div>:
@@ -158,7 +158,7 @@ export default function Project({data}:any) {
                 <Carousel.Slide>
                 <div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                     <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
-                        <Image fill={true} src={focusedItem?.imageLink} onLoadingComplete={()=>setImageLoader(!imageLoader)} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
+                        <img  src={focusedItem?.imageLink} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
                     </div>
                     <div className={styles.itemPop}>
                         {focusedItem?.itemsArray.map((item:any)=><p style={{width:'25px',position:'absolute',height:'25px',backgroundColor:"black",borderRadius:"50%",display:item.distance?.x?"flex":"none",alignItems:"center",justifyContent:"center",color:'white',left:item.distance?.x?`${item.distance.x * dynamicDimension.x}px`:'',top:item.distance?.y?`${item.distance.y * dynamicDimension.y}px`:''}}>{item.itemNumber}</p>)}
@@ -187,7 +187,7 @@ export default function Project({data}:any) {
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                             <p>Email :</p>
                           
-                            <a href={item.Email?item.Email:''}><Image alt='' src={mailicon} style={{width:'30px',height:'30px',display:'flex',alignItems:'center',justifyContent:"center"}}/></a>
+                            <a href={item.Email?item.Email:''}><img alt='' src={mailicon} style={{width:'30px',height:'30px',display:'flex',alignItems:'center',justifyContent:"center"}}/></a>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
@@ -228,7 +228,7 @@ export default function Project({data}:any) {
 
         {userData?<div style={{margin:'20px auto',width:width*0.8,display:'flex',justifyContent:"space-around",alignItems:"center",boxSizing:'border-box',flexDirection:'column',height:'auto'}}>
 
-            <div onClick={()=>{setShowfulluser(true);setGalleryData(null);router.push(`../UserPrivates/${userData._id}`)}} style={{height:'80px',cursor:'pointer',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image quality={100} fill={true} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={userData.avatarLink} alt="user avatar"/></div>
+            <div onClick={()=>{setShowfulluser(true);setGalleryData(null);router.push(`../UserPrivates/${userData._id}`)}} style={{height:'80px',cursor:'pointer',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image fill style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={userData.avatarLink} alt="user avatar"/></div>
             <div style={{height:'auto',display:'flex',flexDirection:'column',justifyContent:"space-around",marginTop:'15px',alignItems:"center"}}>
               <p onClick={()=>{setShowfulluser(true);setGalleryData(null);router.push(`../UserPrivates/${userData._id}`)}} style={{fontFamily:"NexaTextLight",cursor:'pointer',fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{userData.Username}</p>
               <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{userData.name}</p>
