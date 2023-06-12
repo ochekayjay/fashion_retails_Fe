@@ -173,6 +173,9 @@ function SearchUserContent() {
       }
     },[mainContentDiv,searchgalleryData,mainContentDiv])
 
+
+
+    
   return (
     <div style={{width:'100%',minHeight:'100vh',position:'relative'}}>
         <div style={{width:'100%',display:searchValue===''?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>

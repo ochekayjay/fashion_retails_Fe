@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images:{
-    domains:['igoche-fashion-db.s3.us-east-2.amazonaws.com']
+    domains:['igoche-fashion-db.s3.us-east-2.amazonaws.com'],
+    unoptimized: true
   }
 }
 
