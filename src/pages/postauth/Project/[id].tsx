@@ -47,6 +47,7 @@ export default function Project({data}:any) {
     const [hideItem,setHideItem] = useState<any>(true)
     const [showfulluser,setShowfulluser] = useState<boolean>(false)
     const [loadProject,setLoadProject] = useState(true)
+    const [showItems,setShowItems] = useState<boolean>(false)
 
 //router.isReady
 
@@ -81,6 +82,7 @@ export default function Project({data}:any) {
 
     useEffect(()=>{
       console.log(userData)
+      console.log(focusedItem)
 
 
       if(router.isReady){
@@ -158,10 +160,10 @@ export default function Project({data}:any) {
                 <Carousel.Slide>
                 <div ref={imageHolderRef} style={{height:width>500?"350px":width*0.80*1.7777,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                     <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
-                        <img  src={focusedItem?.imageLink} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
+                        <Image fill onLoad={()=>setImageLoader(true)}  src={focusedItem?.imageLink} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
                     </div>
                     <div className={styles.itemPop}>
-                        {focusedItem?.itemsArray.map((item:any)=><p style={{width:'25px',position:'absolute',height:'25px',backgroundColor:"black",borderRadius:"50%",display:item.distance?.x?"flex":"none",alignItems:"center",justifyContent:"center",color:'white',left:item.distance?.x?`${item.distance.x * dynamicDimension.x}px`:'',top:item.distance?.y?`${item.distance.y * dynamicDimension.y}px`:''}}>{item.itemNumber}</p>)}
+                      {focusedItem?.itemsArray.map((item:any)=><p style={{width:'25px',position:'absolute',height:'25px',backgroundColor:"black",borderRadius:"50%",display:item.distance?.x?"flex":"none",alignItems:"center",justifyContent:"center",color:'white',left:item.distance?.x?`${item.distance.x * dynamicDimension.x}px`:'',top:item.distance?.y?`${item.distance.y * dynamicDimension.y}px`:''}}>{item.itemNumber}</p>)}
                     </div>
                 </div>
                 </Carousel.Slide>
