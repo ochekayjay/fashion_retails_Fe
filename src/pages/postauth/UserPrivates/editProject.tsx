@@ -20,7 +20,7 @@ function EditProject() {
     })
 
     useEffect(()=>{
-        setHashtagHold(focusedItem?.hashtag.join(','))
+        setHashtagHold(focusedItem?.hashtag.join(' '))
         setEnlistUserObj({title:focusedItem?.title,
                           projectDescription:focusedItem?.projectDescription,
                           })

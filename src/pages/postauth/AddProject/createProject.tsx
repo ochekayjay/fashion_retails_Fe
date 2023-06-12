@@ -393,7 +393,7 @@ const updateHashtag = (event:any)=>{
   console.log(hashholder)
   console.log(hashtagHold)
   setHashtagHold(event.target.value)
-  setEnlistUserObj({...enlistUserObj, hashtag : hashArray})   
+  setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
 }
 
 const updateList =  (event:any,id:any)=>{
