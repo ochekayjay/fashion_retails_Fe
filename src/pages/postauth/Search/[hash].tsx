@@ -70,6 +70,12 @@ export default function HashDynamics() {
                     setDisplayData(newfetch.UserSearch)
                     window.sessionStorage.setItem(`obj${hash}`,newfetch.UserSearch)
                     setSearchLoading(false)
+                    let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
+                    if(typeof fetchedData === 'string'){
+                        fetchData = JSON.parse(fetchedData)
+                    console.log(fetchedData)
+                    }
+                    
                 }
                 else{
                   setSearchLoading(true)
@@ -187,7 +193,7 @@ export default function HashDynamics() {
            </div>
 
         </div>
-        {displayData?<section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'15px'}}>
+        {displayData?<section style={{width:width>1100?'65%':'100%',minHeight:width>1100?'100vh':'75vh',marginTop:'100px'}}>
           <div style={{width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'space-around'}}>
             <div onClick={()=>setMainContentDiv(true)}  style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"24px",height:'24px'}}><Image src={columnIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
@@ -204,7 +210,12 @@ export default function HashDynamics() {
           </div>
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {displayData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
-                                                                                        {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
+                   
+                   {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
+
+              <div onClick={()=>{setFocusedItem(d);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
+                  <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
+              </div>
             
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
