@@ -19,6 +19,7 @@ import collectionIcon from '../../../iconholder/bookmarkCollection.svg'
 import moreIcon from '../../../iconholder/moreIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton';
+import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton';
 
 
 
@@ -41,6 +42,7 @@ export default function HashDynamics() {
   const [itemClicked,setItemClicked] = useState<any>('')
   const [determineBlur,setDetermineBlur] = useState<boolean>(false)
   const [firstLoad,setFirstLoad] = useState<any>(true)
+  const [showProject,setShowProject] = useState<boolean>(false)
   const { query: { message, hash } } = router
 
 
@@ -201,12 +203,11 @@ useEffect(()=>{
   return (
       <div style={{width:'100vw',minHeight:'100vh',position:'relative'}}>
 
-<div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
+          <div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
           
           </div>
-
-      
-<div className={determineBlur===false?styles.searchSectionSmall:styles.searchSectionBig}>
+          {showProject && <ProjectSkeleton/>}
+          <div className={determineBlur===false?styles.searchSectionSmall:styles.searchSectionBig}>
             <div className={styles.searchSectionSmallBlur}></div>
            <div style={{position:'absolute',top:'0px',left:'0px',height:'100%',width:"100%",zIndex:'30'}}>
            <p style={{width:'80%',position:'relative',height:'50px',margin:'15px auto',borderRadius:'10px'}}>
@@ -250,7 +251,7 @@ useEffect(()=>{
                    
                    {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
 
-              <div onClick={()=>{setFocusedItem(d);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
+              <div onClick={()=>{setFocusedItem(d);setShowProject(true);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
               </div>
             
