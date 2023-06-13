@@ -38,12 +38,15 @@ export default function HashDynamics() {
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
+  const [determineBlur,setDetermineBlur] = useState<boolean>(false)
   const [firstLoad,setFirstLoad] = useState<any>(true)
+  const { query: { message, hash } } = router
 
 
 
   useEffect(()=>{
-    const { query: { message, hash } } = router
+    
+    console.log(router.pathname)
     console.log(message)
     console.log(hash)
     const storedhash = window.sessionStorage.getItem(`hash${hash}`)
@@ -68,11 +71,11 @@ export default function HashDynamics() {
         
                 if(newfetch.state){
                     setDisplayData(newfetch.UserSearch)
-                    window.sessionStorage.setItem(`obj${hash}`,newfetch.UserSearch)
+                    window.sessionStorage.setItem(`obj${hash}`,JSON.stringify(newfetch.UserSearch))
                     setSearchLoading(false)
                     let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
                     if(typeof fetchedData === 'string'){
-                        fetchData = JSON.parse(fetchedData)
+                        fetchedData = JSON.parse(fetchedData)
                     console.log(fetchedData)
                     }
                     
@@ -87,12 +90,17 @@ export default function HashDynamics() {
     }
 
     else{
-        const fetchedData = window.sessionStorage.getItem(`obj${hash}`)
-        setDisplayData(fetchedData)
+        console.log('in here fixing')
+        let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
+        if(typeof fetchedData === 'string'){
+            fetchedData = JSON.parse(fetchedData)
+            setDisplayData(fetchedData)
+        }
+        
     }
    
 
-  },[])
+  },[message,hash])
 
 
 
@@ -161,15 +169,38 @@ export default function HashDynamics() {
 
 
 
+  
+  const encodeUri = (searchValue:any)=>{
+    
+
+    const hashobj = JSON.stringify({text:searchValue})
+    //const encodedUrl = CryptoJS.SHA256(hashobj).toString();
+    let a = Math.random()*134
+    const parma = a.toString()
+
+    router.push(`./${parma}?message=${searchValue}`)
+    //console.log(encodedUrl);
+  }
+
+useEffect(()=>{
+        if(searchValue!==''){
+            setDetermineBlur(true)
+        }
+        else{
+            setDetermineBlur(false)
+        }
+},[searchValue])
+
+
   return (
       <div style={{width:'100vw',minHeight:'100vh',position:'relative'}}>
 
-<div style={{width:'100%',display:searchValue===''?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
+<div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
           
           </div>
 
       
-<div className={searchValue===''?styles.searchSectionSmall:styles.searchSectionBig}>
+<div className={determineBlur===false?styles.searchSectionSmall:styles.searchSectionBig}>
             <div className={styles.searchSectionSmallBlur}></div>
            <div style={{position:'absolute',top:'0px',left:'0px',height:'100%',width:"100%",zIndex:'30'}}>
            <p style={{width:'80%',position:'relative',height:'50px',margin:'15px auto',borderRadius:'10px'}}>
@@ -177,8 +208,8 @@ export default function HashDynamics() {
               <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><img alt='search' src={searchIcon.src}/></span>
             </p>
 
-            <p style={{padding:'5px 10px',display:searchValue===''?'none':'block',borderRadius:"7px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:'fit-content',margin:'10px auto',height:'auto',backgroundColor:'white',color:'black',letterSpacing:'2px',fontFamily:"NexaTextLight"}}>Enter</p>
-            <div style={{width:'100%',height:'auto',display:searchValue===''?'none':'block',padding:'15px'}}>
+            <p onClick={()=>{setDetermineBlur(false); encodeUri(searchValue)}}  style={{padding:'5px 10px',display:determineBlur===false?'none':'block',borderRadius:"7px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',width:'fit-content',margin:'10px auto',height:'auto',backgroundColor:'white',color:'black',letterSpacing:'2px',fontFamily:"NexaTextLight"}}>Enter</p>
+            <div style={{width:'100%',height:'auto',display:determineBlur===false?'none':'block',padding:'15px'}}>
                 <div style={{width:'80%',margin:'auto',backgroundColor:'white ',minHeight:'50px',maxHeight:'250px',overflow:'auto',borderRadius:'10px',display:'flex',alignItems:"center",justifyContent:"center"}}>
                     {searchLoading?<Loader color="black" size="sm" variant="bars" />:
                     <div style={{width:'100%',padding:'5px',height:'auto',}}>
