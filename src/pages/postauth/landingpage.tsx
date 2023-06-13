@@ -140,9 +140,9 @@ useEffect(()=>{
         {loadProSkeleton && <ProjectSkeleton/>}
         <Navbar viewmobile={viewmobile} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
-          <div onClick={()=>setViewMobile(!viewmobile)} style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
-            <p style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>
-            <div style={{width:'65%',position:'relative',height:'50px',borderRadius:'15px',padding:"10px",backgroundColor:'white',margin:"15px auto"}}>
+          <div style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
+            <p onClick={()=>setViewMobile(!viewmobile)} style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>
+            <div onClick={()=>router.push('../Search/main')} style={{width:'65%',position:'relative',height:'50px',borderRadius:'15px',padding:"10px",backgroundColor:'white',margin:"15px auto"}}>
                 <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
             </div>
             <p style={{width:'24px',height:'24px'}}><Image alt='' src={notsOff} style={{width:'100%',height:'100%'}}/></p>
