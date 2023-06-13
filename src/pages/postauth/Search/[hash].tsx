@@ -18,6 +18,7 @@ import columnIcon from '../../../iconholder/column.svg'
 import collectionIcon from '../../../iconholder/bookmarkCollection.svg'
 import moreIcon from '../../../iconholder/moreIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
+import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton';
 
 
 
@@ -56,7 +57,7 @@ export default function HashDynamics() {
             window.sessionStorage.setItem(`hash${hash}`,hash)
             window.sessionStorage.setItem(`message${message}`,message)
         }
-
+        setSearchValue(message)
         const dataFunc = async()=>{
             let fetchData = await fetch(`https://fashion-r-services.onrender.com/content/allSearchWithImg?message=${message}`,{
                 method: 'GET',  
@@ -92,9 +93,11 @@ export default function HashDynamics() {
     else{
         console.log('in here fixing')
         let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
+      
         if(typeof fetchedData === 'string'){
             fetchedData = JSON.parse(fetchedData)
             setDisplayData(fetchedData)
+            setSearchValue(message)
         }
         
     }
@@ -183,7 +186,10 @@ export default function HashDynamics() {
   }
 
 useEffect(()=>{
-        if(searchValue!==''){
+        if(searchValue===message){
+          setDetermineBlur(false)
+        }
+        else if(searchValue!==''){
             setDetermineBlur(true)
         }
         else{
@@ -269,7 +275,7 @@ useEffect(()=>{
               </div>
             </div>)}
           </div>
-        </section>: <p>i would work</p>}
+        </section>: <GallerySkeleton/>}
       </div>
   )
 }

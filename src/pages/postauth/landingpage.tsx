@@ -24,6 +24,7 @@ import useWindowResize from '@/utils/windowdimension'
 import { useRetailContext } from '@/context/context'
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton'
+import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
 
 
 
@@ -191,9 +192,7 @@ useEffect(()=>{
             </div>)}
           </div>
         </section>: 
-        <div style={{width:'70vw',height:'200px',margin:'100px auto',display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <Loader color="black" size="sm" variant="bars" />
-        </div>}
+        <GallerySkeleton/>}
         </div>
     </div>
   )

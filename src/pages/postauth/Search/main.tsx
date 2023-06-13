@@ -4,6 +4,7 @@ import { useRetailContext } from '@/context/context';
 import { useRouter } from 'next/router';
 import { Loader } from '@mantine/core';
 import searchIcon from '../../../iconholder/search.svg'
+import HashSkeleton from '@/utils/Skeleton/hashSkeleton';
 
 
 
@@ -110,6 +111,14 @@ export default function HashBrowse() {
 
 
 
+ const filterbyHash = async (hash:any)=>{
+  let a = Math.random()*134
+  const parma = a.toString()
+  const hashString = hash.slice(1)
+  router.push(`./${parma}?message=${hashString}`)
+
+  }
+
 
 
   return (
@@ -147,17 +156,21 @@ export default function HashBrowse() {
           {hashState?
             <div style={{width:'100vw',height:'auto',marginTop:'100px',display:'flex',alignItems:'center',justifyContent:"center"}}>
             <div className={styles.elementHolder}>
-            {hashState.map((d:any)=><div style={{display:'flex',borderRadius:'10px',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',overflow:'hidden',backgroundColor: `${d?.backgroundColor}`,height:'120px'}}>
+            {hashState.map((d:any)=>
+              < div className={styles.hashMap}>
+                
+                <div style={{display:'flex',borderRadius:'10px',position:"relative",overflow:'hidden',backgroundColor: `${d?.backgroundColor}`,height:'100%',width:'100%'}}>
             <div style={{position:'absolute',borderRadius:'5px',height:'88.9px',zIndex:'100',width:'50px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',bottom:'0px',right:'0px',transform:'rotate(45deg)'}}>
                 <img src={d?.imageLink} style={{position:'absolute',borderRadius:'5px',height:'100%',width:"100%",top:'0px',left:"0px"}}/>
             </div>
-            <p style={{position:'absolute',zIndex:'200',top:'0px',left:'0px',height:'100%',width:'100%',padding:'5px',paddingLeft:'10px',fontFamily:'NexaTextBold',fontSize:'20px',letterSpacing:'1.5px',color:'white'}}>{d?.hash}</p>
-                              </div>
+            <p onClick={()=>filterbyHash(d.hash)} style={{position:'absolute',zIndex:'200',top:'0px',left:'0px',height:'100%',width:'100%',padding:'5px',paddingLeft:'10px',fontFamily:'NexaTextBold',fontSize:'20px',letterSpacing:'1.5px',color:'white'}}>{d?.hash}</p>
+            </div>
+              </ div>
                       )
             }
       
             </div>
-          </div>:<p style={{fontSize:'50px',backgroundColor:'white',color:'black'}}>DOES not work for now</p>}
+          </div>:<HashSkeleton/>}
       </div>
   )
 }
