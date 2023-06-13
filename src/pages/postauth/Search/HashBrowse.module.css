@@ -1,0 +1,72 @@
+
+
+.elementHolder{
+    width:100vw;
+    height:auto;
+    display:grid;
+    grid-template-columns:auto auto;
+    column-gap:10px;
+    padding:5px;
+    position: relative;
+    row-gap: 25px;
+    z-index: 10;
+    transition: grid-template-columns 3.5s ease;
+}
+
+
+.searchSectionSmall{
+    position:fixed;
+    top:0px;
+    left:0px;
+    z-index:300;
+    max-height:80px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+    
+    backdrop-filter:'blur(4px)';
+    transition: max-height 1s ease;
+}
+
+
+.searchSectionSmallBlur{
+    position:fixed;
+    top:0px;
+    left:0px;
+    height:80px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+    z-index: 20;
+    backdrop-filter:blur(4px);
+
+    
+}
+.searchSectionBig{
+    position:fixed;
+    top:0px;
+    left:0px;
+    z-index:300;
+    max-height:400px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+
+    backdrop-filter:'blur(4px)';
+    transition: max-height 1s ease;
+}
+
+
+@keyframes popShow{
+    from{ transform: scale(0)}
+    to{ transform: scale(1);
+        height:auto;
+        width: 140px;
+       }
+  }

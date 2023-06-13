@@ -1,6 +1,29 @@
 import React from 'react'
 
-function Tester() {
+
+
+export async function getStaticProps() {
+
+  //https://fashion-r-services.onrender.com
+  //http://localhost:5005
+  
+    const res = await fetch(`https://fashion-r-services.onrender.com/content/hashbrowse/`,{
+    method: 'GET',  
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    
+        }
+    });
+    const data = await res.json()
+    
+  return { props: { data} };
+  }
+
+
+ 
+
+export default function Tester({data}:any) {
   return (
     <div style={{width:'100vw',height:'100vh',display:'flex',alignItems:'center',justifyContent:"center"}}>
         <div style={{width:'300px',height:'300px',position:"relative",backgroundColor:'red',overflow:'hidden'}}>
@@ -11,4 +34,3 @@ function Tester() {
   )
 }
 
-export default Tester
