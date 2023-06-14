@@ -25,7 +25,7 @@ import { useRetailContext } from '@/context/context'
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
-
+import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 
 
 /**
@@ -136,6 +136,15 @@ useEffect(()=>{
 },[mainContentDiv,allGallery])
 
 
+const onDelete = (id:any)=>{
+  const asyncDel = async()=>{
+    const newdata = await DeleteProject(id)
+    setAllGallery(newdata.userImages)
+  }
+
+  asyncDel()
+}
+
   return (
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
@@ -172,7 +181,7 @@ useEffect(()=>{
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
-                <div style={{display: id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>onDelete(d._id)} style={{display: id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
               </div>: null}
