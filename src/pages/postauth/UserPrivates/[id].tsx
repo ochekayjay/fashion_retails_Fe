@@ -23,6 +23,7 @@ import Profilepictures from '@/utils/Pictures/profilepictures'
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 import ProjectSkeleton from '../../../utils/Skeleton/projectSkeleton'
 import { DeleteProject } from '@/utils/pre_auth/deleteProject'
+import ShareLink from '@/utils/pre_auth/shareLink'
 
 
 export async function getServerSideProps(context:any) {
@@ -67,6 +68,7 @@ export default function Userpage({data}:any) {
   const [itemClicked,setItemClicked] = useState<any>('')
   const [firstLoad,setFirstLoad] = useState<any>(true)
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
+  const token = window.localStorage.getItem('token')
   
 
 
@@ -237,10 +239,14 @@ if(firstLoad){
         </>}
         </>
         
-
+      <div style={{width:'95%',margin:"150px auto",marginBottom:'20px',height:'auto'}}>
+          <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px'}}>PROMOTED SECTION</p>
+          <p style={{width:'fit-content',height:'fit-content',margin:'auto',display:token?'block':'none'}}><p className={styles.appPromoButton}>Add Project</p></p>
+      </div>
        
 
-      {userData && <div style={{marginTop:'150px',width:'100%',height:'auto'}}>
+      {userData && <div style={{marginTop:'40px',width:'100%',height:'auto'}}>
+      <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px'}}>CONTENT SECTION</p>
         <p style={{width:'85%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>Search</p>
         <div onClick={()=> searchUserFunc()} style={{width:'85%',position:'relative',height:'40px',borderRadius:'15px',padding:"10px",backgroundColor:'rgb(228,228,228)',margin:"15px auto"}}>
         <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
@@ -271,7 +277,7 @@ if(firstLoad){
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div onClick={()=>onDelete(d._id)} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
-                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>ShareLink({title:d.title,description:d.projectDescription,link:`https://fashion-retails-fe-ashen.vercel.app/postauth/Project/${d._id}`})} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
               </div>: null}
               
