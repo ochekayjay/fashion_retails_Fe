@@ -57,7 +57,7 @@ import ShareLink from '@/utils/pre_auth/shareLink'
 const Landingpage = ()=> {
   
   const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id} = useRetailContext()
+  const {viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id,setId} = useRetailContext()
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
@@ -94,7 +94,8 @@ useEffect(()=>{
       const userImages = resolvedValue.userImages;
       console.log(userImages)
       setAllGallery(userImages)
-      // Continue using 'userImages' here
+      const userId = window.localStorage.getItem('id')
+      userId? setId(userId): ''
       // ...
     }).catch((error) => {
       // Handle any errors that occurred during the promise execution

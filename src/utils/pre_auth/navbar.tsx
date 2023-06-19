@@ -26,7 +26,15 @@ type showMobile = {
 
 function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
   const {width,height} = useWindowResize()
-  const {signed,name,username,avatarUrl,id} = useRetailContext()
+  const {signed,name,username,avatarUrl,id,setId,setSigned} = useRetailContext()
+
+
+  const signOut = ()=>{
+    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('id')
+    setId(null)
+    setSigned(false)
+  }
   return (
     <>
     <Head>
@@ -58,7 +66,7 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='top creators' src={topcreatorIcon} /></span><span className={styles.navlogospan}>Top Creators</span></p>
         </div>
-        {signed?
+        {id?
         <div className={styles.navdivs}>
             <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>WELCOME</span></p>
         <div className={styles.creatorsectsInnerUser}>
@@ -72,7 +80,7 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
               
             </div>
         </div>
-        <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
+        <p onClick={()=>signOut()} className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
       </div>:
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>Become a Creator</span></p>

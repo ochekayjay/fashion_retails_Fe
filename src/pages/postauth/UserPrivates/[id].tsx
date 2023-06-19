@@ -24,6 +24,7 @@ import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton'
 import ProjectSkeleton from '../../../utils/Skeleton/projectSkeleton'
 import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 import ShareLink from '@/utils/pre_auth/shareLink'
+import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
 
 
 export async function getServerSideProps(context:any) {
@@ -60,7 +61,7 @@ export default function Userpage({data}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {setSearchedUserId,setUserHashatags,id,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches} = useRetailContext()
+  const {setSearchedUserId,id,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
@@ -68,6 +69,7 @@ export default function Userpage({data}:any) {
   const [itemClicked,setItemClicked] = useState<any>('')
   const [firstLoad,setFirstLoad] = useState<any>(true)
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
+  const [userHashtags,setUserHashtags] = useState<any>(null)
   const token = window.localStorage.getItem('token')
   
 
@@ -109,10 +111,21 @@ if(typeof window !== 'undefined'){
 
 useEffect(()=>{
 if(data){
-
+          console.log(data.userDetail)
           setGalleryData(data.userImages);
           setUserData(data.userDetail);
           setFirstLoad(false)
+
+          if(data.userDetail?.hashtag){
+            const hashArray = data.userDetail?.hashtag.split(' ')
+            if(hashArray){
+              setUserHashtags(hashArray)
+            }
+          }
+        
+          else{
+            setUserHashtags(null)
+          }
 }
 
 },[data])
@@ -154,12 +167,12 @@ const searchUserFunc = ()=>{
   if(userData?.hashtag){
     const hashArray = userData?.hashtag.split(' ')
     if(hashArray){
-      setUserHashatags(hashArray)
+      setUserHashtags(hashArray)
     }
   }
 
   else{
-    setUserHashatags(null)
+    setUserHashtags(null)
   }
   
     setSearches(null)
@@ -214,7 +227,7 @@ if(firstLoad){
             </div>
 
         </section>:
-        <>{!userData|| !router.isReady? <FullUserSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"440px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
+        <>{!userData||  !router.isReady? <FullUserSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:id?"440px":"350px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center',position:'fixed',top:'0px',backgroundColor:'white',zIndex:"50000000",width:"100%",padding:'20px'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.Username}</p>
@@ -245,11 +258,24 @@ if(firstLoad){
       </div>
        
 
-      {userData && <div style={{marginTop:'40px',width:'100%',height:'auto'}}>
-      <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px'}}>CONTENT SECTION</p>
-        <p style={{width:'85%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>Search</p>
-        <div onClick={()=> searchUserFunc()} style={{width:'85%',position:'relative',height:'40px',borderRadius:'15px',padding:"10px",backgroundColor:'rgb(228,228,228)',margin:"15px auto"}}>
+      {userData && <div style={{marginTop:'40px',width:'100%',height:'auto',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+      <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px',marginBottom:'30px'}}>CONTENT SECTION</p>
+        <div style={{width:'85%',margin:'30px auto', height:'150px'}}>
+            <p style={{width:'100%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>#Creator hashtags</p>
+            <div style={{width:'100%',height:'150px',overflow:'hidden',borderRadius:'10px',position:'relative',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>
+              <p style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',border:'1px solid black', borderWidth:'0px 0px 1px',fontFamily:'NexaTextLight',fontSize:'20px',position:'absolute',top:"0px",left:'0px'}}>User Hashtags</p>
+              <div style={{marginTop:'30px',maxHeight:'90%',overflow:'auto',width:'100%'}}>
+                {userHashtags?<div style={{height:'150px',width:'100%',display:'flex',flexWrap:'wrap',justifyContent:'space-around'}}>{userHashtags.map((hash:any)=><span style={{color:'blue',margin:"10px",fontFamily:'NexaTextLight'}}>{hash}</span>)}</div>:
+                <p style={{width:'100%',height:"100%",marginTop:'30px',display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"NexaTextLight"}}>No Hashtags Available!</p>}
+
+              </div>
+            </div>
+        </div>
+        <div style={{width:'85%',height:'auto',margin:'40px auto'}}>
+        <p style={{width:'100%',textAlign:"left",fontFamily:'NexaTextBold',marginBottom:'10px'}}>Search</p>
+        <div style={{width:'100%',position:'relative',height:'40px',borderRadius:'15px',padding:"10px",backgroundColor:'rgb(228,228,228)',margin:"0px auto"}}>
         <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
+        </div>
         </div>
         </div>}
 
@@ -295,7 +321,7 @@ if(firstLoad){
               </div>
             </div>)}
           </div>
-        </section>: <p>i would work</p>}
+        </section>: <GallerySkeleton/>}
     </div>
     
   )
