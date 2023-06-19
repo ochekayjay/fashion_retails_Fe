@@ -6,6 +6,7 @@ import { Carousel } from '@mantine/carousel';
 import useWindowResize from '@/utils/windowdimension';
 import { useRetailContext } from '@/context/context';
 import mailicon from '../../../iconholder/mailIcon.svg'
+import mailer from '../../../iconholder/mailIcon.svg'
 import Image from 'next/image';
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton';
 import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton';
@@ -169,7 +170,8 @@ export default function Project({data}:any) {
                 </Carousel.Slide>
                 {focusedItem?.itemsArray.map((item:any)=> 
                 <Carousel.Slide>
-                    <div style={{height: '100%',padding:'15px 0px',paddingBottom:'20px',boxSizing:'border-box', width: width*0.8,color:'white',backgroundColor:focusedItem?.backgroundColor,display:item.distance?.x?"flex":"none",flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
+                    <div style={{height: '100%',padding:'45px 0px',paddingBottom:'20px',boxSizing:'border-box', width: width*0.8,color:'white',backgroundColor:focusedItem?.backgroundColor,display:item.distance?.x?"flex":"none",flexDirection:'column',justifyContent:'space-around',alignItems:'center',position:'relative'}}>
+                      <div style={{position:'absolute',color:"white",display:'flex',alignItems:'center',justifyContent:"space-between",width:"100px",height:"50px",padding:'5px',borderRadius:"50%",top:'10px', right:'10px'}}><span style={{height:'20px',boxShadow:'1px 1px 3px black',width:"20px",borderRadius:'50%',backgroundColor:item.verified?'green':'yellow'}}></span><span>{item.verified?'Verified':'Pending'}</span></div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
@@ -217,8 +219,8 @@ export default function Project({data}:any) {
                 </Carousel.Slide>)}
           </Carousel>
         }<div style={{display:'flex',justifyContent:'space-around',marginTop:'25px',width:width*0.8,height:'auto'}}>
-        <p onClick={()=>setHideItem(false)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>show Items</p>
-        <p onClick={()=>setHideItem(true)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:'white',backgroundColor:'rgb(156, 154, 154)'}}>Hide Items</p>
+        <p onClick={()=>setHideItem(false)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:hideItem?'white':'rgb(156, 154, 154)',cursor:'pointer',backgroundColor:hideItem?'rgb(156, 154, 154)':'white'}}>show Items</p>
+        <p onClick={()=>setHideItem(true)} style={{width:'100px',height:'40px',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',zIndex:'3',color:hideItem?'rgb(156, 154, 154)':'white',cursor:'pointer',backgroundColor:hideItem?'white':'rgb(156, 154, 154)'}}>Hide Items</p>
       </div>
       <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
