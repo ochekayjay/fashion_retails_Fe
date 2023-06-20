@@ -86,7 +86,9 @@ export default function Userpage({data,promotion}:any) {
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   const [userHashtags,setUserHashtags] = useState<any>(null)
   const [promos,setPromos] = useState<any>(null)
-  const token = window.localStorage.getItem('token')
+  if(typeof window !== 'undefined'){
+    const token = window.localStorage.getItem('token')
+  }
   
 
 
