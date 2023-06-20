@@ -49,9 +49,6 @@ export default function HashDynamics() {
 
   useEffect(()=>{
     
-    console.log(router.pathname)
-    console.log(message)
-    console.log(hash)
     const storedhash = window.sessionStorage.getItem(`hash${hash}`)
 
     if(!storedhash || storedhash!== hash){

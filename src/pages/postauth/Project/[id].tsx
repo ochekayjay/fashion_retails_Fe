@@ -52,34 +52,14 @@ export default function Project({data}:any) {
 
 //router.isReady
 
-    const filterbyHash = async (hash:any)=>{
-      
-      const hashed = `%23${hash.slice(1)}`
-      
-      const projects = await fetch(`https://fashion-r-services.onrender.com/content/allHash?hashtag=${hashed}`,{
-        method: 'GET',  
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-    
-            }
-        });
-        
-      const searchCollect = await projects.json()
-  
-      if(searchCollect.userImages.length>=1){
-        
-        setSearches(searchCollect.userImages)
-        router.push('../Search/searchUserContent')
-      }
 
-      else{
-        console.log('cant work')
-        
-      }
-      
-    }
+const filterbyHash = async (hash:any)=>{
+  let a = Math.random()*134
+  const parma = a.toString()
+  const hashString = hash.slice(1)
+  router.push(`../Search/${parma}?message=${hashString}`)
 
+  }
 
     useEffect(()=>{
     
