@@ -92,7 +92,6 @@ useEffect(()=>{
     promise.then((resolvedValue) => {
       // Access the 'userImages' property on the resolved value
       const userImages = resolvedValue.userImages;
-      console.log(userImages)
       setAllGallery(userImages)
       const userId = window.localStorage.getItem('id')
       userId? setId(userId): ''
@@ -127,10 +126,7 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-  console.log('a in userp')
   if(imageHolderRef?.current){
-
-    console.log('b in userp')
     const height = imageHolderRef.current?.offsetWidth*1.777
 
     setImgHeight(height)

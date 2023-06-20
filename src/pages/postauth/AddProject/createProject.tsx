@@ -377,8 +377,7 @@ function handleUpload(canvasRef:any) {
   });
 }
 const updateUserObj = (event:any)=>{
-  console.log(event.target.name)
-  console.log(enlistUserObj.projectDescription)
+
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
     
     
@@ -388,10 +387,7 @@ const updateUserObj = (event:any)=>{
 const updateHashtag = (event:any)=>{
   const hashArray = event.target.value
   const hashholder  = hashArray.split(' ')
-  console.log(enlistUserObj)
 
-  console.log(hashholder)
-  console.log(hashtagHold)
   setHashtagHold(event.target.value)
   setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
 }

@@ -235,8 +235,7 @@ function handleUpload(canvasRef:any) {
   });
 }
 const updateUserObj = (event:any)=>{
-  console.log(event.target.name)
-  console.log(enlistUserObj.projectDescription)
+
     setEnlistUserObj({...enlistUserObj,...{[event.target.name] : event.target.value}})
     
     

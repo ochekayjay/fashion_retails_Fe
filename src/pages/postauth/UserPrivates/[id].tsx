@@ -127,7 +127,6 @@ if(typeof window !== 'undefined'){
 
 useEffect(()=>{
 if(data){
-          console.log(data.userDetail)
           setGalleryData(data.userImages);
           setUserData(data.userDetail);
           setFirstLoad(false)
