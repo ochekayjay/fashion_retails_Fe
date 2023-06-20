@@ -122,7 +122,7 @@ function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
   return (
     <div style={{width:"100%",height:'100%',backgroundColor:"black",zIndex:'1000',position:"fixed",top:"0px",left:"0px",display:'flex',alignItems:"center",justifyContent:"space-between",flexDirection:'column'}}>
      
-        <div style={{border:'3px solid red',padding:'15px',position:'absolute',top:'50%',transform:'translateY(-50%)',boxSizing:'border-box',width:width>500?'600px':width,height:'auto',margin:width>500?'0px auto':''}}>
+        <div style={{padding:'15px',position:'absolute',top:'50%',transform:'translateY(-50%)',boxSizing:'border-box',width:width>500?'600px':width,height:'auto',margin:width>500?'0px auto':''}}>
         <ReactCrop
           crop={crop}
           onChange={(_, percentCrop) => setCrop(percentCrop)}

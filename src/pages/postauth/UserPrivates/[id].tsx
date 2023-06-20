@@ -25,6 +25,8 @@ import ProjectSkeleton from '../../../utils/Skeleton/projectSkeleton'
 import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 import ShareLink from '@/utils/pre_auth/shareLink'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
+import { Carousel } from '@mantine/carousel';
+import Link from 'next/link'
 
 
 export async function getServerSideProps(context:any) {
@@ -41,21 +43,34 @@ export async function getServerSideProps(context:any) {
     
         }
     });
-    const data = await res.json()
+
+    const promotions = await fetch(`https://fashion-r-services.onrender.com/promo/creator/${id}`,{
+    method: 'GET',  
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     
-  return { props: { data} };
+        }
+    });
+
+
+    const data = await res.json()
+    const promotion = await promotions.json()
+    
+  return { props: { data, promotion} };
   }
 
   else{
     const data = null
-    return { props: { data} };
+    const promotion = null
+    return { props: { data,promotion} };
   }
 }
  
 
 
 
-export default function Userpage({data}:any) {
+export default function Userpage({data,promotion}:any) {
 
   const [showAvatar,setShowAvatar] = useState(false)
   const [userId, setUserId] = useState<any>('')
@@ -70,6 +85,7 @@ export default function Userpage({data}:any) {
   const [firstLoad,setFirstLoad] = useState<any>(true)
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   const [userHashtags,setUserHashtags] = useState<any>(null)
+  const [promos,setPromos] = useState<any>(null)
   const token = window.localStorage.getItem('token')
   
 
@@ -115,7 +131,7 @@ if(data){
           setGalleryData(data.userImages);
           setUserData(data.userDetail);
           setFirstLoad(false)
-
+         
           if(data.userDetail?.hashtag){
             const hashArray = data.userDetail?.hashtag.split(' ')
             if(hashArray){
@@ -128,7 +144,15 @@ if(data){
           }
 }
 
-},[data])
+if(promotion.status){
+  setPromos({status:promotion.status,promos:promotion.promoImages})
+}
+
+else if(!promotion.status){
+  setPromos({status:promotion.status,promos:null})
+}
+
+},[data,promotion])
  
 
 
@@ -227,7 +251,7 @@ if(firstLoad){
             </div>
 
         </section>:
-        <>{!userData||  !router.isReady? <FullUserSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:id?"440px":"350px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
+        <>{!userData||  !router.isReady? <FullUserSkeleton/>: <section style={{width:'100%',position:"relative",margin:"0px auto",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:id===userData._id?"440px":"350px",paddingTop:'15px',display:"flex",flexDirection:"column",alignItems:"center",backgroundColor:'white'}}>
             <div style={{textAlign:'center',position:'fixed',top:'0px',backgroundColor:'white',zIndex:"50000000",width:"100%",padding:'20px'}}>
                 <p style={{width:'auto',height:'20px',fontFamily:'NexaTextBold',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.name}</p>
                 <p style={{width:'80%',height:'20px',fontFamily:'NexaTextLight',letterSpacing:'2.0px',fontSize:'15px',margin:'5px auto'}}>{userData.Username}</p>
@@ -240,7 +264,7 @@ if(firstLoad){
               <p style={{fontFamily:"NexaTextBold",textAlign:"left",fontSize:'15px'}}><strong>Accumulated Views</strong> &nbsp; &nbsp; 13456</p>
             </div>
 
-            <div style={{width:"90%",boxSizing:"border-box",marginTop:'40px',display:id?'flex':'none',alignItems:"center",justifyContent:"space-around"}}>
+            <div style={{width:"90%",boxSizing:"border-box",marginTop:'40px',display:id===userData._id?'flex':'none',alignItems:"center",justifyContent:"space-around"}}>
               <section onClick={()=> router.push('../AddProject/createProject')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
               <section onClick={()=>router.push('./editProfile')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',cursor:'pointer',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
             </div>
@@ -254,13 +278,32 @@ if(firstLoad){
         
       <div style={{width:'95%',margin:"150px auto",marginBottom:'20px',height:'auto'}}>
           <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px'}}>PROMOTED SECTION</p>
-          <p style={{width:'fit-content',height:'fit-content',margin:'auto',display:token?'block':'none'}}><p className={styles.appPromoButton}>Add Project</p></p>
+          {promos.status?
+                  <Carousel maw={width*0.8} mx="auto" withIndicators height="auto">
+                    {promos.promos.map((promo:any)=><Carousel.Slide>
+                 <div style={{height:'auto',backgroundColor:promo.backgroundColor,borderRadius:'0px 0px 15px 15px',width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',paddingBottom:'20px'}}>
+                 <div style={{height:width>500?"350px":width*0.80*1.7777,width:"100%",position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+                    <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
+                        <Image fill src={promo?.imageLink} alt={promo?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
+                    </div>
+                    
+                </div>
+              <div style={{margin:'20px auto',width:'100%',marginBottom:'20px'}}>
+                <p style={{width:"100%",margin:"15px auto",textAlign:"left",paddingLeft:'15px',fontFamily:"NexaTextBold",fontSize:'20px'}}>{promo.title}</p>
+                <p style={{width:"100%",margin:"15px auto",textAlign:"left",paddingLeft:'15px',maxHeight:'70px',overflow:'auto',fontSize:'15px',letterSpacing:'1.5px',fontFamily:'NexaTextLight'}}>{promo.promoDescription}</p>
+                <p style={{width:"fit-content",padding:'5px 10px',display:"flex",alignItems:'center',justifyContent:"center",borderRadius:'7px',margin:"15px auto",textAlign:"left",paddingLeft:'15px',fontSize:"15px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white'}}><Link href={promo.link} target="_blank">Visit Site</Link></p>
+              </div>
+                 </div>
+                </Carousel.Slide>)}
+                  </Carousel>
+                  :<p style={{fontFamily:'NexaTextLight',color:'black',fontSize:'25px',width:"95%",margin:'30px auto',textAlign:"center"}}>No Promotions here!</p>}
+          <p onClick={()=>router.push('../AddPromo/createPromo')} style={{width:'fit-content',height:'fit-content',margin:'20px auto',display:id===userData._id?'block':'none'}}><p className={styles.appPromoButton}>Add Project</p></p>
       </div>
        
 
-      {userData && <div style={{marginTop:'40px',width:'100%',height:'auto',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
-      <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px',marginBottom:'30px'}}>CONTENT SECTION</p>
-        <div style={{width:'85%',margin:'30px auto', height:'150px'}}>
+      {userData && <div style={{marginTop:'70px',width:'100%',height:'auto',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+      <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px',marginBottom:'5px'}}>CONTENT SECTION</p>
+        <div style={{width:'85%',margin:'30px auto', height:'150px',marginTop:"10px"}}>
             <p style={{width:'100%',textAlign:"left",fontFamily:'NexaTextBold',margin:'10px auto'}}>#Creator hashtags</p>
             <div style={{width:'100%',height:'150px',overflow:'hidden',borderRadius:'10px',position:'relative',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>
               <p style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',border:'1px solid black', borderWidth:'0px 0px 1px',fontFamily:'NexaTextLight',fontSize:'20px',position:'absolute',top:"0px",left:'0px'}}>User Hashtags</p>
