@@ -49,6 +49,7 @@ export default function Project({data}:any) {
     const [showfulluser,setShowfulluser] = useState<boolean>(false)
     const [loadProject,setLoadProject] = useState(true)
     const [showItems,setShowItems] = useState<boolean>(false)
+    const mailicon = <svg xmlns="http://www.w3.org/2000/svg" height="24" fill='#FFFFFF' viewBox="0 -960 960 960" width="24"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
 
 //router.isReady
 
@@ -168,7 +169,7 @@ const filterbyHash = async (hash:any)=>{
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                             <p>Email :</p>
                           
-                            <a href={item.Email?item.Email:''}><img alt='' src={mailicon} style={{width:'30px',height:'30px',display:'flex',alignItems:'center',justifyContent:"center"}}/></a>
+                            <a href={item.Email?item.Email:''}><span>{mailicon}</span></a>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
@@ -189,7 +190,14 @@ const filterbyHash = async (hash:any)=>{
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:"black",position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:'10px',boxSizing:'border-box',alignItems:'center',width:'100%',height:'100%'}}>
                             <p>Delivery :</p>
-                            <p style={{display:'block',overflow:'hidden'}}>{item.Delivery?item.Delivery:''}</p>
+                            <p style={{display:'block',overflow:'hidden',fontSize:'9px'}}>{item.Delivery?item.Delivery:''}</p>
+                          </div>
+                        </div>
+                        <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
+                          <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:"black",position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
+                          <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:'10px',boxSizing:'border-box',alignItems:'center',width:'100%',height:'100%'}}>
+                            <p>Link :</p>
+                            <p style={{display:item.Phone===''?'none':'block'}}>{item.link?item.link:''}</p>
                           </div>
                         </div>
                     </div>

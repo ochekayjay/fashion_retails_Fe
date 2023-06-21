@@ -580,7 +580,7 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
                       </div>
                       <div style={{width:'80%',height:'40px',margin:'15px auto'}}>
                           <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Business Link &nbsp; <span style={{color:'red'}}>*</span></p>
-                          <input value={itemArray[itemNumber-1]?.businessLink} placeholder='instagram/pinterest/website' type='text' name='businessLink' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
+                          <input value={itemArray[itemNumber-1]?.link} placeholder='instagram/pinterest/website' type='text' name='link' onChange={(event)=>{updateList(event,itemNumber-1)}} className={styles.forminputPop}/>
                       </div>
 
                       <p onClick={()=>setItemPop(false)} style={{margin:'15px auto',width:'auto',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'center',backgroundColor:'white',color:'black'}}>close</p>
@@ -676,7 +676,7 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
                     </div>
                     <div style={{width:'100%',height:'auto',padding:'10px',margin:width>800?"":'10px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Business Link &nbsp; <span style={{color:'red'}}>*</span></p>
-                                <input  value={itemArr?.businessLink} placeholder='instagram/pinterest/website' type='text' name='businessLink' onChange= {(event)=>{updateList(event,index)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
+                                <input  value={itemArr?.link} placeholder='instagram/pinterest/website' type='text' name='link' onChange= {(event)=>{updateList(event,index)}} className={shownormal?styles.forminput:enlistUserObj.Email===""?styles.forminputUnfilled: styles.forminput}/>
                     </div>
 
                     <div style={{margin:'15px auto',display:'flex',alignItems:'center',justifyContent:'space-around',width:'75%',height:'auto'}}>
