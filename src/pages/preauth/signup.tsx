@@ -130,12 +130,14 @@ export default function Signup() {
             body: formData
             }); 
         const res = await createdCreator.json()
+        
         if(res.verification==='mail sent'){
+      
             setIsLoading(false)
             setSignError({message:'A link has been sent to your mail for confirmation, it would be valid for an hour. Kindly look up and sign in',link:'Sign In'})
             setShowError(true)
         }
-        console.log(res)
+      
        }
         
    
