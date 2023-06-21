@@ -5,6 +5,7 @@ import { Loader } from '@mantine/core';
 import useWindowResize from '@/utils/windowdimension'
 import { useRetailContext } from '@/context/context';
 import { useRouter } from 'next/router';
+import AuthInfo from '@/utils/pre_auth/authInfo';
 
 
 
@@ -17,6 +18,8 @@ export default function signin() {
     const {width,height} = useWindowResize()
     const [shownormal,setshowNormal] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
+    const [signError,setSignError] = useState<any>({message:null,link:null})
+    const [showError,setShowError] = useState<boolean>(false)
     const {push} = useRouter()
 
     const [enlistUserObj,setEnlistUserObj] = useState<any>({
@@ -68,11 +71,15 @@ export default function signin() {
 
         }
         else if(res.status==='unverified'){
-            console.log('successful')
+            setIsLoading(false)
+            setSignError({message:'User exists but mail is unverified',link:'verify'})
+            setShowError(true)
         }
 
         else{
-            console.log('failed')
+            setIsLoading(false)
+            setSignError({message:'User does not exist',link:'Sign Up'})
+            setShowError(true)
         }
         console.log(res)
     }
@@ -86,7 +93,7 @@ export default function signin() {
 //'https://fashion-r-services.onrender.com/creator/signin',
   return (
     <div style={{backgroundColor:'rgb(228,228,228)',minHeight:'100vh',width:'100vw',flexDirection:"column",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        
+        {showError && <AuthInfo message={signError.message} link={signError.link} setShowError={setShowError}/>}
         <div style={{width:width>850?"65%":'85%',margin:'30px auto'}}>
             <p style={{width:'140px',boxShadow:'1px 1px 5px rgb(91, 90, 90)',marginLeft:'0px',textAlign:'center',padding:'10px 15px',boxSizing:'border-box',borderRadius:'15px',color:'black',backgroundColor:"white",fontFamily:'NexaTextLight',fontSize:'18px', letterSpacing:'1.5px',height:'auto'}}>back</p>
         </div>

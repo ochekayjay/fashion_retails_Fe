@@ -87,18 +87,20 @@ useEffect(()=>{
         return fetched
     }
 
-    const promise: Promise<any> = allDataFunc()
+ if(!allGallery){
+  const promise: Promise<any> = allDataFunc()
 
-    promise.then((resolvedValue) => {
-      // Access the 'userImages' property on the resolved value
-      const userImages = resolvedValue.userImages;
-      setAllGallery(userImages)
-      const userId = window.localStorage.getItem('id')
-      userId? setId(userId): ''
-      // ...
-    }).catch((error) => {
-      // Handle any errors that occurred during the promise execution
-    });
+  promise.then((resolvedValue) => {
+    // Access the 'userImages' property on the resolved value
+    const userImages = resolvedValue.userImages;
+    setAllGallery(userImages)
+    const userId = window.localStorage.getItem('id')
+    userId? setId(userId): ''
+    // ...
+  }).catch((error) => {
+    // Handle any errors that occurred during the promise execution
+  });
+ }
     
 },[])
  
