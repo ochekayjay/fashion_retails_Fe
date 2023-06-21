@@ -98,7 +98,17 @@ export default function Home() {
 </style>
     </Head>
     {width>750?<div className={styles.mainview}>
-        <section style={{width:width>750?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
+       
+        <p style={{marginTop:"30px",color:'black',textAlign:'center',letterSpacing:"2px",fontFamily:'NexaTextLight',fontSize:"25px"}}>Please, revert to mobile view. Webview still in the pipeline</p>
+    </div>: <MiniLandingPage/>}
+    </>
+  )
+}
+
+
+
+/**
+ *  <section style={{width:width>750?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
           get paid for posting pictures today!
         </section>
         <section style={{display:'flex',position:'relative',flexDirection:width>750?'row':'column',width:'100%',justifyContent:'space-around',alignItems:'center',height:width>750?'400px':'auto',marginTop:'50px'}}>
@@ -153,8 +163,4 @@ export default function Home() {
           </div>
           
         </section>
-        
-    </div>: <MiniLandingPage/>}
-    </>
-  )
-}
+ */
