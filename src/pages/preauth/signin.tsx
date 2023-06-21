@@ -76,6 +76,12 @@ export default function signin() {
             setShowError(true)
         }
 
+        else if(res.status==='wrong password'){
+            setIsLoading(false)
+            setSignError({message:'Wrong credentials. Your password is likely wrong',link:null})
+            setShowError(true)
+        }
+
         else{
             setIsLoading(false)
             setSignError({message:'User does not exist',link:'Sign Up'})
