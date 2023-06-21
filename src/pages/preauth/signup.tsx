@@ -5,7 +5,6 @@ import { Button } from '@mantine/core'
 import Link from 'next/link'
 import ColorThief from "color-thief-ts"
 import useWindowResize from '@/utils/windowdimension';
-import ImageCropper from '@/utils/pre_auth/imageCropper';
 import MainCrop from '@/utils/reactImgCrop/mainCrop';
 import { useDebounceEffect } from '@/utils/useDebounceEffect';
 import { imgPreview } from '@/utils/reactImgCrop/imgPreview';
@@ -39,16 +38,12 @@ export default function Signup() {
     function handleUpload(canvasRef:any,formData:any) {
         const canvas = canvasRef.current;
         canvas.toBlob((blob:any) => {
-          console.log('b blob')
-          console.log(`${blob} data`)
           const file = new File([blob], 'filename.png', { type: 'image/jpg' });; // 'filename.png' specifies the desired filename
           setFile(file)
           
           // Perform your upload logic here
 
           const formDataObject = Object.fromEntries(formData.entries());
-
-          console.log(formDataObject);
         });
       }
 
@@ -106,7 +101,6 @@ export default function Signup() {
         */
         
         formData.append('name',enlistUserObj.name)
-        console.log('c blob')
         formData.append('Username',enlistUserObj.username)
         formData.append('Password',enlistUserObj.password)
         formData.append('Email',enlistUserObj.email)
@@ -119,7 +113,6 @@ export default function Signup() {
         //console.log(formData)
         const formDataObject = Object.fromEntries(formData.entries());
 
-    console.log(formDataObject);
 //http://localhost:5005
 //https://fashion-r-services.onrender.com/creator/register
         const createdCreator = await fetch('https://fashion-r-services.onrender.com/creator/register', {
@@ -149,7 +142,6 @@ export default function Signup() {
         const extractColor = async(url:string)=>{
         const colorThief = new ColorThief();
         const dominantColor = await colorThief.getColorAsync(url);
-        console.log(dominantColor)
         setDominantColor(dominantColor);
         setCropImage(true)
         setShowImage(false)
@@ -159,7 +151,7 @@ export default function Signup() {
     },[cropImageUrl])
 
     const handleFileChange = (e:any) => {
-        console.log('in')
+    
         const file = e.target.files[0];
         const imageUrl = URL.createObjectURL(file);
         //console.log(imageUrl)
@@ -220,7 +212,7 @@ export default function Signup() {
         const extractColor = async(url:string)=>{
         const colorThief = new ColorThief();
         const dominantColor = await colorThief.getColorAsync(url);
-        console.log(dominantColor)
+      
         setDominantColor(dominantColor);
       
         

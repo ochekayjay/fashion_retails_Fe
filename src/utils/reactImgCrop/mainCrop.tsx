@@ -47,19 +47,13 @@ function MainCrop({imgSrc,setImgSrc,crop,firstImageRef,formData,handleUpload,onC
   const {width,height} = useWindowResize()
   useDebounceEffect(
     async () => {
-      console.log('abc')
-      console.log(completedCrop?.width)
-      console.log(completedCrop?.height)
-      console.log(imgRef.current)
-      console.log(previewCanvasRef.current)
+    
       if (
         completedCrop?.width &&
         completedCrop?.height &&
         imgRef.current &&
         previewCanvasRef.current
       ) {
-
-        console.log('jay')
         // We use canvasPreview as it's much faster than imgPreview.
         canvasPreview(
           imgRef.current,
@@ -69,11 +63,7 @@ function MainCrop({imgSrc,setImgSrc,crop,firstImageRef,formData,handleUpload,onC
           //rotate,
         )
 
-        console.log('bay')
-
         const newUrl = await imgPreview(imgRef.current,completedCrop)
-        console.log('cay')
-        console.log(newUrl)
         setNewPIUrl(newUrl)
       }
 
