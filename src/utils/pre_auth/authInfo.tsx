@@ -58,7 +58,7 @@ function AuthInfo({message,link,setShowError,mail,setSignError}:any) {
         <div onClick={()=>setShowError(false)} style={{display:'flex',alignItems:"center",justifyContent:'right',paddingRight:'15px',marginTop:'15px',width:'100%'}}>
         <p style={{width:"20px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:"20px",display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:"white",padding:'5px',borderRadius:"50%"}}>{cancel}</p>
         </div>
-        <p style={{fontFamily:'NexaTextLight',width:"70%",margin:'auto',fontSize:'25px'}}>{message}</p>
+        <p style={{fontFamily:'NexaTextLight',width:"70%",margin:'auto',fontSize:'20px'}}>{message}</p>
 
         {link==='Sign Up'?<Link href={'../../preauth/signup'}><p style={{width:"100px",height:'40px',marginBottom:'15px',borderRadius:"10px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white',display:'flex',alignItems:'center',justifyContent:"center"}}>Sign Up</p></Link>:link === 'Sign In'?<Link href={'../../preauth/signin'}><p style={{width:"100px",height:'40px',marginBottom:'15px',borderRadius:"10px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white',display:'flex',alignItems:'center',justifyContent:"center"}}>Sign In</p></Link>:link==='verify'?<p onClick={(event)=>submitUserInfo(event)} style={{width:"100px",height:'40px',marginBottom:'15px',borderRadius:"10px",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:'black',color:'white',display:'flex',alignItems:'center',justifyContent:"center"}}>{isLoading?<Loader color="white" size="sm" variant="bars" />:'Re-verify'}</p>:''}
     </div>
