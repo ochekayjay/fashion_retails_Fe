@@ -14,7 +14,7 @@ import addItem from '../../../iconholder/addItem.svg'
 import closeItem from '../../../iconholder/closeItem.svg'
 import ImageCropper from '@/utils/pre_auth/imageCropper';
 import ColorThief from "color-thief-ts"
-import MainCrop from '../AddProject/ProjectCrop/mainCrop'; 
+import MainCrop from '@/utils/reactImgCrop/mainCrop';
 import { ListItemArray } from '@/utils/itemArray';
 
 import ReactCrop, {
@@ -318,7 +318,7 @@ const submitUserInfo = async (event:any,enlistUserObj:any,itemArray:any)=>{
         <section style={{width:width>500?'auto':'100%',height:width>500?'auto':'100%',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${dominantColor},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
             
-            <div   style={{height:width>500?"622.2222px":width*1.4222,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+            <div   style={{height:width>500?'350px':width*0.80,width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',position:'relative',backgroundColor:"white",marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                 {completedCrop?
                     <>
 
