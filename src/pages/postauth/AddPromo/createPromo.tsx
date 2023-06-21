@@ -114,7 +114,7 @@ export default function CreatePromo() {
 
 const [imgSrc, setImgSrc] = useState('')
 const [crop, setCrop] = useState<Crop>()
-const [aspect, setAspect] = useState<number | undefined>(9 / 16)
+const [aspect, setAspect] = useState<number | undefined>(1 /1)
 const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
 const [newPIUrl, setNewPIUrl] = useState('')
 const previewCanvasRef = useRef<HTMLCanvasElement>(null)

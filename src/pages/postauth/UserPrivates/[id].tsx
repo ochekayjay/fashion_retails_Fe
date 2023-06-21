@@ -278,12 +278,12 @@ if(firstLoad){
         </>
         
       <div style={{width:'95%',margin:"150px auto",marginBottom:'20px',height:'auto'}}>
-          <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px'}}>PROMOTED SECTION</p>
+          <p style={{width:'fit-content',margin:'auto',letterSpacing:'1.5px',fontFamily:'NexaTextBold',fontSize:'22px',marginBottom:"20px"}}>PROMOTED SECTION</p>
           {promos.status?
                   <Carousel maw={width*0.8} mx="auto" withIndicators height="auto">
                     {promos.promos.map((promo:any)=><Carousel.Slide>
                  <div style={{height:'auto',backgroundColor:promo.backgroundColor,borderRadius:'0px 0px 15px 15px',width:width>500?'350px':width*0.80,margin:width>500?"":'0px auto',paddingBottom:'20px'}}>
-                 <div style={{height:width>500?"350px":width*0.80*1.7777,width:"100%",position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
+                 <div style={{height:width>500?'350px':width*0.80,width:"100%",position:'relative',marginBottom:'30px',boxShadow:'1px 1px 3px black',boxSizing:'border-box',borderRadius:'15px'}}>
                     <div style={{width:'100%',height:'100%',boxShadow:'1px 1px 5px rgb(91, 90, 90)',}}>
                         <Image fill src={promo?.imageLink} alt={promo?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
                     </div>
