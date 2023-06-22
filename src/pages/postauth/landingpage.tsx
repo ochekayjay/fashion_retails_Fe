@@ -88,7 +88,7 @@ useEffect(()=>{
     }
 
  if(!allGallery){
-  console.log('testing feed')
+  
   const promise: Promise<any> = allDataFunc()
 
   promise.then((resolvedValue) => {
@@ -146,6 +146,64 @@ const onDelete = (id:any)=>{
   asyncDel()
 }
 
+
+const [scrollable,setScrollable] = useState<boolean>(false)
+   // Restore scroll position on route change
+  useEffect(() => {
+    const scrollKey = router.pathname?`scrollPosition_${router.pathname}`:'';
+    const key = window.sessionStorage.getItem(scrollKey)
+    
+    const keystring = window.sessionStorage.getItem(scrollKey)
+     if(keystring){
+      const storedPosition = parseInt(keystring);
+      if (!isNaN(storedPosition)) {
+        setTimeout(() => {
+          window.scrollTo(0, storedPosition);
+        }, 0);
+      }
+     }
+
+     setScrollable(true)
+    
+  }, [router.pathname]);
+
+
+  // Store scroll position in session storage on route change
+  useEffect(() => {
+    const handleScroll = () => {
+  
+      const scrollKey = `scrollPosition_${router.pathname}`;
+      
+      const key = window.sessionStorage.getItem(scrollKey)
+      
+      const scrollString = window.scrollY.toString()
+      if(scrollString !== '0'){
+        sessionStorage.setItem(scrollKey,scrollString);
+      }
+    }
+
+    const handleRouteChange = () => {
+      // Your code logic here, which will run on every route change
+      setScrollable(false);
+    };
+    
+
+  
+    if(scrollable){
+      router.events.on('routeChangeComplete', handleRouteChange);
+      window.addEventListener('scroll', handleScroll);
+
+      // Clean up the event listener on component unmount
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }  
+
+    
+  },);
+
+  
   return (
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}

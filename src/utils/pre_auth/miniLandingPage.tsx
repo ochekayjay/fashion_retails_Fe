@@ -18,7 +18,7 @@ import imgTwelve from '../../../public/miniSize/imgone (8).jpg'
 import imgThirteen from '../../../public/miniSize/imgone (9).jpg'
 import imgFourteen from '../../../public/miniSize/imgone (10).jpg'
 import imgFifteen from '../../../public/miniSize/imgone (11).jpg'
-
+import { useRouter } from 'next/router'
 
 
 import ring from '../../../src/iconForLanding/rings.svg'
@@ -59,6 +59,7 @@ function MiniLandingPage() {
     const RefTwo = useRef<HTMLDivElement>(null);
     const RefThree = useRef<HTMLDivElement>(null);
     const RefFour = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
 
 
@@ -196,6 +197,9 @@ const getClass = (id:any)=>{
     }
   }
 }
+
+
+
 
   return (
     <div className={styles.mainview}>

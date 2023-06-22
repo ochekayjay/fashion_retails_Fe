@@ -118,6 +118,69 @@ const filterbyHash = async (hash:any)=>{
     },[imageLoader,data])
     
 
+
+    const [scrollable,setScrollable] = useState<boolean>(false)
+   // Restore scroll position on route change
+  useEffect(() => {
+    const {id} = router.query
+    const uniqueId = `Projects ${id}`
+    const keystring = window.sessionStorage.getItem(uniqueId)
+    console.log(keystring)
+     if(keystring){
+      const storedPosition = parseInt(keystring);
+      if (!isNaN(storedPosition)) {
+        setTimeout(() => {
+          window.scrollTo(0, storedPosition);
+        }, 0);
+      }
+     }
+
+     setScrollable(true)
+    
+  }, [router.pathname]);
+
+
+  // Store scroll position in session storage on route change
+  useEffect(() => {
+    const {id} = router.query
+
+    const uniqueId = `Projects ${id}`
+    const handleScroll = () => {
+  
+      const scrollKey = uniqueId;
+      
+      const key = window.sessionStorage.getItem(scrollKey)
+      
+      const scrollString = window.scrollY.toString()
+      console.log(scrollString)
+      if(scrollString !== '0'){
+        sessionStorage.setItem(scrollKey,scrollString);
+      }
+    }
+
+    const handleRouteChange = () => {
+      // Your code logic here, which will run on every route change
+      setScrollable(false);
+    };
+    
+
+  
+    if(scrollable){
+      router.events.on('routeChangeComplete', handleRouteChange);
+      window.addEventListener('scroll', handleScroll);
+
+      // Clean up the event listener on component unmount
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }  
+
+    
+  },);
+
+
+
     if(loadProject){
       return <ProjectSkeleton/>
     }
