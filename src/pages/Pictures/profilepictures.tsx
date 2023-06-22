@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import useWindowResize from '../windowdimension'
+import useWindowResize from '@/utils/windowdimension';
 import { useRouter } from 'next/router';
 import { Loader } from '@mantine/core';
 import Image from 'next/image';
@@ -17,6 +17,7 @@ function Profilepictures() {
 
   const getFunc : () => Promise<any> = async()=>  {
     try{
+
       const res = await fetch(`https://fashion-r-services.onrender.com/creator/avatar/${creatorId}`,{
       method: 'GET',  
       headers: {
@@ -25,6 +26,7 @@ function Profilepictures() {
           }
       });
       const data = await res.json()
+    
         return data     
     }
 

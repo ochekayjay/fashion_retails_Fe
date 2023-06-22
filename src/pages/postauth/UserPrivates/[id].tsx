@@ -223,8 +223,6 @@ if(firstLoad){
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         
-        {showAvatar && <Profilepictures color={userData.color} userId={userData._id} showAvatar={showAvatar} setShowAvatar={setShowAvatar}/>}
-       
        <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px',position:'relative'}}>
                 <Image fill={true}  onClick={()=>setShowAvatar(true)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
@@ -269,9 +267,9 @@ if(firstLoad){
               <section onClick={()=> router.push('../AddProject/createProject')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Add Project</p><p style={{width:"24px",height:'24px'}}><Image src={addIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
               <section onClick={()=>router.push('./editProfile')} style={{width:'150px',padding:"10px",height:'auto',boxShadow:'1px 1px 5px rgb(91, 90, 90)',cursor:'pointer',display:'flex',justifyContent:'space-around',backgroundColor:'white',borderRadius:'5px'}}><p style={{fontFamily:"NexaTextLight",fontSize:'14px'}}>Edit Account</p><p style={{width:"24px",height:'24px'}}><Image src={editIcon} alt='' style={{width:"100%",height:'100%'}}/></p></section>
             </div>
-
+            
             <div style={{boxShadow:'1px 1px 5px rgb(91, 90, 90)',position:'absolute',bottom:'-80px',left:'10px',border:'3px solid white',borderRadius:"15px",width:'150px',backgroundColor:"white",height:'150px'}}>
-                <Image fill={true}  quality={100} onClick={()=>setShowAvatar(true)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
+                <Image fill={true}  quality={100} onClick={()=>router.push(`../../Pictures/profilepictures?creatorId=${userData._id}`)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
             </div>
         </section>}
         </>}
