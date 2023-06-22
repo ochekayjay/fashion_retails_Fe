@@ -169,7 +169,7 @@ const filterbyHash = async (hash:any)=>{
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                             <p>Email :</p>
                           
-                            <a href={item.Email?item.Email:''}><span>{mailicon}</span></a>
+                            <a href={item.Email?`mailto:${item.Email}`:''}><span style={{display:item.Email?'block':'none'}}>{mailicon}</span></a>
                           </div>
                         </div>
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
