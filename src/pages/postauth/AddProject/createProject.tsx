@@ -387,9 +387,10 @@ const updateUserObj = (event:any)=>{
 const updateHashtag = (event:any)=>{
   const hashArray = event.target.value
   const hashholder  = hashArray.split(' ')
-
+  const newer = hashholder[0].split(',')
   setHashtagHold(event.target.value)
-  setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
+  
+  setEnlistUserObj({...enlistUserObj, hashtag : newer})   
 }
 
 const updateList =  (event:any,id:any)=>{

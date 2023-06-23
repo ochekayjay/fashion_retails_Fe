@@ -13,6 +13,7 @@ import searchIcon from '../../iconholder/search.svg'
 import menuIcon from '../../iconholder/menu.svg'
 import Image from 'next/image' 
 import Link from 'next/link'
+import { Loader } from '@mantine/core'
 import useWindowResize from '../windowdimension'
 import { useRetailContext } from '@/context/context'
 
@@ -21,10 +22,12 @@ type showMobile = {
   viewmobile: boolean,
   setViewMobile : any,
   setShowfulluser : any,
+  userfile : any,
+  otherUsers : any
 
 }
 
-function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
+function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,otherUsers}:showMobile) {
   const {width,height} = useWindowResize()
   const {signed,name,username,avatarUrl,id,setId,setSigned} = useRetailContext()
 
@@ -65,15 +68,29 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser}:showMobile) {
         </div>
         <div className={styles.navdivs}>
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='top creators' src={topcreatorIcon} /></span><span className={styles.navlogospan}>Top Creators</span></p>
+          <div style={{width:'95%',height:'auto',margin:"10px auto"}}>
+          {otherUsers?otherUsers.map((user:any)=>
+           <Link href={`./UserPrivates/${user._id}`}>
+              <div onClick={()=>setViewMobile(!viewmobile)} style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
+              <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.25',zIndex:'3'}}></div>
+              <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+                <p style={{width:'45px',height:'45px',borderRadius:"50%"}}><img src={user.avatarLink} style={{width:'100%',height:"100%",borderRadius:'50%'}}/></p>
+                <div style={{display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:"column",overflow:'hidden',color:'black',fontFamily:'NexaTextLight'}}>
+                  <p>{user.Username}</p>
+                  <p>{user.name}</p>
+                </div>
+              </div>
+            </div></Link>):<p style={{textAlign:"center"}}><Loader color="black" size="sm" variant="bars" /></p>}  
+          </div>
         </div>
-        {id?
+        {userfile?
         <div className={styles.navdivs}>
             <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='become a creator' src={becomecreatorIcon}/></span><span className={styles.navlogospan}>WELCOME</span></p>
         <div className={styles.creatorsectsInnerUser}>
-            <div style={{height:'80px',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image quality={100} fill={true} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={avatarUrl} alt="user avatar"/></div>
+            <div style={{height:'80px',width:'80px',borderRadius:'50%',border:'3px solid rgb(70, 70, 70)',position:'relative'}}><Image quality={100} fill={true} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:"cover"}}  src={userfile.avatarLink} alt="user avatar"/></div>
             <div style={{width:'150px',height:'auto',display:'flex',justifyContent:"center",alignItems:'left',flexDirection:'column'}}>
-              <p style={{fontFamily:"NexaTextLight",fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{username}</p>
-              <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{name}</p>
+              <p style={{fontFamily:"NexaTextLight",fontSize:'18px',textAlign:"center",marginBottom:"10px"}}>{userfile.Username}</p>
+              <p style={{fontFamily:"NexaTextLight",fontSize:'12px',textAlign:"center",marginBottom:"10px"}}>{userfile.name}</p>
               <Link href={`./UserPrivates/${id}`}>
                 <p onClick={()=>{ setShowfulluser(true);setViewMobile(!viewmobile)}} style={{padding:'5px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',backgroundColor:'white',borderRadius:"3px",textAlign:"center",width:'60%',margin:'0px auto'}}>profile</p>
               </Link>

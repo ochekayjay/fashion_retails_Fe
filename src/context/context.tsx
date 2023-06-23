@@ -1,4 +1,5 @@
 import React ,{ useContext, createContext,useState,ReactNode } from "react";
+import { Loader } from "@mantine/core";
 
 type showMobile = {
     viewmobile: boolean,
@@ -28,7 +29,11 @@ type showMobile = {
     allGallery: any,
     setAllGallery: any,
     searches: any,
-    setSearches: any
+    setSearches: any,
+    userfile:any,
+    setUserFile: any,
+    otherUsers:any,
+    setOtherUsers: any
 }
 
 type ChildrenProps = {
@@ -63,7 +68,11 @@ const retailContext = createContext<showMobile>
   allGallery : null,
   setAllGallery : ()=>{},
   searches : null,
-  setSearches : ()=>{}})
+  setSearches : ()=>{},
+  userfile: null,
+  otherUsers: null,
+  setUserFile: ()=>{},
+  setOtherUsers : ()=>{}})
 
 
 
@@ -82,8 +91,10 @@ export const ContextProvider = ({children}:ChildrenProps) => {
     const [searchedUserId,setSearchedUserId] = useState(null)
     const [allGallery,setAllGallery] = useState(null)
     const [searches,setSearches] = useState(null)
+    const [userfile,setUserFile] = useState(null)
+    const [otherUsers,setOtherUsers] = useState(null)
   return (
-    <retailContext.Provider value={{searches,setSearches,allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId}}>
+    <retailContext.Provider value={{searches,setSearches,allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId,userfile,setUserFile,otherUsers,setOtherUsers}}>
         {children}
     </retailContext.Provider>
   )

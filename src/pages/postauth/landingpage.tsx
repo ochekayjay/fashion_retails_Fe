@@ -57,7 +57,7 @@ import ShareLink from '@/utils/pre_auth/shareLink'
 const Landingpage = ()=> {
   
   const {width,height} = useWindowResize()
-  const {viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id,setId} = useRetailContext()
+  const {otherUsers,setOtherUsers,userfile,setUserFile,viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id,setId} = useRetailContext()
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
@@ -203,11 +203,38 @@ const [scrollable,setScrollable] = useState<boolean>(false)
     
   },);
 
+  useEffect(()=>{
+      if(!otherUsers || !userfile){
+        const userId = window.localStorage.getItem('id')
+        const id = userId?userId:'null'
+        const extradata = async()=>{
+          const fetchdata = await fetch(`https://fashion-r-services.onrender.com/creator/extras?id=${id}`,{
+            method: 'GET',  
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            
+                }
+            })
+        const newData = await fetchdata.json()
+        return newData
+        }
+
+        const newData = async()=>{
+          const data = await extradata()
+          setOtherUsers(data.allCreators)
+          setUserFile(data.creator)
+        }
+
+        newData()
+      }
+  },[])
+
   
   return (
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
-        <Navbar viewmobile={viewmobile} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
+        <Navbar viewmobile={viewmobile} userfile={userfile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
           <div style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
             <p onClick={()=>setViewMobile(!viewmobile)} style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>
