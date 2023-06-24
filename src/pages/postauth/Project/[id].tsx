@@ -10,6 +10,7 @@ import mailer from '../../../iconholder/mailIcon.svg'
 import Image from 'next/image';
 import FullUserSkeleton from '@/utils/Skeleton/fullUserSkeleton';
 import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton';
+import HomeButton from '@/utils/pre_auth/homeButton';
 
 
 
@@ -187,6 +188,7 @@ const filterbyHash = async (hash:any)=>{
 
   return (
     <>
+    <HomeButton/>
   <div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',backgroundImage: `linear-gradient(to bottom , ${focusedItem?.backgroundColor},white)`,padding:'0px'}}>
         {showfulluser&& <FullUserSkeleton/>}
         <section style={{width:width>500?'auto':'100%',minHeight:width>500?'auto':'100vh',padding:'15px',position:'relative',borderRadius:width>500?"15px":'',paddingTop:width>500?'30px':'80px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
@@ -259,8 +261,8 @@ const filterbyHash = async (hash:any)=>{
                         <div style={{backgroundColor:'transparent',height:'40px',position:'relative',width:'85%',margin:'auto'}}>
                           <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:"black",position:'absolute',top:'0px',left:'0px',opacity:'0.4',zIndex:'3'}}></div>
                           <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:'10px',boxSizing:'border-box',alignItems:'center',width:'100%',height:'100%'}}>
-                            <p>Link :</p>
-                            <p style={{display:item.Phone===''?'none':'block'}}>{item.link?item.link:''}</p>
+                            <p>Link/Instagram :</p>
+                            <a href={item.link?item.link:''} target="_blank"><p style={{display:item.link===''?'none':'flex',padding:'3px',alignItems:'center',justifyContent:"center",backgroundColor:'white',color:"black"}}>visit</p></a>
                           </div>
                         </div>
                     </div>

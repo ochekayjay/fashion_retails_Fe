@@ -21,6 +21,7 @@ import imgFifteen from '../../../public/miniSize/imgone (11).jpg'
 import { useRouter } from 'next/router'
 
 
+
 import ring from '../../../src/iconForLanding/rings.svg'
 import bracelet from '../../../src/iconForLanding/bracelet.png'
 import braids from '../../../src/iconForLanding/braids.png'

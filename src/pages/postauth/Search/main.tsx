@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Loader } from '@mantine/core';
 import searchIcon from '../../../iconholder/search.svg'
 import HashSkeleton from '@/utils/Skeleton/hashSkeleton';
+import HomeButton from '@/utils/pre_auth/homeButton';
 
 
 
@@ -123,7 +124,7 @@ export default function HashBrowse() {
 
   return (
       <div style={{width:'100vw',minHeight:'100vh',position:'relative'}}>
-
+        <HomeButton/>
 <div style={{width:'100%',display:searchValue===''?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
           
           </div>

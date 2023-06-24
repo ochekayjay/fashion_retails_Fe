@@ -20,6 +20,7 @@ import moreIcon from '../../../iconholder/moreIcon.svg'
 import useWindowResize from '@/utils/windowdimension'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton';
 import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton';
+import HomeButton from '@/utils/pre_auth/homeButton';
 
 
 
@@ -199,6 +200,7 @@ useEffect(()=>{
 
   return (
       <div style={{width:'100vw',minHeight:'100vh',position:'relative'}}>
+        <HomeButton/>
 
           <div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
           

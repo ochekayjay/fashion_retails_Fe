@@ -27,6 +27,8 @@ import ShareLink from '@/utils/pre_auth/shareLink'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
 import { Carousel } from '@mantine/carousel';
 import Link from 'next/link'
+import HomeButton from '@/utils/pre_auth/homeButton'
+import TagOption from '@/utils/pre_auth/tagOption'
 
 
 export async function getServerSideProps(context:any) {
@@ -86,6 +88,11 @@ export default function Userpage({data,promotion}:any) {
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   const [userHashtags,setUserHashtags] = useState<any>(null)
   const [promos,setPromos] = useState<any>(null)
+  const [changeImg,setChangeImg] = useState<boolean>(false)
+  const [mainImg,setMainImg] = useState<any>(null)
+  const [showTag,setShowTag] = useState<boolean>(false)
+  const [tagimgUrl,setTagImgUrl] = useState<any>(null)
+  
   if(typeof window !== 'undefined'){
     const token = window.localStorage.getItem('token')
   }
@@ -100,6 +107,7 @@ export default function Userpage({data,promotion}:any) {
   }
 
 
+
   useEffect(()=>{
 if(typeof window !== 'undefined'){
 
@@ -108,21 +116,13 @@ if(typeof window !== 'undefined'){
     setUserId(id)
 
   }
-
   else{
     const { query: { id } } = router;
-    //const id = window.localStorage.getItem('id');
-    //const token = window.localStorage.getItem('token')
-    //const queryParam = token ? `?id=${id}&token=${token}` : '';
-
     if(!userData && !galleryData){
-
       router.push(`../../postauth/userpage${id}`)
     }
   }
-}
- 
-    
+}    
 },[])
 
  
@@ -132,7 +132,9 @@ if(data){
           setGalleryData(data.userImages);
           setUserData(data.userDetail);
           setFirstLoad(false)
-         
+          changeImg?"":setMainImg(data.userImages)
+                  
+
           if(data.userDetail?.hashtag){
             const hashArray = data.userDetail?.hashtag.split(' ')
             if(hashArray){
@@ -155,6 +157,8 @@ else if(!promotion.status){
 
 },[data,promotion])
  
+
+
 
 
 /**
@@ -285,9 +289,25 @@ if(firstLoad){
   return <FullUserSkeleton/>
 }
 
+
+const clickingItem = (id:any)=>{
+  if(itemClicked===id){
+    setItemClicked(null)
+  }
+
+  else{
+    setItemClicked(id)
+  }
+}
+
+
   return (<div style={{display:'flex',position:'relative',flexDirection:width>1100?'row':'column',backgroundColor:'white',justifyContent:width>1100?"space-around":"center",marginTop:'0px',minHeight:'100vh',padding:width>1100?'60px 10px':'',boxSizing:"border-box",paddingBottom:'30px'}}>
+        <HomeButton/>
+        <>
+          <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
+          {showTag && <TagOption tagimgUrl={tagimgUrl} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
+        </>
         {loadProSkeleton && <ProjectSkeleton/>}
-        
        <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
             <div style={{height:"350px",width:'350px',marginBottom:'30px',boxSizing:'border-box',borderRadius:'15px',position:'relative'}}>
                 <Image fill={true}  onClick={()=>setShowAvatar(true)} src={userData.avatarLink} alt='user avatar' style={{width:'100%',height:'100%',objectFit:"cover",borderRadius:'15px'}}/>
@@ -406,6 +426,7 @@ if(firstLoad){
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
               <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
+                  <div style={{height:'100%',width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'2',backdropFilter:'blur(4px)',display:d._id===itemClicked?'block':'none'}}></div>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
@@ -416,8 +437,8 @@ if(firstLoad){
               
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
                 <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setShowTag(true);clickingItem(d._id)}}  style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <div  onClick={()=>{setMoreOptions(true);setShowTag(false);clickingItem(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
               </div>

@@ -27,6 +27,7 @@ import ProjectSkeleton from '@/utils/Skeleton/projectSkeleton'
 import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
 import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 import ShareLink from '@/utils/pre_auth/shareLink'
+import TagOption from '@/utils/pre_auth/tagOption'
 
 
 /**
@@ -66,7 +67,10 @@ const Landingpage = ()=> {
   const [isLoading, setIsLoading] = useState(false)
   const [showfulluser,setShowfulluser] = useState<boolean>(false)
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
+  const [showTag,setShowTag] = useState<boolean>(false)
+  const [tagimgUrl,setTagImgUrl] = useState<any>(null)
   const router = useRouter()
+
 
 
 
@@ -230,11 +234,25 @@ const [scrollable,setScrollable] = useState<boolean>(false)
       }
   },[])
 
+  const clickingItem = (id:any)=>{
+      if(itemClicked===id){
+        setItemClicked(null)
+      }
+
+      else{
+        setItemClicked(id)
+      }
+  }
   
   return (
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
-        <Navbar viewmobile={viewmobile} userfile={userfile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
+        {showfulluser && <FullUserSkeleton/>}
+        <>
+          <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
+          {showTag && <TagOption tagimgUrl={tagimgUrl} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
+        </>
+        <Navbar viewmobile={viewmobile} userfile={userfile} setUserFile={setUserFile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
           <div style={{height:'90px',display:'flex',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',position:'fixed',zIndex:'300',top:'0px',left:'0px',width:'100%',boxSizing:"border-box",padding:"15px"}}>
             <p onClick={()=>setViewMobile(!viewmobile)} style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>
@@ -264,6 +282,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(allGallery.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
               <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:mainContentDiv?width*0.5*0.8*1.777:width*0.8*1.777,position:'relative'}}>
                   <img src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
+                  <div style={{height:'100%',width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'2',backdropFilter:'blur(4px)',display:d._id===itemClicked?'block':'none'}}></div>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
@@ -271,11 +290,13 @@ const [scrollable,setScrollable] = useState<boolean>(false)
                 <div onClick={()=>ShareLink({title:d.title,description:d.projectDescription,link:`https://fashion-retails-fe-ashen.vercel.app/postauth/Project/${d._id}`})} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
                 <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
               </div>: null}
+
+             
               
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
                 <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setShowTag(true);clickingItem(d._id)}} style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <div  onClick={()=>{setMoreOptions(true);setShowTag(false);clickingItem(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
               </div>

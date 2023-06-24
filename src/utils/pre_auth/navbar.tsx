@@ -23,11 +23,12 @@ type showMobile = {
   setViewMobile : any,
   setShowfulluser : any,
   userfile : any,
+  setUserFile : any,
   otherUsers : any
 
 }
 
-function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,otherUsers}:showMobile) {
+function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,setUserFile,otherUsers}:showMobile) {
   const {width,height} = useWindowResize()
   const {signed,name,username,avatarUrl,id,setId,setSigned} = useRetailContext()
 
@@ -37,6 +38,7 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,otherUsers}:s
     window.localStorage.removeItem('id')
     setId(null)
     setSigned(false)
+    setUserFile(null)
   }
   return (
     <>
@@ -71,7 +73,7 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,otherUsers}:s
           <div style={{width:'95%',height:'auto',margin:"10px auto"}}>
           {otherUsers?otherUsers.map((user:any)=>
            <Link href={`./UserPrivates/${user._id}`}>
-              <div onClick={()=>setViewMobile(!viewmobile)} style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
+              <div onClick={()=>{setShowfulluser(true);setViewMobile(!viewmobile)}} style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
               <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.25',zIndex:'3'}}></div>
               <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                 <p style={{width:'45px',height:'45px',borderRadius:"50%"}}><img src={user.avatarLink} style={{width:'100%',height:"100%",borderRadius:'50%'}}/></p>
