@@ -30,7 +30,7 @@ import ShareLink from '@/utils/pre_auth/shareLink'
 import TagOption from '@/utils/pre_auth/tagOption'
 
 
-import io from 'Socket.IO-client'
+import io from 'socket.io-client'
 
 
 
@@ -85,7 +85,7 @@ const Landingpage = ()=> {
   
 
   const socketInitializer = async () => {
-    socket = io('http://localhost:5005',
+    socket = io('https://fashion-r-services.onrender.com',
                 {transports: ["websocket"]})
     setServerSocket(socket)
     socket.on('connect', () => {
