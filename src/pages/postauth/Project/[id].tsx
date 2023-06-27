@@ -65,7 +65,7 @@ const filterbyHash = async (hash:any)=>{
 
     useEffect(()=>{
     
-
+      console.log('a in id')
 
       if(router.isReady){
         

@@ -1,14 +1,21 @@
 import React, {useState,useEffect} from 'react'
 import Styles from './TagOption.module.css'
 import { Skeleton } from '@mantine/core'
+import { useRetailContext } from '@/context/context'
 import { Loader } from '@mantine/core'
 
-function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,setMoreOptions}:any) {
+function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked,setMoreOptions}:any) {
 
     const [isLoading,setIsLoading] = useState<boolean>(true)
     const [searchval,setSearchVal] = useState('')
     const [creatorArr,setCreatorArr] = useState<any>('')
     const [creatorholder,setCreatorHolder] = useState<any>('')
+    const [taggedCreators,setTaggedCreators] = useState<any>([])
+    const [taggedIds,setTaggedIds] = useState<any>([])
+    const [taggedSockets,setTaggedSockets] = useState<any>([])
+    const cancel = <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg>
+    const {serversocket}  = useRetailContext()
+
 
     useEffect(()=>{
         const id = 'null'
@@ -77,20 +84,77 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,setMoreOpti
 
 
     const arr = [1,2,3]
+
+    
+
+    const updateTag = (user:any)=>{
+      if(!taggedCreators.includes(user.avatarLink)){
+        setTaggedCreators([...taggedCreators,user.avatarLink])
+        setTaggedIds([...taggedIds,user._id])
+        setTaggedSockets([...taggedSockets,user.socketId])
+      }
+      }
+
+      const removeTag = (index:any)=>{
+        console.log(index)
+        const arr = taggedCreators
+        const sockets = taggedSockets
+        const tagids = taggedIds
+        arr.splice(index,1)
+        sockets.splice(index,1)
+        tagids.splice(index,1)
+
+          setTaggedCreators([...arr])
+          setTaggedIds([...tagids])
+          setTaggedSockets([...sockets])
+        
+        }
+
+
+
+const sendNotifs = async()=>{
+  setShowTag(null)
+  setTagImgUrl(null)
+  setMoreOptions(false)
+  setItemClicked('')
+
+  const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds}
+  const token = window.localStorage.getItem('token')
+
+  const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
+  const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Content-Type': 'application/json',Authorization: `Bearer ${token}`}}
+  
+      
+  
+      const createdCreator =  await fetch('https://fashion-r-services.onrender.com/promo/post', {...withoutImage,body:JSON.stringify(data)});
+}
+
   return (
     <div className={Styles.tagHolder}>
+        <p style={{width:'90%',margin:"3px auto",fontFamily:"NexaTextLight",color:'white',fontSize:"13px",textAlign:"center"}}>Tag people to project</p>
         <p style={{width:"70px",height:'124.39px',margin:'10px auto'}}><img src={tagimgUrl} style={{height:'100%',width:"100%"}}/></p>
         <p style={{width:"90%",height:'auto',margin:"10px auto"}}>
-            <input  value={searchval} placeholder='search for creators' onChange={(event)=>searchCreator(event)} style={{width:'100%',backgroundColor:'rgb(84, 83, 83)',color:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',fontFamily:'NexaTextLight',height:'45px',borderRadius:'10px',paddingLeft:'10px',outline:'none',borderWidth:'0px 0px 0px'}}/>
+            <input  value={searchval} placeholder='search for creators' onChange={(event)=>searchCreator(event)} style={{width:'100%',backgroundColor:'rgb(84, 83, 83)',color:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)',fontFamily:'NexaTextLight',height:'35px',borderRadius:'10px',paddingLeft:'10px',outline:'none',borderWidth:'0px 0px 0px'}}/>
         </p>
-        <div style={{width:'100%',marginBottom:'10px',maxHeight:'150px',minHeight:'150px',overflow:'auto'}}>
+
+        {taggedCreators.length>0 &&<div style={{width:'90%',height:'auto'}}>
+        <div style={{width:'auto',margin:'5px auto',height:'75px',display:'flex',justifyContent:'space-around',alignItems:"center",padding:'0px 15px',paddingLeft:"40px",overflowX:'auto',borderRadius:'7px'}}>
+            { taggedCreators.map((tags:any,index:any)=><div style={{width:'auto',height:'100%',padding:"5px",backgroundColor:"black",margin:'0px 6px',border:"1px solid white",borderRadius:'7px',display:'flex',justifyContent:"space-between",alignItems:"center"}}>
+              <p style={{width:'35px',height:"35px",borderRadius:"50%",marginRight:'3px'}}>
+                  <img src={tags} style={{width:'100%',height:"100%",borderRadius:'50%'}}/>
+              </p>
+              <p onClick={()=>{removeTag(index)}} style={{padding:"3px",cursor:'pointer',display:'flex',marginLeft:'3px',alignItems:"center",justifyContent:'center',borderRadius:'50%',backgroundColor:'white'}}>{cancel}</p>
+            </div>)}
+        </div>
+        </div>}
+        <div style={{width:'100%',marginBottom:'10px',maxHeight:'100px',minHeight:'100px',overflow:'auto'}}>
             {creatorArr===null?<p style={{color:'white',width:'100%',textAlign:"center",marginTop:'25px',fontFamily:"NexaTextLight",fontSize:'20px'}}>Creator not found!</p>:isLoading? arr.map((ar:any)=><p style={{width:'90%',height:"45px",margin:'15px auto',borderRadius:"10px"}}><Skeleton height="100%"  width="100%" radius={10}/></p>):
             <div style={{width:'100%',height:"100%",display:"flex",flexDirection:"column",}}>{
                 creatorArr.map((user:any)=>
             
-               <div onClick={()=>{}} style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
+               <div  style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
                <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.25',zIndex:'3'}}></div>
-               <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+               <div onClick={()=>{updateTag(user.avatarLink)}}style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                  <p style={{width:'45px',height:'45px',borderRadius:"50%"}}><img src={user.avatarLink} style={{width:'100%',height:"100%",borderRadius:'50%'}}/></p>
                  <div style={{display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:"column",overflow:'hidden',color:'white',fontFamily:'NexaTextLight'}}>
                    <p>{user.Username}</p>
@@ -99,7 +163,7 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,setMoreOpti
                </div>
              </div>)}</div>}
         </div>
-        <p onClick={()=>{setShowTag(null);setTagImgUrl(null);setMoreOptions(false);setItemClicked('')}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',margin:'10px auto',backgroundColor:'white',color:'black'}}>close</p>
+        <p onClick={()=>{setShowTag(null);setTagImgUrl(null);setMoreOptions(false);setItemClicked('');serversocket.emit('notifs','i am in')}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',margin:'10px auto',backgroundColor:'white',color:'black'}}>close</p>
     </div>
   )
 }

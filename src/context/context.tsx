@@ -33,7 +33,9 @@ type showMobile = {
     userfile:any,
     setUserFile: any,
     otherUsers:any,
-    setOtherUsers: any
+    setOtherUsers: any,
+    serversocket:any,
+    setServerSocket:any
 }
 
 type ChildrenProps = {
@@ -72,7 +74,9 @@ const retailContext = createContext<showMobile>
   userfile: null,
   otherUsers: null,
   setUserFile: ()=>{},
-  setOtherUsers : ()=>{}})
+  setOtherUsers : ()=>{},
+  serversocket: null,
+  setServerSocket : ()=>{}})
 
 
 
@@ -93,8 +97,9 @@ export const ContextProvider = ({children}:ChildrenProps) => {
     const [searches,setSearches] = useState(null)
     const [userfile,setUserFile] = useState(null)
     const [otherUsers,setOtherUsers] = useState(null)
+    const [serversocket,setServerSocket] = useState<any>(null)
   return (
-    <retailContext.Provider value={{searches,setSearches,allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId,userfile,setUserFile,otherUsers,setOtherUsers}}>
+    <retailContext.Provider value={{searches,setSearches,serversocket,setServerSocket,allGallery,setAllGallery,searchedUserId,setSearchedUserId,userHashTags,setUserHashatags,focusedItem,setFocusedItem,galleryData,setGalleryData,viewmobile,setViewMobile,userData,setUserData,userbio,setUserbio,name,signed,setSigned,setName,username,setUsername,avatarUrl, setAvatarUrl,id,setId,userfile,setUserFile,otherUsers,setOtherUsers}}>
         {children}
     </retailContext.Provider>
   )

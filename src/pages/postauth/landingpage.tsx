@@ -30,6 +30,10 @@ import ShareLink from '@/utils/pre_auth/shareLink'
 import TagOption from '@/utils/pre_auth/tagOption'
 
 
+import io from 'Socket.IO-client'
+
+
+
 /**
  * 
  * @param param0 export async function getServerSideProps() {
@@ -58,7 +62,7 @@ import TagOption from '@/utils/pre_auth/tagOption'
 const Landingpage = ()=> {
   
   const {width,height} = useWindowResize()
-  const {otherUsers,setOtherUsers,userfile,setUserFile,viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id,setId} = useRetailContext()
+  const {otherUsers,setOtherUsers,setServerSocket,userfile,setUserFile,viewmobile,setViewMobile,galleryData,setGalleryData,allGallery,setAllGallery,setFocusedItem,id,setId} = useRetailContext()
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
   const [moreOptions,setMoreOptions] = useState<any>(false)
   const [itemClicked,setItemClicked] = useState<any>('')
@@ -70,11 +74,38 @@ const Landingpage = ()=> {
   const [showTag,setShowTag] = useState<boolean>(false)
   const [tagimgUrl,setTagImgUrl] = useState<any>(null)
   const router = useRouter()
+  let token:any
+  let socket
 
+  if(typeof window !== 'undefined'){
+    token = window.localStorage.getItem('token')
+  }
+//http://localhost:5005
+//https://fashion-r-services.onrender.com
+  
 
+  const socketInitializer = async () => {
+    socket = io('http://localhost:5005',
+                {transports: ["websocket"]})
+    setServerSocket(socket)
+    socket.on('connect', () => {
+      console.log('connected')
+    });
+     
+    socket.emit('addSocketid', token)
+    socket.on('notifications',(d)=>{console.log(d)})
+  
+  }
 
-
-
+  useEffect(() => {
+    if(typeof window !== 'undefined'){
+      socketInitializer()
+    }
+    }, [])
+ 
+ 
+ 
+ 
 
 useEffect(()=>{
     const allDataFunc = async()=>{
@@ -250,7 +281,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         {showfulluser && <FullUserSkeleton/>}
         <>
           <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
-          {showTag && <TagOption tagimgUrl={tagimgUrl} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
+          {showTag && <TagOption tagimgUrl={tagimgUrl} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
         </>
         <Navbar viewmobile={viewmobile} userfile={userfile} setUserFile={setUserFile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
         <div style={{width:width>800?'75%':'100%',minHeight:'100vh'}}>
