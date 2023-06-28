@@ -85,7 +85,7 @@ const Landingpage = ()=> {
   
 
   const socketInitializer = async () => {
-    socket = io('https://fashion-r-services.onrender.com',
+    socket = io('http://localhost:5005',
                 {transports: ["websocket"]})
     setServerSocket(socket)
     socket.on('connect', () => {
@@ -93,7 +93,7 @@ const Landingpage = ()=> {
     });
      
     socket.emit('addSocketid', token)
-    socket.on('notifications',(d)=>{console.log(`${d} testing socket on client`)})
+    socket.on('notifications',(d)=>{console.log(`${JSON.stringify(d)} testing socket on client`)})
   
   }
 

@@ -14,6 +14,7 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked
     const [taggedCreators,setTaggedCreators] = useState<any>([])
     const [taggedIds,setTaggedIds] = useState<any>([])
     const [taggedSockets,setTaggedSockets] = useState<any>([])
+    const [creatorNotif,setCreatorNotif] = useState<any>([])
     const cancel = <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg>
     const {serversocket}  = useRetailContext()
 
@@ -93,6 +94,7 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked
         setTaggedCreators([...taggedCreators,user.avatarLink])
         setTaggedIds([...taggedIds,user._id])
         setTaggedSockets([...taggedSockets,user.socketId])
+        setCreatorNotif([...creatorNotif,user._id])
       }
       }
 
@@ -101,13 +103,16 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked
         const arr = taggedCreators
         const sockets = taggedSockets
         const tagids = taggedIds
+        const notif = creatorNotif
         arr.splice(index,1)
         sockets.splice(index,1)
         tagids.splice(index,1)
+        notif.splice(index,1)
 
           setTaggedCreators([...arr])
           setTaggedIds([...tagids])
           setTaggedSockets([...sockets])
+          setCreatorNotif([...notif])
         
         }
 
@@ -124,7 +129,7 @@ const sendNotifs = async()=>{
   
   
 
-  const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds}
+  const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds,creatorNotification:creatorNotif}
   const token = window.localStorage.getItem('token')
 
   const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
