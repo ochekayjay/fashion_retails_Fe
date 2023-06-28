@@ -7,6 +7,7 @@ import { Loader } from '@mantine/core'
 function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked,setMoreOptions}:any) {
 
     const [isLoading,setIsLoading] = useState<boolean>(true)
+    const [sendLoading,setSendLoading] = useState<boolean>(false)
     const [searchval,setSearchVal] = useState('')
     const [creatorArr,setCreatorArr] = useState<any>('')
     const [creatorholder,setCreatorHolder] = useState<any>('')
@@ -113,7 +114,14 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked
 
 
 const sendNotifs = async()=>{
-  setIsLoading(true)
+
+  if(taggedSockets.length<1 || taggedIds.length<1){
+
+  }
+
+  else{
+  setSendLoading(true)
+  
   
 
   const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds}
@@ -131,9 +139,17 @@ const sendNotifs = async()=>{
         setTagImgUrl(null)
         setMoreOptions(false)
         setItemClicked('')
-        setIsLoading(false)
+        setSendLoading(false)
       }
+  }
 
+    }
+
+    const closetag = ()=>{
+      setShowTag(null)
+      setTagImgUrl(null)
+      setMoreOptions(false)
+      setItemClicked('')
     }
 
   return (
@@ -170,7 +186,10 @@ const sendNotifs = async()=>{
                </div>
              </div>)}</div>}
         </div>
-        <p onClick={()=>{sendNotifs()}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',margin:'10px auto',backgroundColor:'white',color:'black'}}>{isLoading?<Loader color="white" size="sm" variant="bars" />:'tag'}</p>
+        <div style={{width:'90%',margin:'10px auto',display:'flex',alignItems:"center",justifyContent:"space-around"}}>
+            <p onClick={()=>{sendNotifs()}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',backgroundColor:'white',color:'black'}}>{sendLoading?<Loader color="black" size="sm" variant="bars" />:'tag'}</p>
+            <p onClick={()=>{closetag()}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',backgroundColor:'white',color:'black'}}>close</p>
+        </div>
     </div>
   )
 }
