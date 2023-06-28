@@ -85,7 +85,7 @@ const Landingpage = ()=> {
   
 
   const socketInitializer = async () => {
-    socket = io('http://localhost:5005',
+    socket = io('https://fashion-r-services.onrender.com',
                 {transports: ["websocket"]})
     setServerSocket(socket)
     socket.on('connect', () => {
