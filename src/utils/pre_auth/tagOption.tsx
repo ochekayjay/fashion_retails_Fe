@@ -139,6 +139,8 @@ const sendNotifs = async()=>{
         setTagImgUrl(null)
         setMoreOptions(false)
         setItemClicked('')
+        setTaggedCreators([])
+        setTaggedIds([])
         setSendLoading(false)
       }
   }
