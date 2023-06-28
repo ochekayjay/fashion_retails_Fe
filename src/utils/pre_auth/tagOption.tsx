@@ -113,10 +113,8 @@ function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked
 
 
 const sendNotifs = async()=>{
-  setShowTag(null)
-  setTagImgUrl(null)
-  setMoreOptions(false)
-  setItemClicked('')
+  setIsLoading(true)
+  
 
   const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds}
   const token = window.localStorage.getItem('token')
@@ -126,8 +124,17 @@ const sendNotifs = async()=>{
   
       
   
-      const createdCreator =  await fetch('https://fashion-r-services.onrender.com/promo/post', {...withoutImage,body:JSON.stringify(data)});
-}
+      let createdNotif =  await fetch('https://fashion-r-services.onrender.com/notifs/project', {...withoutImage,body:JSON.stringify(data)});
+      createdNotif= await createdNotif.json()
+      if(createdNotif.status){
+        setShowTag(null)
+        setTagImgUrl(null)
+        setMoreOptions(false)
+        setItemClicked('')
+        setIsLoading(false)
+      }
+
+    }
 
   return (
     <div className={Styles.tagHolder}>
@@ -154,7 +161,7 @@ const sendNotifs = async()=>{
             
                <div  style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
                <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.25',zIndex:'3'}}></div>
-               <div onClick={()=>{updateTag(user.avatarLink)}}style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
+               <div onClick={()=>{updateTag(user)}}style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>
                  <p style={{width:'45px',height:'45px',borderRadius:"50%"}}><img src={user.avatarLink} style={{width:'100%',height:"100%",borderRadius:'50%'}}/></p>
                  <div style={{display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:"column",overflow:'hidden',color:'white',fontFamily:'NexaTextLight'}}>
                    <p>{user.Username}</p>
@@ -163,7 +170,7 @@ const sendNotifs = async()=>{
                </div>
              </div>)}</div>}
         </div>
-        <p onClick={()=>{setShowTag(null);setTagImgUrl(null);setMoreOptions(false);setItemClicked('');serversocket.emit('notifs','i am in')}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',margin:'10px auto',backgroundColor:'white',color:'black'}}>close</p>
+        <p onClick={()=>{sendNotifs()}} style={{width:'70px',cursor:'pointer',boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:'7px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'NexaTextBold',height:'30px',margin:'10px auto',backgroundColor:'white',color:'black'}}>{isLoading?<Loader color="white" size="sm" variant="bars" />:'tag'}</p>
     </div>
   )
 }

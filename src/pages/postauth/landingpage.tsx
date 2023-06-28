@@ -93,7 +93,7 @@ const Landingpage = ()=> {
     });
      
     socket.emit('addSocketid', token)
-    socket.on('notifications',(d)=>{console.log(d)})
+    socket.on('notifications',(d)=>{console.log(`${d} testing socket on client`)})
   
   }
 
