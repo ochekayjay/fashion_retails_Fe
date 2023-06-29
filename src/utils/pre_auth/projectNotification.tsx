@@ -16,7 +16,7 @@ const router = useRouter()
   return (
     <div onClick={()=>{router.push(`./Project/${notificationObj.link}`);console.log(`./Project/${notificationObj.link}`)}} className={styles.notificationAlert}>
        <div style={{width:'300px',padding:'7px',height:"100%",display:'flex',justifyContent:"space-evenly",alignItems:"center"}}>
-        <div style={{width:"40px",height:'40px',borderRadius:'50%',border:'1px solid white',marginRight:'10px'}}><img src={notificationObj.imageLink} style={{width:"100%",height:'100%',borderRadius:'50%'}}/></div>
+        <div style={{width:"30px",height:'53.33px',border:'1px solid white',marginRight:'10px'}}><img src={notificationObj.imageLink} style={{width:"100%",height:'100%'}}/></div>
         <div style={{color:'white',fontSize:'11px',fontFamily:'NexaTextLight',letterSpacing:'1.5px'}}>{`${notificationObj.creatorName} just tagged you to a project`}</div>
         <div onClick={()=>setNotBar(false)} style={{width:"30px",cursor:'pointer',height:"30px",border:'1px solid white',backgroundColor:'white',display:"flex",alignItems:'center',borderRadius:"5px",justifyContent:"center"}}>{cancel}</div>
        </div>
