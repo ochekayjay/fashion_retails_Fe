@@ -285,7 +285,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         {showfulluser && <FullUserSkeleton/>}
-        {notbar  && <ProjectNotification  setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
+        {notbar  && <ProjectNotification  setLoadProSkeleton={setLoadProSkeleton} setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
         <>
           <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
           {showTag && <TagOption tagimgUrl={tagimgUrl} tagimgName={tagimgName} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
