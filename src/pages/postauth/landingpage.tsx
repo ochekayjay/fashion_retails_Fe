@@ -8,6 +8,7 @@ import rowIcon from '../../iconholder/rows.svg'
 import columnIcon from '../../iconholder/column.svg'
 import notificationIcon from '../../iconholder/notification.svg'
 import notsOff from '../../iconholder/notificationOff.svg'
+import notsOn from '../../iconholder/notificationOn.svg'
 import searchIcon from '../../iconholder/search.svg'
 import shareIcon from '../../iconholder/share.svg'
 import smalldeleteicon from '../../iconholder/smallDeleteIcon.svg'
@@ -28,6 +29,7 @@ import GallerySkeleton from '@/utils/Skeleton/gallerySkeleton'
 import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 import ShareLink from '@/utils/pre_auth/shareLink'
 import TagOption from '@/utils/pre_auth/tagOption'
+import ProjectNotification from '@/utils/pre_auth/projectNotification'
 
 
 import io from 'socket.io-client'
@@ -73,6 +75,9 @@ const Landingpage = ()=> {
   const [loadProSkeleton,setLoadProSkeleton] = useState<any>(false)
   const [showTag,setShowTag] = useState<boolean>(false)
   const [tagimgUrl,setTagImgUrl] = useState<any>(null)
+  const [newNotification,setNewNotification] = useState<boolean>(false)
+  const [notificationObj,setNotificationObj] = useState<any>()
+  const [notbar,setNotBar] = useState(false)
   const router = useRouter()
   let token:any
   let socket
@@ -93,7 +98,7 @@ const Landingpage = ()=> {
     });
      
     socket.emit('addSocketid', token)
-    socket.on('notifications',(d)=>{console.log(`${JSON.stringify(d)} testing socket on client`)})
+    socket.on('notifications',(d)=>{console.log(`${JSON.stringify(d)} testing socket on client`);setNewNotification(true);setNotBar(true);setNotificationObj({...d})})
   
   }
 
@@ -279,6 +284,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         {showfulluser && <FullUserSkeleton/>}
+        {notbar  && <ProjectNotification  setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
         <>
           <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
           {showTag && <TagOption tagimgUrl={tagimgUrl} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
@@ -290,7 +296,10 @@ const [scrollable,setScrollable] = useState<boolean>(false)
             <div onClick={()=>router.push('./Search/main')} style={{width:'65%',position:'relative',height:'50px',borderRadius:'15px',padding:"10px",backgroundColor:'white',margin:"15px auto"}}>
                 <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
             </div>
-            <p style={{width:'24px',height:'24px'}}><Image alt='' src={notsOff} style={{width:'100%',height:'100%'}}/></p>
+            <p style={{width:'24px',height:'24px',position:'relative'}}>
+              <Image alt='' src={token?notsOn:notsOff} style={{width:'100%',height:'100%'}}/>
+              <span style={{position:'absolute',width:'15px',display:newNotification?'block':'none',boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:'15px',top:'-5px',right:'-3px',borderRadius:"50%",backgroundColor:"blue",zIndex:'5'}}></span>
+            </p>
           </div>
 
           {allGallery?<section style={{width:width>1100?'65%':'100%',height:'auto',marginTop:'100px'}}>
