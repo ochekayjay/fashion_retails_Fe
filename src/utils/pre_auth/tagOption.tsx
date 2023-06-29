@@ -4,7 +4,7 @@ import { Skeleton } from '@mantine/core'
 import { useRetailContext } from '@/context/context'
 import { Loader } from '@mantine/core'
 
-function TagOption({tagimgUrl,setShowTag,setTagImgUrl,setItemClicked,itemClicked,setMoreOptions}:any) {
+function TagOption({tagimgUrl,tagimgName,setShowTag,setTagImgUrl,setItemClicked,itemClicked,setMoreOptions}:any) {
 
     const [isLoading,setIsLoading] = useState<boolean>(true)
     const [sendLoading,setSendLoading] = useState<boolean>(false)
@@ -129,7 +129,7 @@ const sendNotifs = async()=>{
   
   
 
-  const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds,creatorNotification:creatorNotif}
+  const data = {notifiedSockets:taggedSockets,link:itemClicked,notified:taggedIds,imageLink:tagimgUrl,imageName:tagimgName}
   const token = window.localStorage.getItem('token')
 
   const withImage = {method: 'POST',headers:{'Accept': '*/*',Authorization: `Bearer ${token}`}}
