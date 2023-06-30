@@ -78,7 +78,7 @@ export default function Userpage({data,promotion}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {setSearchedUserId,id,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches,userfile} = useRetailContext()
+  const {setSearchedUserId,id,setId,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches,userfile} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
@@ -131,6 +131,9 @@ if(typeof window !== 'undefined'){
 
 useEffect(()=>{
 if(data){
+
+  const id = window.localStorage.getItem('id');
+  setId(id)
           setGalleryData(data.userImages);
           setUserData(data.userDetail);
           setFirstLoad(false)
