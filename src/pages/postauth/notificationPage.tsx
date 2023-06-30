@@ -15,7 +15,7 @@ function NotificationPage() {
       const userId = window.localStorage.getItem('id')
       const id = userId?userId:'null'
       const notificationData = async()=>{
-        const fetchdata = await fetch(`https://fashion-r-services.onrender.com/notifs/project/?id=${id}`,{
+        const fetchdata = await fetch(`https://fashion-r-services.onrender.com/notifs/project/${id}`,{
           method: 'GET',  
           headers: {
             'Accept': 'application/json',
