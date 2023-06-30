@@ -226,7 +226,7 @@ const getClass = (id:any)=>{
 
       <div style={{fontSize:"25px",width:"150px",border:'1px solid red',borderWidth:'0px 1px 1px 0px',height:'50px',textAlign:"center",margin:"25px auto",fontFamily:"NexaTextBold",position:'relative'}}>
       <Link href={'/postauth/landingpage'}><div style={{position:"absolute",width:"150px",margin:'auto',border:'1px groove #234C4A',borderWidth:'0px 1px 1px 0px',height:"50px",display:'flex',alignItems:'center',justifyContent:"center",top:'0px',left:'0px',zIndex:'3',backgroundColor:"black",color:"white",fontFamily:'NexaTextLight',fontSize:'20px'}}><p style={{fontFamily:'NexaTextLight',fontSize:'20px'}}>explore</p></div></Link>
-          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double #F06071',backgroundColor:"black"}}></div>
+          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double #F06071',borderWidth:'0px 1px 1px 0px',backgroundColor:"black"}}></div>
       </div>
 
 
