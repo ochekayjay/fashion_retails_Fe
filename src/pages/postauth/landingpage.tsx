@@ -297,7 +297,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
             <div onClick={()=>router.push('./Search/main')} style={{width:'65%',position:'relative',height:'50px',borderRadius:'15px',padding:"10px",backgroundColor:'white',margin:"15px auto"}}>
                 <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
             </div>
-            <p style={{width:'24px',height:'24px',position:'relative'}}>
+            <p onClick={()=>router.push('./notificationPage')} style={{width:'24px',height:'24px',position:'relative'}}>
               <Image alt='' src={token?notsOn:notsOff} style={{width:'100%',height:'100%'}}/>
               <span style={{position:'absolute',width:'15px',display:newNotification?'block':'none',boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:'15px',top:'-5px',right:'-3px',borderRadius:"50%",backgroundColor:"blue",zIndex:'5'}}></span>
             </p>

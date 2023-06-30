@@ -41,7 +41,7 @@ function NotificationPage() {
   return (
     <>
     <HomeButton/>
-    <div style={{width:'100vw',height:'auto',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:'0px'}}>
+    <div style={{width:'100vw',height:'auto',backgroundColor:'rgb(228,228,228)',display:'flex',position:'relative',alignItems:"center",justifyContent:'center',padding:'0px'}}>
     {width<500 && <p onClick={()=>router.back()} style={{position:'absolute',cursor:'pointer', top:'15px',left:width*0.10,padding:'10px 15px',backgroundColor:'white',borderRadius:'10px'}}>back</p>}
         <div style={{width:'100%',marginTop:'60px',height:'auto'}}>
         {notifsArray && notifsArray.map((notif:any)=>
