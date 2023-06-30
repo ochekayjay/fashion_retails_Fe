@@ -221,12 +221,12 @@ const getClass = (id:any)=>{
         <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Create beautiful projects</p>
         <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Highlight Items & item retailers</p>
         <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Fill text indexes for easy search</p>
-        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Promote ads on your page for a fee</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Promote ads on your page</p>
     </div>
 
       <div style={{fontSize:"25px",width:"150px",border:'1px solid red',borderWidth:'0px 1px 1px 0px',height:'50px',textAlign:"center",margin:"25px auto",fontFamily:"NexaTextBold",position:'relative'}}>
-      <Link href={'/postauth/landingpage'}><div style={{position:"absolute",width:"150px",margin:'auto',border:'1px groove red',borderWidth:'0px 1px 1px 0px',height:"50px",display:'flex',alignItems:'center',justifyContent:"center",top:'0px',left:'0px',zIndex:'3',backgroundColor:"black",color:"white",fontFamily:'NexaTextItalic',fontSize:'20px'}}><p >explore</p></div></Link>
-          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double yellow',backgroundColor:"black"}}></div>
+      <Link href={'/postauth/landingpage'}><div style={{position:"absolute",width:"150px",margin:'auto',border:'1px groove #234C4A',borderWidth:'0px 1px 1px 0px',height:"50px",display:'flex',alignItems:'center',justifyContent:"center",top:'0px',left:'0px',zIndex:'3',backgroundColor:"black",color:"white",fontFamily:'NexaTextLight',fontSize:'20px'}}><p style={{fontFamily:'NexaTextLight',fontSize:'20px'}}>explore</p></div></Link>
+          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double #F06071',backgroundColor:"black"}}></div>
       </div>
 
 
