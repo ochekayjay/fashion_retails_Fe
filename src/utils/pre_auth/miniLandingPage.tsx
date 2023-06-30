@@ -55,11 +55,13 @@ function MiniLandingPage() {
     const [refftwo,setrefftwo] = useState<boolean>(false)
     const [reffthree,setreffthree] = useState<boolean>(false)
     const [refffour,setrefffour] = useState<boolean>(false)
+    const [reffdetail,setreffdetail] = useState<boolean>(false)
     
     const RefOne = useRef<HTMLDivElement>(null);
     const RefTwo = useRef<HTMLDivElement>(null);
     const RefThree = useRef<HTMLDivElement>(null);
     const RefFour = useRef<HTMLDivElement>(null);
+    const refdetails = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
 
@@ -153,6 +155,8 @@ if(retails){
  }
 
 }
+
+
       };
   
       window.addEventListener('scroll', handleScroll);
@@ -208,9 +212,21 @@ const getClass = (id:any)=>{
       get paid for posting pictures today!
     </section>
     <section style={{display:'flex',position:'relative',flexDirection:width>750?'row':'column',width:'100%',justifyContent:'space-around',alignItems:'center',height:width>750?'400px':'auto',marginTop:'50px'}}>
-      <div style={{width:width>750?'25%':'85%',margin:'10px auto',height:width>750?'100%':'400px',display:'flex',flexDirection:'column',alignItems:'left',justifyContent:'space-around',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
+      <div style={{width:width>750?'25%':'85%',margin:'10px auto',height:width>750?'100%':'200px',display:'flex',flexDirection:'column',alignItems:'left',justifyContent:'space-around',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
         <p style={{fontSize:'35px',letterSpacing:'1.5px'}}>Melting point for buyers, digital creators, models and SME's</p>
-        <p style={{width:'100px',padding:'15px 15px',textAlign:'center',marginTop:'10px',backgroundColor:'black',color:'white',boxShadow:'0px 0px 3px black',fontSize:'15px',fontFamily:" 'Merriweather', serif; "}}><Link href={'/postauth/landingpage'}>explore</Link></p>
+      </div>
+
+
+    <div ref={refdetails} className={styles.detailHolder}>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Create beautiful projects</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Highlight Items & item retailers</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Fill text indexes for easy search</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Promote ads on your page for a fee</p>
+    </div>
+
+      <div style={{fontSize:"25px",width:"150px",border:'1px solid red',borderWidth:'0px 1px 1px 0px',height:'50px',textAlign:"center",margin:"25px auto",fontFamily:"NexaTextBold",position:'relative'}}>
+      <Link href={'/postauth/landingpage'}><div style={{position:"absolute",width:"150px",margin:'auto',border:'1px groove red',borderWidth:'0px 1px 1px 0px',height:"50px",display:'flex',alignItems:'center',justifyContent:"center",top:'0px',left:'0px',zIndex:'3',backgroundColor:"black",color:"white",fontFamily:'NexaTextItalic',fontSize:'20px'}}><p >explore</p></div></Link>
+          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double yellow',backgroundColor:"black"}}></div>
       </div>
 
 

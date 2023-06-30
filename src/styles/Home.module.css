@@ -193,7 +193,45 @@
   display: none;
 }
 
+.detailHolder{
+  width:90%;
+  margin:20px auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  flex-direction:column;
+  height:300px;
+  background-color: rgb(70, 69, 69);
+  border-radius:15px;
+  animation: 2.5s detailslide forwards;
+  animation-timing-function: ease-in-out;
+}
 
+
+
+@keyframes detailslide {
+  0%{
+    transform: scale(0);
+    opacity: 0;
+  }
+  95%{
+    transform: scale(1.0);
+    opacity: 1.0;
+  }
+
+  97.5%{
+    transform: scale(0.95);
+    opacity: 1.0;
+  }
+
+  100%{
+    transform: scale(1.0);
+    opacity: 1.0;
+  }
+
+
+
+}
 
 
 @keyframes upperslide {
