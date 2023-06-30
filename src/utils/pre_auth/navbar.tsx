@@ -16,7 +16,9 @@ import Link from 'next/link'
 import { Loader } from '@mantine/core'
 import useWindowResize from '../windowdimension'
 import { useRetailContext } from '@/context/context'
-
+import email from '../../../public/images/gmail.png'
+import twitter from '../../../public/images/twitter.png'
+import linkedin from '../../../public/images/linkedin.png'
 
 type showMobile = {
   viewmobile: boolean,
@@ -31,6 +33,8 @@ type showMobile = {
 function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,setUserFile,otherUsers}:showMobile) {
   const {width,height} = useWindowResize()
   const {signed,name,username,avatarUrl,id,setId,setSigned} = useRetailContext()
+
+
 
 
   const signOut = ()=>{
@@ -107,6 +111,14 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,setUserFile,o
           <Link href={'../../preauth/signin'}><p onClick={()=>setViewMobile(!viewmobile)} className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signinIcon} alt='signin'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN IN</span></p></p></Link>
           <p className={styles.creatorsectsInner}><span className={styles.navspanIcon}><Image src={lowerdirectionIcon} alt='lowerdirect'/></span><p style={{display:'flex',justifyContent:'left',fontSize:'14px'}}><span className={styles.navspanIcon}><Image src={signoutIcon} alt='signout'/></span><span style={{display:'flex',alignItems:"center"}}>SIGN OUT</span></p></p>
         </div>}
+        </div>
+        <div style={{backgroundColor:'rgb(91, 90, 90)',width:'100%',height:'100px'}}>
+          <p style={{textAlign:"center",boxSizing:'border-box',margin:"25px auto",fontFamily:'NexaTextLight',fontSize:'20px',color:'white'}}>Contact Developer</p>
+          <div style={{width:'100%',margin:'15px auto',display:"flex",justifyContent:'space-around',alignItems:'center'}}>
+          <a href={'mailto:josephigoche777@gmail.com'}><p style={{width:'30px',height:'30px'}}><img src={email.src} style={{width:'100%',height:'100%'}}/></p></a>
+          <a href={'https://www.linkedin.com/in/joseph-dickson-a66b9a1a2'} target="_blank"><p style={{width:'30px',height:'30px'}}><img src={linkedin.src} style={{width:'100%',height:'100%'}}/></p></a>
+          <a href={'https://twitter.com/kjay_wonder?t=zNlhjkc46lNI83quCIE82w&s=09'} target="_blank"><p style={{width:'30px',height:'30px'}}><img src={twitter.src} style={{width:'100%',height:'100%'}}/></p></a>
+          </div>
         </div>
     </section>
     </>

@@ -230,7 +230,7 @@ useEffect(() => {
  const {id} = router.query
  const uniqueId = `Projects ${id}`
  const keystring = window.sessionStorage.getItem(uniqueId)
- console.log(keystring)
+ 
   if(keystring){
    const storedPosition = parseInt(keystring);
    if (!isNaN(storedPosition)) {
@@ -257,7 +257,7 @@ useEffect(() => {
    const key = window.sessionStorage.getItem(scrollKey)
    
    const scrollString = window.scrollY.toString()
-   console.log(scrollString)
+   
    if(scrollString !== '0'){
      sessionStorage.setItem(scrollKey,scrollString);
    }
@@ -418,10 +418,7 @@ const clickingItem = (id:any)=>{
                 <p style={{width:"24px",height:'24px'}}><Image src={rowIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
             </div>
-            <div style={{width:"35px",height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
-                <p style={{width:"24px",height:'24px'}}><Image src={collectionIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
-            </div>
+          
           </div>
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {galleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
@@ -438,8 +435,8 @@ const clickingItem = (id:any)=>{
               </div>: null}
               
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
-                <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setTagImgName(d.imageName);setTagTitle(d.title);setShowTag(true);clickingItem(d._id)}}  style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{width:"20px",height:'20px',display: id===null ?"none":'block'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setTagImgName(d.imageName);setTagTitle(d.title);setShowTag(true);clickingItem(d._id)}}  style={{width:"20px",height:'20px',display: id===null ?"none":'block'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
                 <div  onClick={()=>{setMoreOptions(true);setShowTag(false);clickingItem(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>

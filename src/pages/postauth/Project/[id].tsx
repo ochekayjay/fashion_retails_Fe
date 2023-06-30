@@ -126,7 +126,7 @@ const filterbyHash = async (hash:any)=>{
     const {id} = router.query
     const uniqueId = `Projects ${id}`
     const keystring = window.sessionStorage.getItem(uniqueId)
-    console.log(keystring)
+    
      if(keystring){
       const storedPosition = parseInt(keystring);
       if (!isNaN(storedPosition)) {
@@ -153,7 +153,7 @@ const filterbyHash = async (hash:any)=>{
       const key = window.sessionStorage.getItem(scrollKey)
       
       const scrollString = window.scrollY.toString()
-      console.log(scrollString)
+      
       if(scrollString !== '0'){
         sessionStorage.setItem(scrollKey,scrollString);
       }

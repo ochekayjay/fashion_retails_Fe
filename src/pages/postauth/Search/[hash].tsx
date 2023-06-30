@@ -77,7 +77,7 @@ export default function HashDynamics() {
                     let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
                     if(typeof fetchedData === 'string'){
                         fetchedData = JSON.parse(fetchedData)
-                    console.log(fetchedData)
+                  
                     }
                     
                 }
@@ -91,7 +91,7 @@ export default function HashDynamics() {
     }
 
     else{
-        console.log('in here fixing')
+        
         let fetchedData = window.sessionStorage.getItem(`obj${hash}`)
       
         if(typeof fetchedData === 'string'){
@@ -151,7 +151,7 @@ export default function HashDynamics() {
      });
 
      const newdata = await data.json()
-     console.log(newdata)
+     
      setFocusedItem(newdata.content)
      setUserData(newdata.userDetail)
      router.push(`../Project/${Id}`)
@@ -240,10 +240,7 @@ useEffect(()=>{
                 <p style={{width:"24px",height:'24px'}}><Image src={rowIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
             </div>
-            <div style={{width:"35px",height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
-                <p style={{width:"24px",height:'24px'}}><Image src={collectionIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'black',opacity:'0.3',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
-            </div>
+      
           </div>
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
             {displayData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
@@ -262,8 +259,8 @@ useEffect(()=>{
               </div>: null}
               
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
-                <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{width:"20px",height:'20px',display: id===null ?"none":'block'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p style={{width:"20px",height:'20px',display: id===null ?"none":'block'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
                 <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
