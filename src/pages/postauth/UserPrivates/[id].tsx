@@ -78,7 +78,7 @@ export default function Userpage({data,promotion}:any) {
   const [userId, setUserId] = useState<any>('')
   const router = useRouter()
   const {width,height} = useWindowResize()
-  const {setSearchedUserId,id,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches} = useRetailContext()
+  const {setSearchedUserId,id,setFocusedItem,galleryData,setGalleryData,userData,setUserData,setSearches,userfile} = useRetailContext()
   const imageHolderRef = useRef<HTMLDivElement>(null)
   const [imgHeight,setImgHeight] = useState<any>(0)
   const [mainContentDiv, setMainContentDiv] = useState<boolean>(true)
@@ -92,6 +92,8 @@ export default function Userpage({data,promotion}:any) {
   const [mainImg,setMainImg] = useState<any>(null)
   const [showTag,setShowTag] = useState<boolean>(false)
   const [tagimgUrl,setTagImgUrl] = useState<any>(null)
+  const [tagTitle,setTagTitle] = useState<any>(null)
+  const [tagimgName,setTagImgName] = useState<any>(null)
   
   if(typeof window !== 'undefined'){
     const token = window.localStorage.getItem('token')
@@ -305,7 +307,7 @@ const clickingItem = (id:any)=>{
         <HomeButton/>
         <>
           <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
-          {showTag && <TagOption tagimgUrl={tagimgUrl} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
+          {showTag && <TagOption Username={userfile.Username} tagTitle={tagTitle} tagimgUrl={tagimgUrl} tagimgName={tagimgName} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
         </>
         {loadProSkeleton && <ProjectSkeleton/>}
        <>{width>1100?<section style={{width:'auto',height:'auto',padding:'15px',backgroundImage: `linear-gradient(to bottom , ${userData.color},white)`,boxShadow:'1px 1px 5px rgb(91, 90, 90)',borderRadius:"15px",paddingTop:'30px',boxSizing:'border-box',display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}>
@@ -437,7 +439,7 @@ const clickingItem = (id:any)=>{
               
               <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
                 <p style={{width:"20px",height:'20px'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
-                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setShowTag(true);clickingItem(d._id)}}  style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p onClick={()=>{setTagImgUrl(d.imageLink);setMoreOptions(false);setTagImgName(d.imageName);setTagTitle(d.title);setShowTag(true);clickingItem(d._id)}}  style={{width:"20px",height:'20px'}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
                 <div  onClick={()=>{setMoreOptions(true);setShowTag(false);clickingItem(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
                 <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
                 <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
