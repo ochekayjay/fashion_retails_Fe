@@ -220,7 +220,7 @@ useEffect(()=>{
                     {searchLoading?<Loader color="black" size="sm" variant="bars" />:
                     <div style={{width:'100%',padding:'5px',height:'auto',}}>
                         {searchResults.map((result:any)=>
-                        <div onClick={()=>enterSearchdata(result._id)} style={{height:'60px',border:searchResults.indexOf(result)===searchResults.length-1?"":'1px solid black',borderWidth:searchResults.indexOf(result)===searchResults.length-1?"0px 0px 0px":'0px 0px 1px',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:'column'}}>
+                        <div key={result._id} onClick={()=>enterSearchdata(result._id)} style={{height:'60px',border:searchResults.indexOf(result)===searchResults.length-1?"":'1px solid black',borderWidth:searchResults.indexOf(result)===searchResults.length-1?"0px 0px 0px":'0px 0px 1px',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:'column'}}>
                             <p style={{fontFamily:'NexaTextBold',fontSize:'20px'}}>{result.title}</p>
                     
                         </div>)}
@@ -243,7 +243,7 @@ useEffect(()=>{
       
           </div>
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
-            {displayData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
+            {displayData.map((d:any)=><div key={d._id} ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
                    
                    {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(displayData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
 

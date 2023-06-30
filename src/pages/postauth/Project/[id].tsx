@@ -207,7 +207,7 @@ const filterbyHash = async (hash:any)=>{
                         <Image fill onLoad={()=>setImageLoader(true)}  src={focusedItem?.imageLink} alt={focusedItem?.title} style={{width:'100%',height:'100%',objectFit:"cover",}}/>
                     </div>
                     <div className={styles.itemPop}>
-                      {focusedItem?.itemsArray.map((item:any)=><p style={{width:'25px',position:'absolute',height:'25px',backgroundColor:"black",borderRadius:"50%",display:item.distance?.x?"flex":"none",alignItems:"center",justifyContent:"center",color:'white',left:item.distance?.x?`${item.distance.x * dynamicDimension.x}px`:'',top:item.distance?.y?`${item.distance.y * dynamicDimension.y}px`:''}}>{item.itemNumber}</p>)}
+                      {focusedItem?.itemsArray.map((item:any)=><p key={item._id} style={{width:'25px',position:'absolute',height:'25px',backgroundColor:"black",borderRadius:"50%",display:item.distance?.x?"flex":"none",alignItems:"center",justifyContent:"center",color:'white',left:item.distance?.x?`${item.distance.x * dynamicDimension.x}px`:'',top:item.distance?.y?`${item.distance.y * dynamicDimension.y}px`:''}}>{item.itemNumber}</p>)}
                     </div>
                 </div>
                 </Carousel.Slide>
@@ -275,7 +275,7 @@ const filterbyHash = async (hash:any)=>{
       <div style={{margin:'20px auto',width:width*0.8,height:'auto'}}>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextBold',margin:'20px 0px',fontSize:'30px'}}>{focusedItem?.title}</p>
         <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px'}}>{focusedItem?.projectDescription}</p>
-        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span onClick={()=>filterbyHash(hash)} style={{margin:'0px 5px',color:'blue'}}>{hash}</span>)}</p>
+        <p style={{width:'100%',textAlign:'left',fontFamily:'NexaTextLight',margin:'20px 0px',fontSize:'15px',display:'flex',justifyContent:'left',flexWrap:'wrap'}}>{focusedItem?.hashtag.map((hash:any)=><span key={hash} onClick={()=>filterbyHash(hash)} style={{margin:'0px 5px',color:'blue'}}>{hash}</span>)}</p>
 
       </div></>
         :<p>''</p>}

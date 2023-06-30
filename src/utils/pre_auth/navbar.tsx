@@ -76,7 +76,7 @@ function Navbar({viewmobile,setViewMobile,setShowfulluser,userfile,setUserFile,o
           <p className={styles.creatorsects}><span className={styles.navspanIcon}><Image alt='top creators' src={topcreatorIcon} /></span><span className={styles.navlogospan}>Top Creators</span></p>
           <div style={{width:'95%',height:'auto',margin:"10px auto"}}>
           {otherUsers?otherUsers.map((user:any)=>
-           <Link href={`./UserPrivates/${user._id}`}>
+           <Link key={user._id} href={`./UserPrivates/${user._id}`}>
               <div onClick={()=>{setShowfulluser(true);setViewMobile(!viewmobile)}} style={{backgroundColor:'transparent',height:'60px',boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',position:'relative',width:'100%',margin:'15px auto'}}>
               <div style={{width:'100%',height:'100%',borderRadius:'10px',backgroundColor:'black',position:'absolute',top:'0px',left:'0px',opacity:'0.25',zIndex:'3'}}></div>
               <div style={{display:'flex',position:'absolute',top:'0px',left:'0px',zIndex:'4',justifyContent:'space-between',padding:"5px",boxSizing:"border-box",alignItems:"center",width:'100%',height:'100%'}}>

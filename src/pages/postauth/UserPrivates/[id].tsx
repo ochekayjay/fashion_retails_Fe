@@ -394,7 +394,7 @@ const clickingItem = (id:any)=>{
             <div style={{width:'100%',height:'150px',overflow:'hidden',borderRadius:'10px',position:'relative',backgroundColor:'white',boxShadow:'1px 1px 5px rgb(91, 90, 90)'}}>
               <p style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',border:'1px solid black', borderWidth:'0px 0px 1px',fontFamily:'NexaTextLight',fontSize:'20px',position:'absolute',top:"0px",left:'0px'}}>User Hashtags</p>
               <div style={{marginTop:'30px',maxHeight:'90%',overflow:'auto',width:'100%'}}>
-                {userHashtags?<div style={{height:'150px',width:'100%',display:'flex',flexWrap:'wrap',justifyContent:'space-around'}}>{userHashtags.map((hash:any)=><span style={{color:'blue',margin:"10px",fontFamily:'NexaTextLight'}}>{hash}</span>)}</div>:
+                {userHashtags?<div style={{height:'150px',width:'100%',display:'flex',flexWrap:'wrap',justifyContent:'space-around'}}>{userHashtags.map((hash:any)=><span key={hash} style={{color:'blue',margin:"10px",fontFamily:'NexaTextLight'}}>{hash}</span>)}</div>:
                 <p style={{width:'100%',height:"100%",marginTop:'30px',display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"NexaTextLight"}}>No Hashtags Available!</p>}
 
               </div>
@@ -421,7 +421,7 @@ const clickingItem = (id:any)=>{
           
           </div>
           <div className={mainContentDiv?styles.userMainUploads:styles.userMainUploadsColumn}>
-            {galleryData.map((d:any)=><div ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
+            {galleryData.map((d:any)=><div key={d._id} ref={imageHolderRef} style={mainContentDiv? {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse'}:
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(galleryData.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
               <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`../Project/${d._id}`)}} style={{width:'100%',height:imgHeight,position:'relative'}}>
                   <Image fill={true}  quality={100} src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>

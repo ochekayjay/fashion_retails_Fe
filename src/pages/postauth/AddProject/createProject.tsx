@@ -386,12 +386,13 @@ const updateUserObj = (event:any)=>{
 
 const updateHashtag = (event:any)=>{
   const hashArray = event.target.value
-  const hashholder  = hashArray.split(' ')
-  const newer = hashholder.split(',')
+  const hashholder  = hashArray.split(" ")
+  console.log(hashholder)
+  //const newer = hashholder.split(',')
   setHashtagHold(event.target.value)
   console.log(enlistUserObj.hashtag)
   
-  setEnlistUserObj({...enlistUserObj, hashtag : newer})   
+  setEnlistUserObj({...enlistUserObj, hashtag : hashholder})   
 }
 
 const updateList =  (event:any,id:any)=>{
@@ -648,7 +649,7 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
         </div>}
         <div style={{width:'auto',height:'auto',margin:'30px auto',padding:'10px',display:'flex',alignItems:'center',justifyContent:"space-around",flexDirection:'column'}}>
           {itemArray.map((itemArr:any,index:any)=> 
-            <div className={openBigDiv===true && index+1==sectionToShow?styles.sectionMainHolderShow:styles.sectionMainHolderHide}>
+            <div key={index} className={openBigDiv===true && index+1==sectionToShow?styles.sectionMainHolderShow:styles.sectionMainHolderHide}>
                 <div onClick={()=>controlSectionShown(index+1)} style={{width:width*0.8,height:'50px',boxSizing:'border-box',display:'flex',alignItems:'center',justifyContent:"space-between",padding:'15px'}}>
                   <p style={{width:'30px',height:'30px',display:'flex',borderRadius:'50%',justifyContent:"center",alignItems:"center",backgroundColor:'black',color:'white'}}>{index+1}</p>
                   <Image src={index+1==sectionToShow?dropDown:dropRight} alt='' style={{width:"40px",height:'40px'}}/>
@@ -688,6 +689,10 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
                 </div>
             </div>)}
         </div>
+
+        <p style={{textAlign:"center",fontSize:'11px',fontFamily:'NexaTextLight',color:'black',borderRadius:'10px',opacity:'0.6'}}>Fill the fields below for easy sorting of your project</p> 
+
+
             <div style={{height:"50px",width:width>500?'350px':width*0.80,margin:'30px auto'}}>
                                 <p style={{fontFamily:'NexaTextBold',paddingLeft:'5px',fontSize:'13px',marginBottom:'5px',width:'100%',textAlign:'left'}}>Title &nbsp; <span style={{color:'red'}}>*</span></p>
                                 <input value={enlistUserObj?.title} type='text' placeholder="title" name='title' onChange={(event)=>{updateUserObj(event)}} className={styles.forminput}/>
