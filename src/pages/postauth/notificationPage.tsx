@@ -56,8 +56,9 @@ function NotificationPage() {
         {notifsArray? notifsArray.map((notif:any)=>
                                         <div onClick={()=>{setShowSkeleton(true);router.push(`./Project/${notif.link}`)}} style={{margin:"20px auto",cursor:'pointer',display:"flex",alignItems:'center',justifyContent:"space-around",width:"90%",height:"100px",backgroundColor:"rgb(91, 90, 90)",borderRadius:'12px'}}>
                                             <p style={{width:'45px',height:'80.0001px',border:'1.5px solid white'}}><img src={notif.imageLink} style={{width:'100%',height:"100%"}}/></p>
-                                            <div>
-                                                <p>{userId===notif.notifier?'You created a notification':`${notif.creator} tagged you to  a project`}</p>
+                                            <div style={{display:'flex',flexDirection:'column',height:'80.0001px',alignItems:'center',justifyContent:'space-around'}}>
+                                                <p style={{fontFamily:'NexaTextLight',textAlign:"center",color:'white',fontSize:'11px'}}>{userId===notif.notifier?'You created a notification':`${notif.creator} tagged you to  a project`}</p>
+                                                <p style={{fontFamily:'NexaTextLight',textAlign:"center",color:'white',fontSize:'17px'}}>{notif.title}</p>
                                             </div>
                                         </div>): <NotificationSkeleton/>}
         </div>
