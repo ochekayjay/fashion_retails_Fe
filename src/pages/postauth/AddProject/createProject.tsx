@@ -596,10 +596,10 @@ const withoutImage = {method: 'POST',headers:{'Accept': 'application/json','Cont
                     {pTagArray.map((P:any)=>
                       <p key={P.key} style={{justifyContent :P.justifyContent,zIndex:10,alignItems :P.alignItems,display :P.display,color:P.color,boxShadow : P.boxShadow,position:P.position,width:P.width,height:P.height,top:P.top,left:P.left,borderRadius:P.borderRadius,backgroundColor:P.backgroundColor}}>{P.value}</p>)
                       }
-                      {numberDisplay && <div  style={{width:'80px',height:'80px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
+                      {numberDisplay && <div  style={{width:'100px',height:'100px',position:'absolute',top:popDistance.y,left:popDistance.x,boxShadow: '1px 1px 5px rgb(91, 90, 90)',borderRadius:'10px',backgroundColor:'black',color:'white'}}>
                       <div style={{width:'100%',position:'absolute',borderRadius:'10px',top:'0px',left:'0px',zIndex:'4',height:'100%',display:'flex',alignItems:"center",justifyContent:"space-around",flexDirection:'column'}}>
                         <div style={{textAlign:"center"}}>{itemNumber}</div>
-                        <div style={{margin:'10px auto',width:'90%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
+                        <div style={{margin:'10px auto',width:'95%',display:"flex",justifyContent:'space-around',alignItems:"center"}}>
                           
                           <p onClick={()=>saveNewNumber(itemNumber)} style={{width:'auto',height:"auto",padding:"3px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:'50%',backgroundColor:"white",boxShadow: '1px 1px 5px rgb(91, 90, 90)'}}>
                             <Image alt=''  src={addItem} style={{width:"20px",height:'20px'}}/>

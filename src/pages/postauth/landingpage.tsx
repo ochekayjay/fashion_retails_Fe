@@ -288,7 +288,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         {showfulluser && <FullUserSkeleton/>}
         {notbar  && <ProjectNotification  setLoadProSkeleton={setLoadProSkeleton} setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
         <>
-          <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',backdropFilter:'blur(4px)'}}></div>
+          <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)'}}></div>
           {showTag && <TagOption Username={userfile.Username} tagTitle={tagTitle} tagimgUrl={tagimgUrl} tagimgName={tagimgName} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
         </>
         <Navbar viewmobile={viewmobile} userfile={userfile} setUserFile={setUserFile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
@@ -321,7 +321,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
                                                                                         {display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(allGallery.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.8,margin:'0px auto'}}>
               <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:mainContentDiv?width*0.5*0.8*1.777:width*0.8*1.777,position:'relative'}}>
                   <img src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
-                  <div style={{height:'100%',width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'2',backdropFilter:'blur(4px)',display:d._id===itemClicked?'block':'none'}}></div>
+                  <div style={{height:'100%',width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'2',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)',display:d._id===itemClicked?'block':'none'}}></div>
               </div>
               {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
                 <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>

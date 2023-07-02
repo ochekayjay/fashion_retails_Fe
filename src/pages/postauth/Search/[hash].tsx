@@ -202,7 +202,7 @@ useEffect(()=>{
       <div style={{width:'100vw',minHeight:'100vh',position:'relative'}}>
         <HomeButton/>
 
-          <div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
+          <div style={{width:'100%',display:determineBlur===false?'none':'block',backgroundColor:'transparent',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)',height:'100%',position:'fixed',top:'0px',left:'0px',zIndex:'150'}}>
           
           </div>
           {showProject && <ProjectSkeleton/>}
