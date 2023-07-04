@@ -296,11 +296,11 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         const innerTimeout = setTimeout(() => {
           
           setMiniNotBar(false);
-        }, 10000); 
+        }, 7000); 
         
         
         return () => clearTimeout(innerTimeout);
-      }, 10000); 
+      }, 15000); 
   
       
       return () => clearTimeout(outerTimeout);
