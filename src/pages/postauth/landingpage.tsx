@@ -13,6 +13,7 @@ import searchIcon from '../../iconholder/search.svg'
 import shareIcon from '../../iconholder/share.svg'
 import smalldeleteicon from '../../iconholder/smallDeleteIcon.svg'
 import editIcon from '../../iconholder/editIcon.svg'
+import notificationStyle from '../../utils/pre_auth/ProjectNotification.module.css'
 import likeIcon from '../../iconholder/like.svg'
 import tagIcon from '../../iconholder/tag.svg'
 import bookmarkIcon from '../../iconholder/bookmark.svg'
@@ -79,6 +80,7 @@ const Landingpage = ()=> {
   const [tagimgName,setTagImgName] = useState<any>(null)
   const [notificationObj,setNotificationObj] = useState<any>()
   const [notbar,setNotBar] = useState(false)
+  const [mininotbar,setMiniNotBar] = useState(false)
   const [tagTitle,setTagTitle] = useState<any>(null)
   const router = useRouter()
   let token:any
@@ -136,6 +138,7 @@ useEffect(()=>{
   promise.then((resolvedValue) => {
     // Access the 'userImages' property on the resolved value
     const userImages = resolvedValue.userImages;
+    setMiniNotBar(false)
     setAllGallery(userImages)
     const userId = window.localStorage.getItem('id')
     userId? setId(userId): ''
@@ -282,10 +285,39 @@ const [scrollable,setScrollable] = useState<boolean>(false)
       }
   }
   
+
+
+  useEffect(() => {
+   
+    if(!allGallery){
+      const outerTimeout = setTimeout(() => {
+      
+        setMiniNotBar(true)
+        const innerTimeout = setTimeout(() => {
+          
+          setMiniNotBar(false);
+        }, 10000); 
+        
+        
+        return () => clearTimeout(innerTimeout);
+      }, 10000); 
+  
+      
+      return () => clearTimeout(outerTimeout);
+    }
+  }, [allGallery])
+
+
   return (
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         {showfulluser && <FullUserSkeleton/>}
+        {mininotbar && <div className={notificationStyle.notificationAlertLoading}>
+       <div style={{width:'300px',fontFamily:"NexaTextLight",padding:"5px",color:'white',overflow:'auto',fontSize:'15px',height:"100%",display:'flex',justifyContent:"center",alignItems:"center"}}>
+            Please, the server is hosted on a free-tier platform for now which often goes on sleep-time after being idle for some moments. Please, bear with us, it would be back up.
+        
+       </div>
+    </div>}
         {notbar  && <ProjectNotification  setLoadProSkeleton={setLoadProSkeleton} setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
         <>
           <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)'}}></div>
