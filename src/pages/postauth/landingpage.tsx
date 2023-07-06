@@ -300,7 +300,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         
         
         return () => clearTimeout(innerTimeout);
-      }, 15000); 
+      }, 18000); 
   
       
       return () => clearTimeout(outerTimeout);
@@ -314,7 +314,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         {showfulluser && <FullUserSkeleton/>}
         {mininotbar && <div className={notificationStyle.notificationAlertLoading}>
        <div style={{width:'300px',fontFamily:"NexaTextLight",padding:"5px",color:'white',overflow:'auto',fontSize:'15px',height:"100%",display:'flex',justifyContent:"center",alignItems:"center"}}>
-            Please, the server is hosted on a free-tier platform for now which often goes on sleep-time after being idle for some moments. Please, bear with us, it would be back up.
+            Please, the server is hosted on a free-tier platform for now. Loading time might be slow, please bear with us, it would be back up.
         
        </div>
     </div>}
