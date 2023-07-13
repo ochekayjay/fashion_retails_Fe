@@ -309,7 +309,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
   }, [allGallery])
 
 
-  return (<>{width<800?
+  return (<>{!width?'': width<800?
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         {showfulluser && <FullUserSkeleton/>}
