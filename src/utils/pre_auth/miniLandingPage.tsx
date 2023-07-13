@@ -207,12 +207,13 @@ const getClass = (id:any)=>{
 
 
   return (
+    <>{!width?<div></div>: width<800?
     <div className={styles.mainview}>
-    <section style={{width:width>750?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
+    <section style={{width:width>800?'45%':'90%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
       get paid for posting pictures today!
     </section>
-    <section style={{display:'flex',position:'relative',flexDirection:width>750?'row':'column',width:'100%',justifyContent:'space-around',alignItems:'center',height:width>750?'400px':'auto',marginTop:'50px'}}>
-      <div style={{width:width>750?'25%':'85%',margin:'10px auto',height:width>750?'100%':'200px',display:'flex',flexDirection:'column',alignItems:'left',justifyContent:'space-around',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
+    <section style={{display:'flex',position:'relative',flexDirection:width>800?'row':'column',width:'100%',justifyContent:'space-around',alignItems:'center',height:width>800?'400px':'auto',marginTop:'50px'}}>
+      <div style={{width:width>800?'25%':'85%',margin:'10px auto',height:width>800?'100%':'200px',display:'flex',flexDirection:'column',alignItems:'left',justifyContent:'space-around',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
         <p style={{fontSize:'35px',letterSpacing:'1.5px'}}>Melting point for buyers, digital creators, models and SME's</p>
       </div>
 
@@ -258,6 +259,57 @@ const getClass = (id:any)=>{
     
     
 </div>
+:<div className={styles.mainview}>
+<section style={{width:'80%',textAlign:'center',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Merriweather', serif; ",alignItems:'center',justifyContent:'center',fontSize:'25px',letterSpacing:'1.5px',height:'auto',marginTop:'15px',boxShadow:'0px 1px 0px rgb(196, 192, 192)',margin:'20px auto',backgroundColor:'rgb(251, 249, 249)',padding:'15px 0px'}}>
+  get paid for posting pictures today!
+</section>
+
+<section style={{display:"flex",alignItems:"center",width:'95%',margin:"10px auto",marginTop:"35px",justifyContent:"space-around"}}>
+  <div style={{width:"40%",margin:'auto'}}>
+      <div style={{width:'100%',margin:'10px auto',overflow:"hidden",height:'200px',fontStyle:'normal',fontWeight:'bolder',fontFamily:" 'Abril Fatface', cursive; "}}>
+        <p style={{fontSize:'35px',letterSpacing:'1.5px',width:'100%',paddingLeft:"15px",textAlign:"left"}}>Melting point for buyers, digital creators, models and SME's</p>
+      </div>
+
+      <div style={{fontSize:"25px",width:"150px",border:'1px solid red',borderWidth:'0px 1px 1px 0px',height:'50px',margin:"25px 0px",fontFamily:"NexaTextBold",position:'relative'}}>
+      <Link href={'/postauth/landingpage'}><div style={{position:"absolute",width:"150px",margin:'auto',border:'1px groove #234C4A',borderWidth:'0px 1px 1px 0px',height:"50px",display:'flex',alignItems:'center',justifyContent:"center",top:'0px',left:'0px',zIndex:'3',backgroundColor:"black",color:"white",fontFamily:'NexaTextLight',fontSize:'20px'}}><p style={{fontFamily:'NexaTextLight',fontSize:'20px'}}>explore</p></div></Link>
+          <div style={{position:"absolute",width:"150px",height:"50px",margin:"auto",top:'3.5px',right:'-3.5px',zIndex:'2',border:'1px double #F06071',borderWidth:'0px 1px 1px 0px',backgroundColor:"black"}}></div>
+      </div>
+  </div>
+
+  <div  className={styles.detailHolderNoAnim}>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Create beautiful projects</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Highlight Items & item retailers</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Fill text indexes for easy search</p>
+        <p style={{width:"90%",display:"flex",alignItems:"center",justifyContent:"left",fontFamily:"NexaTextLight",fontSize:"17px",color:'black',borderRadius:'10px',padding:'7px',boxSizing:'border-box',backgroundColor:'white',opacity:'0.8',boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',backdropFilter:'blur(10px)'}}>Promote ads on your page</p>
+    </div>
+</section>
+
+<section style={{display:'grid',gridTemplateColumns: 'repeat(3, 1fr)',width:'95%',margin:'20px auto',gridAutoRows: '1fr',gap: '10px'}}>
+{dataArr.map((sect:any,index:any)=><div style={{margin:'55px auto',width:'90%',height:'auto',position:'relative'}}>
+        
+        <div ref= {index===0?RefOne:index===1?RefTwo:index===2?RefThree:RefFour} style={{height:'300px',width:'100%'}}>
+        <div className={Stylestwo.divHolderNoAnim}>
+        <div style={{width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'4',boxShadow:'0px 1px 0px rgb(196, 192, 192)',backgroundColor:sect?.color,padding:'10px',height:'100%',borderRadius:'10px',display:'flex',justifyContent:'space-around',paddingTop:'30px',alignItems:'center'}}>
+        <p style={{width:'60px',position:'absolute',height:'60px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-3',borderRadius:"50%",backgroundColor:sect?.color}}></p>
+        <p style={{width:'30px',position:'absolute',height:'30px',top:'0px',left:'50%',transform:'translate(-50%,-50%)',zIndex:'-2',borderRadius:"50%",backgroundColor:'rgb(228,228,228)'}}></p>
+            <div style={{width:'47%',height:'250px'}}>
+              <img src={sect?.link.src} alt='' style={{width:'100%',borderRadius:'10px 0px 0px 10px',height:'100%',objectFit:"cover"}}/>
+            </div>
+
+            <div style={{width:'47%',height:'250px',position:'relative',backgroundColor:'transparent'}}>
+              <div style={{position:'absolute',zIndex:'3',backgroundColor:'black',opacity:'0.3',borderRadius:'0px 10px 10px 0px',top:'0px',left:'0px',height:'100%',width:'100%'}}></div>
+              <div style={{position:'absolute',zIndex:'5',backgroundColor:'transparent',top:'0px',left:'0px',height:'100%',width:'100%',color:'black',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
+                {sect?.items.map((item:any)=><div style={{width:'90%',margin:'auto',display:'flex',justifyContent:'space-between',alignItems:"center",color:'white',fontFamily:'NexaTextLight'}}><p style={{padding:'5px',height:'auto',borderRadius:'2.5px',width:'auto',backgroundColor:'white'}}><img src={item?.img?.src} style={{width:'40px',height:'40px',objectFit:'cover'}}/></p> <p>{item?.item}</p></div>)}
+              </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+      </div>)}
+</section>
+  
+  </div>}</>
   )
 }
 

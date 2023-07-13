@@ -97,10 +97,7 @@ export default function Home() {
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&display=swap');
 </style>
     </Head>
-    {width>750?<div className={styles.mainview}>
-       
-        <p style={{marginTop:"30px",color:'black',textAlign:'center',letterSpacing:"2px",fontFamily:'NexaTextLight',fontSize:"25px"}}>Please, revert to mobile view. Webview still in the pipeline</p>
-    </div>: <MiniLandingPage/>}
+    <MiniLandingPage/>
     </>
   )
 }

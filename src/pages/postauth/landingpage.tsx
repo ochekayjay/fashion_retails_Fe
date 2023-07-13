@@ -31,6 +31,7 @@ import { DeleteProject } from '@/utils/pre_auth/deleteProject'
 import ShareLink from '@/utils/pre_auth/shareLink'
 import TagOption from '@/utils/pre_auth/tagOption'
 import ProjectNotification from '@/utils/pre_auth/projectNotification'
+import AllPromo from '@/utils/AllPromo'
 
 
 import io from 'socket.io-client'
@@ -308,7 +309,7 @@ const [scrollable,setScrollable] = useState<boolean>(false)
   }, [allGallery])
 
 
-  return (
+  return (<>{width<800?
     <div style={{display:'flex'}}>
         {loadProSkeleton && <ProjectSkeleton/>}
         {showfulluser && <FullUserSkeleton/>}
@@ -381,7 +382,87 @@ const [scrollable,setScrollable] = useState<boolean>(false)
         </section>: 
         <GallerySkeleton/>}
         </div>
-    </div>
+    </div>:
+    
+    <div style={{display:'flex'}}>
+        {loadProSkeleton && <ProjectSkeleton/>}
+        {showfulluser && <FullUserSkeleton/>}
+        {allGallery && <>
+                          <div style={{height:"100%",width:'100vw',position:'fixed',zIndex:"4555665656",backgroundColor:"black",opacity:'0.3'}}>
+                            
+                        </div>
+                        <p style={{color:'white',fontSize:"25px",zIndex:'4555566677888809',backgroundColor:"grey",textAlign:'center',position:'fixed',top:'50%',left:"50%",transform:'translate(-50%,-50%)',width:"50%",fontFamily:'NexaTextLight'}}>Web-View still under construction please check mobile version for all updates</p>
+                        </>}
+        {mininotbar && <div className={notificationStyle.notificationAlertLoading}>
+       <div style={{width:'300px',fontFamily:"NexaTextLight",padding:"5px",color:'white',overflow:'auto',fontSize:'15px',height:"100%",display:'flex',justifyContent:"center",alignItems:"center"}}>
+            Please, the server is hosted on a free-tier platform for now. Loading time might be slow, please bear with us, it would be back up.
+        
+       </div>
+    </div>}
+        {notbar  && <ProjectNotification  setLoadProSkeleton={setLoadProSkeleton} setNotBar={setNotBar} setNewNotification={setNewNotification} notificationObj={notificationObj}/>}
+        <>
+          <div style={{position:'fixed',height:'100%',zIndex:'1000',display:showTag?'block':'none',width:'100%',top:'0px',left:'0px',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)'}}></div>
+          {showTag && <TagOption Username={userfile.Username} tagTitle={tagTitle} tagimgUrl={tagimgUrl} tagimgName={tagimgName} itemClicked={itemClicked} setItemClicked={setItemClicked} setTagImgUrl={setTagImgUrl} setShowTag={setShowTag} setMoreOptions={setMoreOptions}/>}
+        </>
+        <div style={{width:'25%',height:'auto',border:'1px solid purple',overflow:"hidden"}}>
+          <Navbar viewmobile={viewmobile} userfile={userfile} setUserFile={setUserFile} otherUsers={otherUsers} setViewMobile={setViewMobile} setShowfulluser={setShowfulluser}/>
+        </div>
+        <div style={{width:'70%',display:"flex",flexDirection:'column',justifyContent:"space-around",alignItems:"center"}}>
+
+          <div style={{height:'90px',display:'flex',borderRadius:'15px',marginTop:'25px',backgroundColor:'rgb(91, 90, 90)',alignItems:'center',justifyContent:'space-between',width:'60%',boxSizing:"border-box",padding:"15px"}}>
+            <p onClick={()=>setViewMobile(!viewmobile)} style={{width:'24px',height:'24px',display:width>800?'none':'block'}}>{width>800?"" :<Image alt='menu' src={menuIcon} style={{width:'100%',height:'100%'}}/>}</p>
+            <div onClick={()=>router.push('./Search/main')} style={{width:'65%',position:'relative',height:'50px',borderRadius:'15px',padding:"10px",backgroundColor:'white',margin:"15px auto"}}>
+                <span style={{position:'absolute',height:'100%',width:'50px',display:"flex",top:'0px',right:'0px',alignItems:'center',justifyContent:'center'}}><Image alt='search' src={searchIcon}/></span>
+            </div>
+            <p onClick={()=>router.push('./notificationPage')} style={{width:'24px',height:'24px',position:'relative'}}>
+              <Image alt='' src={token?notsOn:notsOff} style={{width:'100%',height:'100%'}}/>
+              <span style={{position:'absolute',width:'15px',display:newNotification?'block':'none',boxShadow:'1px 1px 5px rgb(91, 90, 90)',height:'15px',top:'-5px',right:'-3px',borderRadius:"50%",backgroundColor:"blue",zIndex:'5'}}></span>
+            </p>
+            </div>
+
+            <div style={{width:'100%',margin:'20px auto',}}>
+          {allGallery?<section style={{width:'90%',height:'auto',margin:'100px auto'}}>
+        <div style={{width:'100%'}}>
+        <AllPromo/>
+        </div>
+
+          <p style={{width:'80%',margin:"15px auto",marginTop:'70px',textAlign:"center",fontFamily:'NexaTextBold',fontSize:"30px"}}>COLLECTIONS</p>
+          <div style={{display:'grid',gridTemplateColumns: 'repeat(3, 1fr)',rowGap:'30px',columnGap:'5%',width:"100%"}}>
+            {allGallery.map((d:any)=><div key={d._id} ref={imageHolderRef} style={{display:'flex',position:"relative",boxShadow:'1px 1px 5px rgb(91, 90, 90)',backgroundColor:d.backgroundColor,height:'auto',flexDirection:(allGallery.indexOf(d)+2)%2===0?'column':'column-reverse',width:width*0.7*0.9*0.3,margin:'0px auto'}}>
+              <div onClick={()=>{setFocusedItem(d);setLoadProSkeleton(true);router.push(`./Project/${d._id}`)}} style={{width:'100%',height:width*0.7*0.9*0.3*1.777,position:'relative'}}>
+                  <img src={d.imageLink} alt={d.title} style={{width:'100%',objectFit:'cover',height:'100%'}}/>
+                  <div style={{height:'100%',width:'100%',position:'absolute',top:'0px',left:'0px',zIndex:'2',WebkitBackdropFilter:'blur(4px)',backdropFilter:'blur(4px)',display:d._id===itemClicked?'block':'none'}}></div>
+              </div>
+              {moreOptions && d._id===itemClicked? <div className={styles.moreItem}>
+                <div onClick={()=>{setFocusedItem(d);router.push('./UserPrivates/editProject')}} style={{display:id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Edit</p><p style={{width:"20px",height:'20px'}}><Image src={smalleditIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>onDelete(d._id)} style={{display: id===null || id!==d.creator?"none":'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Delete</p><p style={{width:"20px",height:'20px'}}><Image src={smalldeleteicon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div onClick={()=>ShareLink({title:d.title,description:d.projectDescription,link:`https://fashion-retails-fe-ashen.vercel.app/postauth/Project/${d._id}`})} style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Share</p><p style={{width:"20px",height:'20px'}}><Image src={shareIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+                <div style={{display:'flex',justifyContent:'space-between',width:'100%',margin:'10px 0px'}}><p>Bookmark</p><p style={{width:"20px",height:'20px'}}><Image src={bookmarkIcon} alt='' style={{width:"100%",height:'100%'}}/></p></div>
+              </div>: null}
+
+             
+              
+              <div  style={{width:'100%',height:'50px',display:mainContentDiv?'flex':'none',alignItems:'center',justifyContent:'space-around'}}>
+                <p style={{width:"20px",height:'20px',display: id===null ?"none":'block'}}><Image src={likeIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <p onClick={()=>{setTagImgUrl(d.imageLink),setTagTitle(d.title);setMoreOptions(false);setShowTag(true);setTagImgName(d.imageName);clickingItem(d._id)}} style={{width:"20px",height:'20px',display: id===null ?"none":'block',}}><Image src={tagIcon} alt='' style={{width:"100%",height:'100%'}}/></p>
+                <div  onClick={()=>{setMoreOptions(true);setShowTag(false);clickingItem(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'relative',display:'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+              </div>
+              </div>
+              <div  onClick={()=>{setMoreOptions(!moreOptions);setItemClicked(d._id)}} style={{width:"35px",cursor:'pointer',height:'35px',position:'absolute',bottom:'10px',right:'10px',display:mainContentDiv?'none':'flex',alignItems:"center",justifyContent:'center'}}>
+                <p style={{width:"35px",height:'35px',display:'flex',alignItems:'center',justifyContent:"center",backgroundColor:'transparent',position:'absolute',top:'0px',left:'0px',zIndex:'3'}}><Image src={moreIcon} alt='' style={{width:"24px",height:'24px'}}/></p>
+                <p style={{position:'absolute',zIndex:'1',borderRadius:"50%",backgroundColor:'white',top:'0px',left:'0px',height:"100%",width:"100%"}}></p>
+              </div>
+            </div>)}
+          </div>
+        </section>: 
+        <GallerySkeleton/>}
+</div>
+          </div>
+        
+        </div>
+    }</>
   )
 }
 

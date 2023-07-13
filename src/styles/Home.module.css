@@ -207,6 +207,19 @@
   animation-timing-function: ease-in-out;
 }
 
+.detailHolderNoAnim{
+  width:40%;
+  margin:20px auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  flex-direction:column;
+  height:300px;
+  background-color: rgb(70, 69, 69);
+  border-radius:15px;
+ 
+}
+
 
 
 @keyframes detailslide {
